@@ -209,6 +209,7 @@ class _ContainerDetailsPageState extends State<ContainerDetailsPage> {
                                       child: CircularProgressIndicator())
                                   : ListView(
                                       controller: _logScrollController,
+                                      shrinkWrap: true,
                                       children: [
                                         ..._logs.map((line) {
                                           return InkWell(
@@ -232,12 +233,16 @@ class _ContainerDetailsPageState extends State<ContainerDetailsPage> {
                                                 right: 10,
                                               ),
                                               child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 15,
                                                   ),
                                                   Text(line),
-                                                  const Divider(),
+                                                  const Divider(
+                                                    height: 5,
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -279,8 +284,6 @@ class _ContainerDetailsPageState extends State<ContainerDetailsPage> {
     List<String> mergedLogs = [];
     mergedLogs.addAll(_logs);
 
-    print('logs: ${mergedLogs.length}');
-
     // find last line in old logs
     String lastLine = '';
 
@@ -289,17 +292,22 @@ class _ContainerDetailsPageState extends State<ContainerDetailsPage> {
     }
 
     if (lastLine != '') {
-      for (String line in logs) {
-        if (line.compareTo(lastLine) > 0) {
-          mergedLogs.add(line);
-          break;
-        }
+      // find last line in new logs
+      String newLastLine = logs.last;
+
+      // if last line is the same, then we don't need to add new logs
+      if (lastLine == newLastLine) {
+        return;
       }
+
+      // find last line from _logs in new logs
+      int lastLineIndex = logs.indexOf(lastLine);
+
+      // add everything after last line to merged logs
+      mergedLogs.addAll(logs.sublist(lastLineIndex + 1, logs.length));
     } else {
       mergedLogs.addAll(logs);
     }
-
-    print('logs: ${mergedLogs.length}');
 
     setState(() {
       _logs = mergedLogs;
