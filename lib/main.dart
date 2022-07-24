@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
@@ -19,7 +21,11 @@ import 'pages/settings/settings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Hive.init((await path_provider.getApplicationDocumentsDirectory()).path);
+
+  // If platform is web, skip init
+  if (!kIsWeb) {
+    Hive.init((await path_provider.getApplicationDocumentsDirectory()).path);
+  }
 
   Hive.registerAdapter(TokenAdapter());
   Hive.registerAdapter(UserAdapter());
