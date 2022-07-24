@@ -3,9 +3,9 @@
 *[Latin: Porta/Door Arius/Keeper]*
 
 [![GitHub issues](https://img.shields.io/github/issues/zbejas/portarius?color=red)](https://github.com/zbejas/portarius/issues)
-[![Release date](https://img.shields.io/github/release-date/zbejas/portarius?labely)](https://github.com/zbejas/portarius/releases/latest)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/zbejas/portarius?label=latest%20version&sort=semver)](https://github.com/zbejas/portarius/releases)
-[![GitHub license](https://img.shields.io/github/license/zbejas/portarius?color=lightgrey)](https://github.com/zbejas/portarius/LICENSE)
+[![Release date](https://img.shields.io/github/release-date/zbejas/portarius?labely)](https://github.com/zbejas/portarius/releases/)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/zbejas/portarius?label=Release)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/zbejas/portarius?include_prereleases&label=including%20beta)
 
 ## Features
 
@@ -13,6 +13,7 @@
 - See running/stopped containers (and also start/stop and restart them)
 - See container logs, mounts, and status
 - Biometric authentication
+- User settings are stored with AES256 encryption
 
 <details>
   <summary>Expand features list</summary>
@@ -46,7 +47,3 @@
 
 - FAQ
 - Manual
-
-## Donations
-
-- Donate to this project on Paypal [here](https://paypal.me/zbe420).
