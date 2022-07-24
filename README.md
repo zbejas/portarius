@@ -4,8 +4,7 @@
 
 [![GitHub issues](https://img.shields.io/github/issues/zbejas/portarius?color=red)](https://github.com/zbejas/portarius/issues)
 [![Release date](https://img.shields.io/github/release-date/zbejas/portarius?labely)](https://github.com/zbejas/portarius/releases/)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/zbejas/portarius?label=Release)
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/zbejas/portarius?include_prereleases&label=including%20beta)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/zbejas/portarius?label=Release)](https://github.com/zbejas/portarius/releases/latest)
 
 ## Features
 
@@ -37,7 +36,8 @@
 
 ## Install
 
-- Download the latest versions in the [Releases page](https://github.com/zbejas/portarius/releases)
+- Download the [latest version](https://github.com/zbejas/portarius/releases).
+- Click on it and install it.
 
 ## Contribute
 
