@@ -159,20 +159,20 @@ class Config {
         attachStdout: json["AttachStdout"],
         cmd: List<String>.from(json["Cmd"]?.map((x) => x) ?? []),
         domainname: json["Domainname"],
-        env: List<String>.from(json["Env"].map((x) => x)),
+        env: List<String>.from(json["Env"]?.map((x) => x) ?? []),
         healthcheck: json["Healthcheck"] != null
             ? Healthcheck.fromJson(json["Healthcheck"])
             : null,
         hostname: json["Hostname"],
         image: json["Image"],
-        labels: Labels.fromJson(json["Labels"]),
+        labels: Labels.fromJson(json["Labels"] ?? {}),
         macAddress: json["MacAddress"],
         networkDisabled: json["NetworkDisabled"],
         openStdin: json["OpenStdin"],
         stdinOnce: json["StdinOnce"],
         tty: json["Tty"],
         user: json["User"],
-        volumes: Volumes.fromJson(json["Volumes"]),
+        volumes: Volumes.fromJson(json["Volumes"] ?? {}),
         workingDir: json["WorkingDir"],
         stopSignal: json["StopSignal"],
         stopTimeout: json["StopTimeout"],
@@ -385,7 +385,7 @@ class HostConfig {
         oomScoreAdj: json["OomScoreAdj"],
         networkMode: json["NetworkMode"],
         pidMode: json["PidMode"],
-        portBindings: PortBindings.fromJson(json["PortBindings"]),
+        portBindings: PortBindings.fromJson(json["PortBindings"] ?? {}),
         privileged: json["Privileged"],
         readonlyRootfs: json["ReadonlyRootfs"],
         publishAllPorts: json["PublishAllPorts"],
@@ -798,7 +798,7 @@ class Health {
   factory Health.fromJson(Map<String, dynamic> json) => Health(
         status: json["Status"],
         failingStreak: json["FailingStreak"],
-        log: List<Log>.from(json["Log"].map((x) => Log.fromJson(x))),
+        log: List<Log>.from(json["Log"].map((x) => Log.fromJson(x)) ?? []),
       );
 
   Map<String, dynamic> toJson() => {
