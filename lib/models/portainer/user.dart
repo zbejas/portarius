@@ -54,7 +54,7 @@ class User extends ChangeNotifier {
     }
 
     if (newToken.jwt.isNotEmpty) {
-      print('Setting new token.');
+      debugPrint('Setting new token.');
       token = newToken;
       notifyListeners();
     }
@@ -120,5 +120,5 @@ class User extends ChangeNotifier {
       other is User &&
           runtimeType == other.runtimeType &&
           username == other.username &&
-          hostUrl == other.hostUrl;          
+          hostUrl == other.hostUrl;
 }

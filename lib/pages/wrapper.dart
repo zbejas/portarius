@@ -37,9 +37,9 @@ class _WrapperState extends State<Wrapper> {
       return const LoadingPage();
     }
 
-    print('Biometrics: ${settings.biometricEnabled}');
-    print('Authenticated: ${isAuthenticated}');
-    print('User: ${user.token?.jwt}');
+    debugPrint('Biometrics: ${settings.biometricEnabled}');
+    debugPrint('Authenticated: ${isAuthenticated}');
+    debugPrint('User: ${user.token?.jwt}');
 
     if (settings.biometricEnabled && !isAuthenticated) {
       if (mounted && !isAuthing) {

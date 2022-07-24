@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
@@ -260,7 +259,7 @@ class RemoteService {
     http.Client client = http.Client();
 
     Uri uri = Uri.parse(
-        "${user.hostUrl}/api/endpoints/${endpoint.id}/docker/containers/$containerId/logs?tail=100&stdout=true&stderr=true");
+        "${user.hostUrl}/api/endpoints/${endpoint.id}/docker/containers/$containerId/logs?tail=200&stdout=true&stderr=true");
 
     http.Response response = await client.get(uri, headers: {
       "Authorization": user.token?.getBearerToken() ?? '',
