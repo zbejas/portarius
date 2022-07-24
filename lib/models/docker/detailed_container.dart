@@ -536,15 +536,13 @@ class Sysctls {
     required this.netIpv4IpForward,
   });
 
-  String netIpv4IpForward;
+  Map<String, dynamic> netIpv4IpForward;
 
   factory Sysctls.fromJson(Map<String, dynamic> json) => Sysctls(
-        netIpv4IpForward: json["net.ipv4.ip_forward"],
+        netIpv4IpForward: json,
       );
 
-  Map<String, dynamic> toJson() => {
-        "net.ipv4.ip_forward": netIpv4IpForward,
-      };
+  Map<String, dynamic> toJson() => netIpv4IpForward;
 }
 
 class Mount {
@@ -818,10 +816,10 @@ class Log {
     required this.output,
   });
 
-  DateTime start;
-  DateTime end;
-  int exitCode;
-  String output;
+  DateTime? start;
+  DateTime? end;
+  int? exitCode;
+  String? output;
 
   factory Log.fromJson(Map<String, dynamic> json) => Log(
         start: DateTime.parse(json["Start"]),
@@ -831,8 +829,8 @@ class Log {
       );
 
   Map<String, dynamic> toJson() => {
-        "Start": start.toIso8601String(),
-        "End": end.toIso8601String(),
+        "Start": start?.toIso8601String(),
+        "End": end?.toIso8601String(),
         "ExitCode": exitCode,
         "Output": output,
       };
