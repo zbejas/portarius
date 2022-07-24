@@ -37,7 +37,8 @@
 
 ## Install
 
-- Download the latest versions in the [Releases page](https://github.com/zbejas/portarius/releases)
+- Download the [latest version](https://github.com/zbejas/portarius/releases).
+- Click on it and install it.
 
 ## Contribute
 
