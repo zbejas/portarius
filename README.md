@@ -21,14 +21,14 @@
 
 ## Screenshots
 
-| Portarius | Portarius | Portarius |
+| Drawer | Home | Auth |
 | :--: | :--: | :--: |
 | ![Screenshot of functions](https://i.imgur.com/1cmRnmb.jpeg) | ![Screenshot of OBD data](https://i.imgur.com/yAKqI9S.jpeg) | ![Screenshot of Dashboard](https://i.imgur.com/N6MqvTx.jpeg) |
 
 <details>
   <summary>More Screenshots</summary>
 
-| Portarius | Portarius | Portarius | Portarius | Portarius |
+| Settings | Drawer Light | Home Light | Auth Light | Settings Light |
 | :--: | :--: | :--: | :--: | :--: |
 | ![Screenshot of functions](https://i.imgur.com/IRjzCYd.jpeg) | ![Screenshot of Dashboard](https://i.imgur.com/L8CG6hG.jpeg) | ![Screenshot of functions](https://i.imgur.com/jbblbfZ.jpeg) | ![Screenshot of functions](https://i.imgur.com/ETl1vpC.jpeg) | ![Screenshot of functions](https://i.imgur.com/oNxU12R.jpeg) |
   
