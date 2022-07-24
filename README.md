@@ -12,7 +12,7 @@
 - See running/stopped containers (and also start/stop and restart them)
 - See container logs, mounts, and status
 - Biometric authentication
-- User settings are stored with AES256 encryption
+- Data is stored with AES256 encryption
 
 <details>
   <summary>Expand features list</summary>
