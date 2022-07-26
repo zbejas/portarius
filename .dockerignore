@@ -1,0 +1,15 @@
+.dart_tool/
+.git/
+.idea/
+.vscode/
+android/
+build/
+docs/
+ios/
+linux/
+localization/
+macos/
+node_modules/
+shaders/
+snap/
+windows/
