@@ -179,9 +179,11 @@ class RemoteService {
     Uri uri = Uri.parse(
         "${user.hostUrl}/api/endpoints/${endpoint.id}/docker/containers/$containerId/start");
 
-    http.Response response = await client.post(uri, headers: {
-      "Authorization": user.token?.getBearerToken() ?? '',
-    });
+    http.Response response = await client.post(uri,
+        headers: {
+          "Authorization": user.token?.getBearerToken() ?? '',
+        },
+        body: jsonEncode({}));
 
     if (response.statusCode == 204) {
       return true;
