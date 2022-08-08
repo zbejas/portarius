@@ -37,10 +37,7 @@
 ## Install
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=si.zbe.portarius)
-
-
-- Download the [latest version](https://github.com/zbejas/portarius/releases).
-- Click on it and install it.
+[<img src="https://censorship.no/img/github-badge.png" alt="Get it on Github" height="80">](https://github.com/zbejas/portarius/releases)
 
 ## Contribute
 
