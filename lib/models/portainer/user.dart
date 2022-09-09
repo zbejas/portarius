@@ -32,6 +32,9 @@ class User extends ChangeNotifier {
   @HiveField(3)
   late Token? token;
 
+  /// is token manually set
+  bool tokenManuallySet = false;
+
   User(
       {required this.username,
       required this.password,

@@ -73,7 +73,8 @@ class StorageManager extends ChangeNotifier {
 
     if (!(await RemoteService().isTokenValid(user)) &&
         user.password.isNotEmpty &&
-        user.username.isNotEmpty) {
+        user.username.isNotEmpty &&
+        !user.tokenManuallySet) {
       Token? token = await RemoteService().authPortainer(
         user.username,
         user.password,
