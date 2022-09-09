@@ -57,7 +57,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
         floatingActionButton: FloatingActionButton(
           tooltip: 'Add User',
           onPressed: () async {
-            await _showAddUserDialog(storage);
+            await _showAddMethodDialog(storage);
           },
           child: const Icon(Icons.add),
         ),
@@ -158,6 +158,58 @@ class _UserManagerPageState extends State<UserManagerPage> {
         Navigator.pop(context);
       }
     }
+  }
+
+  _validateToken(String token, String hostUrl, StorageManager storage) async {
+    Token? tokenObj = Token(jwt: token, manuallySet: true);
+    User user = User(
+      username: 'API Token',
+      password: 'null',
+      hostUrl: hostUrl,
+      token: tokenObj,
+    );
+
+    if (!(await RemoteService().isTokenValid(user))) {
+      ToastContext().init(context);
+      Toast.show(
+        'Invalid token.',
+      );
+      return;
+    }
+
+    await storage.addUserToList(user);
+    if (mounted) {
+      Navigator.pop(context);
+    }
+  }
+
+  _showAddMethodDialog(StorageManager storage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            title: const Text('Select Method'),
+            content: const Text(
+              'Select the method you want to use to add a user.',
+            ),
+            actions: [
+              TextButton(
+                child: const Text('Authentication'),
+                onPressed: () async {
+                  Navigator.pop(context);
+                  await _showAddUserDialog(storage);
+                },
+              ),
+              TextButton(
+                child: const Text('Token'),
+                onPressed: () async {
+                  Navigator.pop(context);
+                  await _showAddViaTokenDialog(storage);
+                },
+              ),
+            ]);
+      },
+    );
   }
 
   _showUserDialog(User loggedUser, User clickedUser, StorageManager storage,
@@ -328,6 +380,84 @@ class _UserManagerPageState extends State<UserManagerPage> {
               onPressed: () {
                 _validateUser(usernameController.text, hostUrlController.text,
                     passwordController.text, storage);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _showAddViaTokenDialog(StorageManager storage) {
+    TextEditingController tokenController = TextEditingController();
+    TextEditingController hostUrlController = TextEditingController();
+
+    Size size = MediaQuery.of(context).size;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add User'),
+          content: Form(
+            child: Wrap(
+              children: [
+                TextFormField(
+                  controller: hostUrlController,
+                  scrollPadding: EdgeInsets.all(size.height * .15),
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.url,
+                  decoration: const InputDecoration(
+                    labelText: 'Host URL',
+                    hintText: 'https://portainer.example.com',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a host URL';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                  width: size.width,
+                ),
+                TextFormField(
+                  controller: tokenController,
+                  scrollPadding: EdgeInsets.all(size.height * .1),
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    labelText: 'Token',
+                    hintText: 'abc123',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the token';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                  width: size.width,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Add'),
+              onPressed: () {
+                _validateToken(
+                    tokenController.text, hostUrlController.text, storage);
               },
             ),
           ],

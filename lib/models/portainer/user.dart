@@ -33,6 +33,7 @@ class User extends ChangeNotifier {
   late Token? token;
 
   /// is token manually set
+  @HiveField(4)
   bool tokenManuallySet = false;
 
   User(
@@ -95,7 +96,17 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 
+  void manuallySetToken(Token newToken) {
+    token = newToken;
+    tokenManuallySet = true;
+    notifyListeners();
+  }
+
   void resetToken() {
+    if (tokenManuallySet) {
+      return;
+    }
+
     token = null;
     notifyListeners();
   }

@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
       settings.init(storage);
     });
 
-    const Map<String, Widget> _routes = {
+    const Map<String, Widget> routes = {
       '/users': UserManagerPage(),
       '/settings': SettingsPage(),
       '/home/container': ContainerDetailsPage(),
@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
             //routes: _routes,
             onGenerateRoute: (settings) {
               String pageName = settings.name ?? '/';
-              Widget routeWidget = _routes[pageName] ?? const Wrapper();
+              Widget routeWidget = routes[pageName] ?? const Wrapper();
 
               if (pageName == '/home/container') {
                 return PageRouteBuilder(
