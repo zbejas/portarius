@@ -2,6 +2,10 @@
 
 *[Latin: Porta/Door Arius/Keeper]*
 
+<p align="center">
+  <img width="1000" src="https://i.imgur.com/jrnn0kO.png">
+</p>
+
 [![GitHub issues](https://img.shields.io/github/issues/zbejas/portarius?color=red)](https://github.com/zbejas/portarius/issues)
 [![Release date](https://img.shields.io/github/release-date/zbejas/portarius?labely)](https://github.com/zbejas/portarius/releases/)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/zbejas/portarius?label=Release)](https://github.com/zbejas/portarius/releases/latest)
@@ -21,33 +25,32 @@
 
 ## Screenshots
 
-| Drawer | Home | Auth |
-| :--: | :--: | :--: |
-| ![Screenshot of functions](https://i.imgur.com/1cmRnmb.jpeg) | ![Screenshot of OBD data](https://i.imgur.com/yAKqI9S.jpeg) | ![Screenshot of Dashboard](https://i.imgur.com/N6MqvTx.jpeg) |
+| Drawer | Home | Auth | Settings |
+| :--: | :--: | :--: | :--: |
+| <img src="https://i.imgur.com/L8CG6hG.jpeg" width="200"> | <img src="https://i.imgur.com/jbblbfZ.jpeg" width="200"> | <img src="https://i.imgur.com/ETl1vpC.jpeg" width="200"> | <img src="https://i.imgur.com/oNxU12R.jpeg" width="200"> |
 
 <details>
-  <summary>More Screenshots</summary>
-
-| Settings | Drawer Light | Home Light | Auth Light | Settings Light |
-| :--: | :--: | :--: | :--: | :--: |
-| ![Screenshot of functions](https://i.imgur.com/IRjzCYd.jpeg) | ![Screenshot of Dashboard](https://i.imgur.com/L8CG6hG.jpeg) | ![Screenshot of functions](https://i.imgur.com/jbblbfZ.jpeg) | ![Screenshot of functions](https://i.imgur.com/ETl1vpC.jpeg) | ![Screenshot of functions](https://i.imgur.com/oNxU12R.jpeg) |
+  <summary>Dark mode screenshots</summary>
+  
+| Drawer | Home | Auth | Settings |
+| :--: | :--: | :--: | :--: |
+| <img src="https://i.imgur.com/IRjzCYd.jpeg" width="200"> | <img src="https://i.imgur.com/1cmRnmb.jpeg" width="200"> | <img src="https://i.imgur.com/yAKqI9S.jpeg" width="200"> | <img src="https://i.imgur.com/N6MqvTx.jpeg" width="200"> |
   
 </details>
 
 ## Install
 
-- Download the [latest version](https://github.com/zbejas/portarius/releases).
-- Click on it and install it.
+[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=si.zbe.portarius)
+[<img src="https://censorship.no/img/github-badge.png" alt="Get it on Github" height="80">](https://github.com/zbejas/portarius/releases)
 
 ## Contribute
 
-- Test the app and Improve this project by requesting features or reporting bugs in [Issues](https://github.com/zbejas/portarius/issues) section and make a PR upon Issue discussion.
+- [Bug report](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=bug_report.md&title=) form if you found a bug
+- [Feature request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=) form if you have a suggestion
+- [Issues](https://github.com/zbejas/portarius/issues) section, have a look around
+- [Pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) if you improved something
 
 ## Documentation
 
-- FAQ
-- Manual
-
-## Notes
-
-- WebApp was pushed due to interest, but does not work at the moment cause of XMLHttpRequest error.
+- [FAQ](https://github.com/zbejas/portarius/wiki/FAQ) 
+- [Privacy policy](https://github.com/zbejas/portarius/wiki/Privacy-Policy)
