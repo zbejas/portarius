@@ -2,6 +2,8 @@
 
 *[Latin: Porta/Door Arius/Keeper]*
 
+<img src="https://i.imgur.com/jrnn0kO.png">
+
 [![GitHub issues](https://img.shields.io/github/issues/zbejas/portarius?color=red)](https://github.com/zbejas/portarius/issues)
 [![Release date](https://img.shields.io/github/release-date/zbejas/portarius?labely)](https://github.com/zbejas/portarius/releases/)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/zbejas/portarius?label=Release)](https://github.com/zbejas/portarius/releases/latest)
@@ -21,16 +23,16 @@
 
 ## Screenshots
 
-| Drawer | Home | Auth |
-| :--: | :--: | :--: |
-| ![Screenshot of functions](https://i.imgur.com/1cmRnmb.jpeg) | ![Screenshot of OBD data](https://i.imgur.com/yAKqI9S.jpeg) | ![Screenshot of Dashboard](https://i.imgur.com/N6MqvTx.jpeg) |
+| Drawer Light | Home Light | Auth Light | Settings Light |
+| :--: | :--: | :--: | :--: |
+| ![Screenshot of Dashboard](https://i.imgur.com/L8CG6hG.jpeg) | ![Screenshot of functions](https://i.imgur.com/jbblbfZ.jpeg) | ![Screenshot of functions](https://i.imgur.com/ETl1vpC.jpeg) | ![Screenshot of functions](https://i.imgur.com/oNxU12R.jpeg) |
 
 <details>
-  <summary>More Screenshots</summary>
-
-| Settings | Drawer Light | Home Light | Auth Light | Settings Light |
-| :--: | :--: | :--: | :--: | :--: |
-| ![Screenshot of functions](https://i.imgur.com/IRjzCYd.jpeg) | ![Screenshot of Dashboard](https://i.imgur.com/L8CG6hG.jpeg) | ![Screenshot of functions](https://i.imgur.com/jbblbfZ.jpeg) | ![Screenshot of functions](https://i.imgur.com/ETl1vpC.jpeg) | ![Screenshot of functions](https://i.imgur.com/oNxU12R.jpeg) |
+  <summary>Dark mode screenshots</summary>
+  
+| Drawer | Home | Auth | Settings |
+| :--: | :--: | :--: | :--: |
+| ![Screenshot of functions](https://i.imgur.com/IRjzCYd.jpeg) | ![Screenshot of functions](https://i.imgur.com/1cmRnmb.jpeg) | ![Screenshot of OBD data](https://i.imgur.com/yAKqI9S.jpeg) | ![Screenshot of Dashboard](https://i.imgur.com/N6MqvTx.jpeg) |
   
 </details>
 
