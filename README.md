@@ -23,16 +23,16 @@
 
 ## Screenshots
 
-| Drawer Light | Home Light | Auth Light | Settings Light |
+| Drawer | Home | Auth | Settings |
 | :--: | :--: | :--: | :--: |
-| ![Screenshot of Dashboard](https://i.imgur.com/L8CG6hG.jpeg) | ![Screenshot of functions](https://i.imgur.com/jbblbfZ.jpeg) | ![Screenshot of functions](https://i.imgur.com/ETl1vpC.jpeg) | ![Screenshot of functions](https://i.imgur.com/oNxU12R.jpeg) |
+| <img src="https://i.imgur.com/L8CG6hG.jpeg" width="200"> | <img src="https://i.imgur.com/jbblbfZ.jpeg" width="200"> | <img src="https://i.imgur.com/ETl1vpC.jpeg" width="200"> | <img src="https://i.imgur.com/oNxU12R.jpeg" width="200"> |
 
 <details>
   <summary>Dark mode screenshots</summary>
   
 | Drawer | Home | Auth | Settings |
 | :--: | :--: | :--: | :--: |
-| ![Screenshot of functions](https://i.imgur.com/IRjzCYd.jpeg) | ![Screenshot of functions](https://i.imgur.com/1cmRnmb.jpeg) | ![Screenshot of OBD data](https://i.imgur.com/yAKqI9S.jpeg) | ![Screenshot of Dashboard](https://i.imgur.com/N6MqvTx.jpeg) |
+| <img src="https://i.imgur.com/IRjzCYd.jpeg" width="200"> | <img src="https://i.imgur.com/1cmRnmb.jpeg" width="200"> | <img src="https://i.imgur.com/yAKqI9S.jpeg" width="200"> | <img src="https://i.imgur.com/N6MqvTx.jpeg" width="200"> |
   
 </details>
 
