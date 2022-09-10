@@ -2,7 +2,9 @@
 
 *[Latin: Porta/Door Arius/Keeper]*
 
-<img src="https://i.imgur.com/jrnn0kO.png">
+<p align="center">
+  <img width="1000" src="https://i.imgur.com/jrnn0kO.png">
+</p>
 
 [![GitHub issues](https://img.shields.io/github/issues/zbejas/portarius?color=red)](https://github.com/zbejas/portarius/issues)
 [![Release date](https://img.shields.io/github/release-date/zbejas/portarius?labely)](https://github.com/zbejas/portarius/releases/)
@@ -43,7 +45,8 @@
 
 ## Contribute
 
-- [Bug report](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=bug_report.md&title= ), [Feature request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=)
+- [Bug report](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=bug_report.md&title= )
+- [Feature request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=)
 
 ## Documentation
 
