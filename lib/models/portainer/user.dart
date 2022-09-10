@@ -40,7 +40,8 @@ class User extends ChangeNotifier {
       {required this.username,
       required this.password,
       required this.hostUrl,
-      this.token});
+      this.token,
+      this.tokenManuallySet = false});
 
   /// Tries to auth [User]
   ///

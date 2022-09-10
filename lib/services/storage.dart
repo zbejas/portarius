@@ -41,11 +41,14 @@ class StorageManager extends ChangeNotifier {
       List<dynamic> tempUserStorage =
           await _storageBox!.get('savedUsers', defaultValue: []);
       _savedUsers = tempUserStorage
-          .map<User>((user) => User(
-              username: user.username,
-              hostUrl: user.hostUrl,
-              password: user.password,
-              token: user.token))
+          .map<User>(
+            (user) => User(
+                username: user.username,
+                hostUrl: user.hostUrl,
+                password: user.password,
+                token: user.token,
+                tokenManuallySet: user.tokenManuallySet),
+          )
           .toList();
     }
 
@@ -159,10 +162,11 @@ class StorageManager extends ChangeNotifier {
         await _storageBox!.get('savedUsers', defaultValue: []);
     _savedUsers = tempUserStorage
         .map<User>((user) => User(
-            username: user.username,
-            hostUrl: user.hostUrl,
-            password: user.password,
-            token: user.token))
+              username: user.username,
+              hostUrl: user.hostUrl,
+              password: user.password,
+              token: user.token,
+            ))
         .toList();
   }
 
