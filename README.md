@@ -43,7 +43,7 @@
 
 ## Contribute
 
-- Test the app and Improve this project by requesting features or reporting bugs in [Issues](https://github.com/zbejas/portarius/issues) section and make a PR upon Issue discussion.
+- [Bug report](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=bug_report.md&title= ), [Feature request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=)
 
 ## Documentation
 
