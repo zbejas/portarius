@@ -47,6 +47,8 @@
 
 - [Bug report](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=bug_report.md&title= )
 - [Feature request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=)
+- Take a look at [Issues](https://github.com/zbejas/portarius/issues)
+- Improved something? Do a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)
 
 ## Documentation
 
