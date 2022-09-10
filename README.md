@@ -48,7 +48,7 @@
 - [Bug report](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=bug_report.md&title=) form if you found a bug
 - [Feature request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=) form if you have a suggestion
 - [Issues](https://github.com/zbejas/portarius/issues) section, have a look around
-- [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) if you improved something
+- [Pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) if you improved something
 
 ## Documentation
 
