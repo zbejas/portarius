@@ -45,17 +45,11 @@
 
 ## Contribute
 
--  form if you found a bug
--  form if you have a suggestion
--  section, have a look around
--  if you improved something
+- [Report](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=bug_report.md&title=) a bug
+- [Post](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=) a feature request
+- [Check out](https://github.com/zbejas/portarius/issues) the issues section
+- [Send](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) a pull request
 
-# Contribute
-* Report a [Bug](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=bug_report.md&title=)
-* Post a [Feature request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=)
-* Check out the [Issues](https://github.com/zbejas/portarius/issues) section
-* Send a [Pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)
-* 
 ## Documentation
 
 - [FAQ](https://github.com/zbejas/portarius/wiki/FAQ) 
