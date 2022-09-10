@@ -47,9 +47,5 @@
 
 ## Documentation
 
-- FAQ
-- Manual
-
-## Notes
-
-- WebApp was pushed due to interest, but does not work at the moment cause of XMLHttpRequest error.
+- [FAQ](https://github.com/zbejas/portarius/wiki/FAQ) 
+- [Privacy policy](https://github.com/zbejas/portarius/wiki/Privacy-Policy)
