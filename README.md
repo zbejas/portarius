@@ -7,8 +7,10 @@
 </p>
 
 [![GitHub issues](https://img.shields.io/github/issues/zbejas/portarius?color=red)](https://github.com/zbejas/portarius/issues)
-[![Release date](https://img.shields.io/github/release-date/zbejas/portarius?labely)](https://github.com/zbejas/portarius/releases/)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/zbejas/portarius?label=Release)](https://github.com/zbejas/portarius/releases/latest)
+[![Release date](https://img.shields.io/github/release-date/zbejas/portarius?labely)](https://github.com/zbejas/portarius/releases/)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/zbejas/portarius?color=yellow&include_prereleases&label=dev-release)
+[![GitHub](https://img.shields.io/github/license/zbejas/portarius)](https://github.com/zbejas/portarius/blob/master/LICENSE)
 
 ## Features
 
@@ -17,11 +19,6 @@
 - See container logs, mounts, and status
 - Biometric authentication
 - Data is stored with AES256 encryption
-
-<details>
-  <summary>Expand features list</summary>
-  More features coming soon!
-</details>
 
 ## Screenshots
 
@@ -41,16 +38,44 @@
 ## Install
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=si.zbe.portarius)
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="80">](https://github.com/zbejas/portarius/releases)
 [<img src="https://censorship.no/img/github-badge.png" alt="Get it on Github" height="80">](https://github.com/zbejas/portarius/releases)
 
 ## Contribute
 
-- [Bug report](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=bug_report.md&title=) form if you found a bug
-- [Feature request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=) form if you have a suggestion
-- [Issues](https://github.com/zbejas/portarius/issues) section, have a look around
-- [Pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) if you improved something
+- [Report](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=bug_report.md&title=) a bug
+- [Request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=) a feature
+- [Help](https://github.com/zbejas/portarius/issues) with the issues
+- [Send](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) a pull request
 
 ## Documentation
 
 - [FAQ](https://github.com/zbejas/portarius/wiki/FAQ) 
 - [Privacy policy](https://github.com/zbejas/portarius/wiki/Privacy-Policy)
+
+## Donations
+
+<table>
+  <tr>
+    <th colspan="3">Thank you for donating</th>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://www.paypal.com/paypalme/zbe420"><img src="https://raw.githubusercontent.com/aha999/DonateButtons/master/Paypal.png" height="80"/></a></td>
+    <td align="center">PayPal</td>
+    <td><a href="https://paypal.me/zbe420/">paypal.me/zbe420</a></td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://liberapay.com/zbejas/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="55"></a>
+    </td>
+    <td align="center">Liberapay</td>
+    <td>
+      <a href="https://liberapay.com/zbejas/donate/">liberapay.com/zbejas</a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://www.buymeacoffee.com/zbejas"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="https://www.buymeacoffee.com/zbejas" height="55"></a></td>
+    <td align="center">Buy me a coffee</a></td>
+    <td><a href="https://www.buymeacoffee.com/zbejas">buymeacoffee.com/zbejas</a></td>
+  </tr>
+</table>
