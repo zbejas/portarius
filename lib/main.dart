@@ -37,13 +37,26 @@ void main() async {
     var key = Hive.generateSecureKey();
     await secureStorage.write(
         key: 'encryptionKey', value: base64UrlEncode(key));
+  } else {
+    // check if key is valid
+    var key = await secureStorage.read(key: 'encryptionKey');
+
+    // if key is not valid, generate a new one and delete the old one
+    // and the  hive storage
+    if (key == null || key.isEmpty) {
+      var newKey = Hive.generateSecureKey();
+      await Hive.deleteBoxFromDisk('portarius');
+      await secureStorage.write(
+          key: 'encryptionKey', value: base64UrlEncode(newKey));
+    }
   }
 
   String key = await secureStorage.read(key: 'encryptionKey') ?? '';
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
-        create: (_) => User(username: '', password: '', hostUrl: '')),
+        create: (_) => User(
+            username: '', password: '', hostUrl: '', tokenManuallySet: false)),
     ChangeNotifierProvider(
       create: (_) => StorageManager(key),
     ),
@@ -72,7 +85,7 @@ class MyApp extends StatelessWidget {
       settings.init(storage);
     });
 
-    const Map<String, Widget> _routes = {
+    const Map<String, Widget> routes = {
       '/users': UserManagerPage(),
       '/settings': SettingsPage(),
       '/home/container': ContainerDetailsPage(),
@@ -90,7 +103,7 @@ class MyApp extends StatelessWidget {
             //routes: _routes,
             onGenerateRoute: (settings) {
               String pageName = settings.name ?? '/';
-              Widget routeWidget = _routes[pageName] ?? const Wrapper();
+              Widget routeWidget = routes[pageName] ?? const Wrapper();
 
               if (pageName == '/home/container') {
                 return PageRouteBuilder(

@@ -32,11 +32,16 @@ class User extends ChangeNotifier {
   @HiveField(3)
   late Token? token;
 
+  /// is token manually set
+  @HiveField(4)
+  bool tokenManuallySet;
+
   User(
       {required this.username,
       required this.password,
       required this.hostUrl,
-      this.token});
+      this.token,
+      required this.tokenManuallySet});
 
   /// Tries to auth [User]
   ///
@@ -92,7 +97,17 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 
+  void manuallySetToken(Token newToken) {
+    token = newToken;
+    tokenManuallySet = true;
+    notifyListeners();
+  }
+
   void resetToken() {
+    if (tokenManuallySet) {
+      return;
+    }
+
     token = null;
     notifyListeners();
   }
@@ -108,6 +123,7 @@ class User extends ChangeNotifier {
     }
 
     token = user.token;
+    tokenManuallySet = user.tokenManuallySet;
     notifyListeners();
   }
 

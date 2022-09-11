@@ -62,9 +62,7 @@ class RemoteService {
 
     http.Response response = await client.post(
       uri,
-      headers: {
-        "Authorization": user.token?.getBearerToken() ?? '',
-      },
+      headers: user.token?.getHeaders() ?? {},
     );
 
     if (response.statusCode == 204) {
@@ -89,7 +87,7 @@ class RemoteService {
     Uri uri = Uri.parse("${user.hostUrl}/api/motd");
     http.Response response = await client.get(
       uri,
-      headers: {"Authorization": user.token?.getBearerToken() ?? ''},
+      headers: user.token?.getHeaders() ?? {},
     );
 
     if (response.statusCode == 200) {
@@ -110,9 +108,10 @@ class RemoteService {
       "${user.hostUrl}/api/endpoints/${endpoint.id}/docker/containers/json?all=true",
     );
 
-    http.Response response = await client.get(uri, headers: {
-      "Authorization": user.token?.getBearerToken() ?? '',
-    });
+    http.Response response = await client.get(
+      uri,
+      headers: user.token?.getHeaders() ?? {},
+    );
 
     if (response.statusCode == 200) {
       return dockerContainerFromJson(response.body);
@@ -133,9 +132,10 @@ class RemoteService {
     Uri uri = Uri.parse(
         "${user.hostUrl}/api/endpoints/${endpoint.id}/docker/containers/$containerId/json");
 
-    http.Response response = await client.get(uri, headers: {
-      "Authorization": user.token?.getBearerToken() ?? '',
-    });
+    http.Response response = await client.get(
+      uri,
+      headers: user.token?.getHeaders() ?? {},
+    );
 
     if (response.statusCode == 200) {
       return detailedDockerContainerFromJson(response.body);
@@ -156,9 +156,10 @@ class RemoteService {
     Uri uri = Uri.parse(
         "${user.hostUrl}/api/endpoints/${endpoint.id}/docker/containers/$containerId/restart");
 
-    http.Response response = await client.post(uri, headers: {
-      "Authorization": user.token?.getBearerToken() ?? '',
-    });
+    http.Response response = await client.post(
+      uri,
+      headers: user.token?.getHeaders() ?? {},
+    );
 
     if (response.statusCode == 204) {
       return true;
@@ -179,9 +180,8 @@ class RemoteService {
     Uri uri = Uri.parse(
         "${user.hostUrl}/api/endpoints/${endpoint.id}/docker/containers/$containerId/start");
 
-    http.Response response = await client.post(uri, headers: {
-      "Authorization": user.token?.getBearerToken() ?? '',
-    });
+    http.Response response = await client.post(uri,
+        headers: user.token?.getHeaders() ?? {}, body: jsonEncode({}));
 
     if (response.statusCode == 204) {
       return true;
@@ -202,9 +202,10 @@ class RemoteService {
     Uri uri = Uri.parse(
         "${user.hostUrl}/api/endpoints/${endpoint.id}/docker/containers/$containerId/stop");
 
-    http.Response response = await client.post(uri, headers: {
-      "Authorization": user.token?.getBearerToken() ?? '',
-    });
+    http.Response response = await client.post(
+      uri,
+      headers: user.token?.getHeaders() ?? {},
+    );
 
     if (response.statusCode == 204) {
       return true;
@@ -223,7 +224,7 @@ class RemoteService {
 
     http.Response response = await client.get(
       uri,
-      headers: {"Authorization": user.token?.getBearerToken() ?? ''},
+      headers: user.token?.getHeaders() ?? {},
     );
 
     if (response.statusCode == 200) {
@@ -242,7 +243,7 @@ class RemoteService {
 
     http.Response response = await client.get(
       uri,
-      headers: {"Authorization": user.token?.getBearerToken() ?? ''},
+      headers: user.token?.getHeaders() ?? {},
     );
 
     if (response.statusCode == 200) {
@@ -261,9 +262,10 @@ class RemoteService {
     Uri uri = Uri.parse(
         "${user.hostUrl}/api/endpoints/${endpoint.id}/docker/containers/$containerId/logs?tail=200&stdout=true&stderr=true");
 
-    http.Response response = await client.get(uri, headers: {
-      "Authorization": user.token?.getBearerToken() ?? '',
-    });
+    http.Response response = await client.get(
+      uri,
+      headers: user.token?.getHeaders() ?? {},
+    );
 
     if (response.statusCode == 200) {
       String splitStr = response.body.replaceRange(7, response.body.length, '');

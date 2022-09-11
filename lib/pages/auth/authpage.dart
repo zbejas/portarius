@@ -55,7 +55,7 @@ class _AuthPageState extends State<AuthPage> {
     Size size = MediaQuery.of(context).size;
 
     if (user.token != null && mounted) {
-      Future.delayed(const Duration(milliseconds: 150), () {
+      Future.delayed(const Duration(milliseconds: 50), () {
         Navigator.pushReplacementNamed(context, '/');
       });
     }
@@ -229,13 +229,15 @@ class _AuthPageState extends State<AuthPage> {
 
     User? userData = box.get('user');
 
-    setState(() {
-      _hostUrlController.text = userData?.hostUrl ?? '';
-      _usernameController.text = userData?.username ?? '';
-      _passwordController.text = userData?.password ?? '';
+    if (mounted) {
+      setState(() {
+        _hostUrlController.text = userData?.hostUrl ?? '';
+        _usernameController.text = userData?.username ?? '';
+        _passwordController.text = userData?.password ?? '';
 
-      _isLoading = false;
-    });
+        _isLoading = false;
+      });
+    }
   }
 
   _authenticateButton(User user, StorageManager storage) async {
