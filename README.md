@@ -9,6 +9,8 @@
 [![GitHub issues](https://img.shields.io/github/issues/zbejas/portarius?color=red)](https://github.com/zbejas/portarius/issues)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/zbejas/portarius?label=Release)](https://github.com/zbejas/portarius/releases/latest)
 [![Release date](https://img.shields.io/github/release-date/zbejas/portarius?labely)](https://github.com/zbejas/portarius/releases/)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/zbejas/portarius?color=yellow&include_prereleases&label=dev-release)
+[![GitHub](https://img.shields.io/github/license/zbejas/portarius)](https://github.com/zbejas/portarius/blob/master/LICENSE)
 
 ## Features
 
