@@ -46,6 +46,11 @@
 - [Help](https://github.com/zbejas/portarius/issues) with the issues
 - [Send](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) a pull request
 
+## Documentation
+
+- [FAQ](https://github.com/zbejas/portarius/wiki/FAQ) 
+- [Privacy policy](https://github.com/zbejas/portarius/wiki/Privacy-Policy)
+
 ## Donations
 
 <table>
@@ -72,8 +77,3 @@
     <td><a href="https://www.buymeacoffee.com/zbejas">buymeacoffee.com/zbejas</a></td>
   </tr>
 </table>
-
-## Documentation
-
-- [FAQ](https://github.com/zbejas/portarius/wiki/FAQ) 
-- [Privacy policy](https://github.com/zbejas/portarius/wiki/Privacy-Policy)
