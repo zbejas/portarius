@@ -18,11 +18,6 @@
 - Biometric authentication
 - Data is stored with AES256 encryption
 
-<details>
-  <summary>Expand features list</summary>
-  More features coming soon!
-</details>
-
 ## Screenshots
 
 | Drawer | Home | Auth | Settings |
@@ -41,8 +36,8 @@
 ## Install
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=si.zbe.portarius)
-[<img src="https://censorship.no/img/github-badge.png" alt="Get it on Github" height="80">](https://github.com/zbejas/portarius/releases)
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="80">](https://github.com/zbejas/portarius/releases)
+[<img src="https://censorship.no/img/github-badge.png" alt="Get it on Github" height="80">](https://github.com/zbejas/portarius/releases)
 
 ## Contribute
 
