@@ -46,8 +46,8 @@
 ## Contribute
 
 - [Report](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=bug_report.md&title=) a bug
-- [Post](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=) a feature request
-- [Check out](https://github.com/zbejas/portarius/issues) the issues section
+- [Request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=) a feature
+- [Help](https://github.com/zbejas/portarius/issues) with the issues
 - [Send](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) a pull request
 
 ## Documentation
