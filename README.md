@@ -31,8 +31,8 @@
   
 | Drawer | Home | Auth | Settings |
 | :--: | :--: | :--: | :--: |
-| <img src="https://i.imgur.com/IRjzCYd.jpeg" width="200"> | <img src="https://i.imgur.com/1cmRnmb.jpeg" width="200"> | <img src="https://i.imgur.com/yAKqI9S.jpeg" width="200"> | <img src="https://i.imgur.com/N6MqvTx.jpeg" width="200"> |
-  
+| <img src="https://i.imgur.com/1cmRnmb.jpeg" width="200"> | <img src="https://i.imgur.com/yAKqI9S.jpeg" width="200"> | <img src="https://i.imgur.com/N6MqvTx.jpeg" width="200"> | <img src="https://i.imgur.com/IRjzCYd.jpeg" width="200"> |
+ 
 </details>
 
 ## Install
