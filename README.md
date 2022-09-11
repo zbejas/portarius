@@ -42,6 +42,7 @@
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=si.zbe.portarius)
 [<img src="https://censorship.no/img/github-badge.png" alt="Get it on Github" height="80">](https://github.com/zbejas/portarius/releases)
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="80">](https://github.com/zbejas/portarius/releases)
 
 ## Contribute
 
@@ -49,6 +50,38 @@
 - [Request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=) a feature
 - [Help](https://github.com/zbejas/portarius/issues) with the issues
 - [Send](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) a pull request
+
+## Donations
+PAYPAL, LIBERAPAY, BUYMEACOFEE
+
+<table>
+  <tr>
+    <th colspan="3">Thank you for donating</th>
+  </tr>
+  
+  <tr>
+    <td align="center"><a href="https://www.paypal.com/paypalme/zbe420"><img src="https://raw.githubusercontent.com/aha999/DonateButtons/master/Paypal.png" height="80"/></a></td>
+    <td align="center">PayPal</td>
+    <td><a href="https://paypal.me/zbe420/">paypal.me/zbe420</a></td>
+  </tr>
+  
+  <tr>
+    <td align="center">
+      <a href="https://liberapay.com/zbejas/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="55"></a>
+    </td>
+    <td align="center">Liberapay</td>
+    <td>
+      <a href="https://liberapay.com/zbejas/donate/">liberapay.com/zbejas</a>
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="center"><a href="https://www.buymeacoffee.com/zbejas"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="https://www.buymeacoffee.com/zbejas" 
+height="55"></a></td>
+    <td align="center">Buy me a coffee</a></td>
+    <td><a href="https://www.buymeacoffee.com/zbejas">buymeacoffee.com/zbejas</a></td>
+  </tr>
+</table>
 
 ## Documentation
 
