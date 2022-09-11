@@ -33,19 +33,28 @@ class StorageManager extends ChangeNotifier {
   /// It opens the local storage.
   /// If the storage is empty, it will create a new one.
   Future<void> init(BuildContext context) async {
-    _storageBox = await Hive.openBox('portarius',
-        encryptionCipher: HiveAesCipher(base64Decode(encryptionKey)));
+    try {
+      _storageBox = await Hive.openBox('portarius',
+          encryptionCipher: HiveAesCipher(base64Decode(encryptionKey)));
+    } catch (e) {
+      print(e);
+      return;
+    }
+
     _packageInfo = await PackageInfo.fromPlatform();
 
     if (_savedUsers.isEmpty) {
       List<dynamic> tempUserStorage =
           await _storageBox!.get('savedUsers', defaultValue: []);
       _savedUsers = tempUserStorage
-          .map<User>((user) => User(
-              username: user.username,
-              hostUrl: user.hostUrl,
-              password: user.password,
-              token: user.token))
+          .map<User>(
+            (user) => User(
+                username: user.username,
+                hostUrl: user.hostUrl,
+                password: user.password,
+                token: user.token,
+                tokenManuallySet: user.tokenManuallySet),
+          )
           .toList();
     }
 
@@ -71,7 +80,9 @@ class StorageManager extends ChangeNotifier {
       return;
     }
 
-    if (!(await RemoteService().isTokenValid(user)) &&
+    print('manually set: ${user.tokenManuallySet}');
+    if (!user.tokenManuallySet &&
+        !(await RemoteService().isTokenValid(user)) &&
         user.password.isNotEmpty &&
         user.username.isNotEmpty) {
       Token? token = await RemoteService().authPortainer(
@@ -91,9 +102,15 @@ class StorageManager extends ChangeNotifier {
       notifyListeners();
     }
 
+    if (user.tokenManuallySet) {
+      user.manuallySetToken(user.token!);
+      notifyListeners();
+    }
+
     if (!_savedUsers.contains(user)) {
       _savedUsers.add(user);
     }
+
     providedUser.setNewUser(user);
     saveUser(user);
   }
@@ -158,10 +175,12 @@ class StorageManager extends ChangeNotifier {
         await _storageBox!.get('savedUsers', defaultValue: []);
     _savedUsers = tempUserStorage
         .map<User>((user) => User(
-            username: user.username,
-            hostUrl: user.hostUrl,
-            password: user.password,
-            token: user.token))
+              username: user.username,
+              hostUrl: user.hostUrl,
+              password: user.password,
+              token: user.token,
+              tokenManuallySet: user.tokenManuallySet,
+            ))
         .toList();
   }
 

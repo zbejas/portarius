@@ -21,13 +21,14 @@ class UserAdapter extends TypeAdapter<User> {
       password: fields[1] as String,
       hostUrl: fields[2] as String,
       token: fields[3] as Token?,
+      tokenManuallySet: fields[4] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.username)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(2)
       ..write(obj.hostUrl)
       ..writeByte(3)
-      ..write(obj.token);
+      ..write(obj.token)
+      ..writeByte(4)
+      ..write(obj.tokenManuallySet);
   }
 
   @override

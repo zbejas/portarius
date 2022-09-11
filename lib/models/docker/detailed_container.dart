@@ -464,10 +464,12 @@ class DeviceRequest {
   factory DeviceRequest.fromJson(Map<String, dynamic> json) => DeviceRequest(
         driver: json["Driver"],
         count: json["Count"],
-        deviceIDs: List<String>.from(json["DeviceIDs"].map((x) => x)),
+        deviceIDs: List<String>.from(json["DeviceIDs"]?.map((x) => x) ?? []),
         capabilities: List<List<String>>.from(json["Capabilities"]
-            .map((x) => List<String>.from(x.map((x) => x)))),
-        options: Options.fromJson(json["Options"]),
+                ?.map((x) => List<String>.from(x?.map((x) => x) ?? [])) ??
+            []),
+        options:
+            json["Options"] == null ? null : Options.fromJson(json["Options"]),
       );
 
   Map<String, dynamic> toJson() => {

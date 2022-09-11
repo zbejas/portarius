@@ -1,8 +1,8 @@
 # Build
-FROM ubuntu:22.04
+FROM ubuntu:22.04 AS base
 
 RUN apt update 
-RUN apt install -y curl git wget unzip
+RUN apt install -y curl git wget unzip python3
 RUN apt clean
 
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
@@ -16,8 +16,9 @@ COPY . /portarius/
 WORKDIR /portarius/
 RUN flutter build web
 
+EXPOSE 80
+
 # Runtime
 FROM nginx:alpine
 LABEL org.opencontainers.image.source="https://github.com/zbejas/portarius"
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=0 /portarius/build/web/ /usr/share/nginx/html/
+COPY --from=base /portarius/build/web /usr/share/nginx/html

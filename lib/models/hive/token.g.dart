@@ -18,15 +18,18 @@ class TokenAdapter extends TypeAdapter<Token> {
     };
     return Token(
       jwt: fields[0] as String,
+      manuallySet: fields[1] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Token obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.jwt);
+      ..write(obj.jwt)
+      ..writeByte(1)
+      ..write(obj.manuallySet);
   }
 
   @override
