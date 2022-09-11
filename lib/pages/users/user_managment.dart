@@ -152,6 +152,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
         hostUrl: hostUrl,
         password: password,
         token: token,
+        tokenManuallySet: false,
       );
       await storage.addUserToList(user);
       if (mounted) {
@@ -167,6 +168,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
       password: 'null',
       hostUrl: hostUrl,
       token: tokenObj,
+      tokenManuallySet: true,
     );
 
     if (!(await RemoteService().isTokenValid(user))) {

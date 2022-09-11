@@ -34,14 +34,14 @@ class User extends ChangeNotifier {
 
   /// is token manually set
   @HiveField(4)
-  bool tokenManuallySet = false;
+  bool tokenManuallySet;
 
   User(
       {required this.username,
       required this.password,
       required this.hostUrl,
       this.token,
-      this.tokenManuallySet = false});
+      required this.tokenManuallySet});
 
   /// Tries to auth [User]
   ///
@@ -123,6 +123,7 @@ class User extends ChangeNotifier {
     }
 
     token = user.token;
+    tokenManuallySet = user.tokenManuallySet;
     notifyListeners();
   }
 

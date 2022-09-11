@@ -15,7 +15,7 @@ String tokenToJson(Token data) => json.encode(data.toJson());
 class Token {
   Token({
     required this.jwt,
-    this.manuallySet = false,
+    required this.manuallySet,
   });
 
   @HiveField(0)
@@ -26,10 +26,12 @@ class Token {
 
   factory Token.fromJson(Map<String, dynamic> json) => Token(
         jwt: json["jwt"],
+        manuallySet: json["manuallySet"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
         "jwt": jwt,
+        "manuallySet": manuallySet,
       };
 
   Map<String, String> getHeaders() {

@@ -55,7 +55,7 @@ class _AuthPageState extends State<AuthPage> {
     Size size = MediaQuery.of(context).size;
 
     if (user.token != null && mounted) {
-      Future.delayed(const Duration(milliseconds: 150), () {
+      Future.delayed(const Duration(milliseconds: 50), () {
         Navigator.pushReplacementNamed(context, '/');
       });
     }
