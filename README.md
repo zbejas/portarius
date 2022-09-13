@@ -37,9 +37,9 @@
 
 ## Install
 
-[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=si.zbe.portarius)
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="80">](https://apt.izzysoft.de/fdroid/index/apk/si.zbe.portarius)
-[<img src="https://censorship.no/img/github-badge.png" alt="Get it on Github" height="80">](https://github.com/zbejas/portarius/releases)
+| Google Play | IzzyOnDroid | GitHub |
+| :--: | :--: | :--: |
+| [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=si.zbe.portarius) | [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="80">](https://apt.izzysoft.de/fdroid/index/apk/si.zbe.portarius) | [<img src="https://censorship.no/img/github-badge.png" alt="Get it on Github" height="80">](https://github.com/zbejas/portarius/releases) |
 
 ## Contribute
 
@@ -55,27 +55,6 @@
 
 ## Donations
 
-<table>
-  <tr>
-    <th colspan="3">Thank you for donating</th>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://www.paypal.com/paypalme/zbe420"><img src="https://raw.githubusercontent.com/aha999/DonateButtons/master/Paypal.png" height="80"/></a></td>
-    <td align="center">PayPal</td>
-    <td><a href="https://paypal.me/zbe420/">paypal.me/zbe420</a></td>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://liberapay.com/zbejas/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="55"></a>
-    </td>
-    <td align="center">Liberapay</td>
-    <td>
-      <a href="https://liberapay.com/zbejas/donate/">liberapay.com/zbejas</a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://www.buymeacoffee.com/zbejas"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="https://www.buymeacoffee.com/zbejas" height="55"></a></td>
-    <td align="center">Buy me a coffee</a></td>
-    <td><a href="https://www.buymeacoffee.com/zbejas">buymeacoffee.com/zbejas</a></td>
-  </tr>
-</table>
+| Paypal | LiberaPay | Buy Me a Coffee |
+| :--: | :--: | :--: |
+| <a href="https://www.paypal.com/paypalme/zbe420"><img src="https://raw.githubusercontent.com/aha999/DonateButtons/master/Paypal.png" height="76" width="208"></a> | <a href="https://liberapay.com/zbejas/donate"><img alt="Donate using Liberapay" src="https://raw.githubusercontent.com/aha999/DonateButtons/master/LiberaPay.png" height="76" width="208"> | <a href="https://www.buymeacoffee.com/zbejas"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="https://www.buymeacoffee.com/zbejas" height="50" width="180"> |
