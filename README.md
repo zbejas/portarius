@@ -62,20 +62,15 @@
   <tr>
     <td align="center"><a href="https://www.paypal.com/paypalme/zbe420"><img src="https://raw.githubusercontent.com/aha999/DonateButtons/master/Paypal.png" height="76" width="208"></a></td>
     <td align="center">PayPal</td>
-    <td><a href="https://paypal.me/zbe420/">paypal.me/zbe420</a></td>
-  </tr>
+</tr>
   <tr>
     <td align="center">
       <a href="https://liberapay.com/zbejas/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="52" width="182"></a>
     </td>
     <td align="center">Liberapay</td>
-    <td>
-      <a href="https://liberapay.com/zbejas/donate/">liberapay.com/zbejas</a>
-    </td>
   </tr>
   <tr>
     <td align="center"><a href="https://www.buymeacoffee.com/zbejas"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="https://www.buymeacoffee.com/zbejas" height="50" width="180"></a></td>
     <td align="center">Buy Me a Coffee</a></td>
-    <td><a href="https://www.buymeacoffee.com/zbejas">buymeacoffee.com/zbejas</a></td>
-  </tr>
+</tr>
 </table>
