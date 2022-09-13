@@ -65,7 +65,7 @@
 </tr>
   <tr>
     <td align="center">
-      <a href="https://liberapay.com/zbejas/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="52" width="182"></a>
+      <a href="https://liberapay.com/zbejas/donate"><img alt="Donate using Liberapay" src="https://raw.githubusercontent.com/aha999/DonateButtons/master/LiberaPay.png" height="76" width="208"></a>
     </td>
     <td align="center">Liberapay</td>
   </tr>
