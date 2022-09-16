@@ -24,6 +24,12 @@
 - [FAQ](https://github.com/zbejas/portarius/wiki/FAQ) 
 - [Privacy policy](https://github.com/zbejas/portarius/wiki/Privacy-Policy)
 
+## Install
+
+| Google Play | IzzyOnDroid | GitHub |
+| :--: | :--: | :--: |
+| [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=si.zbe.portarius) | [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="80">](https://apt.izzysoft.de/fdroid/index/apk/si.zbe.portarius) | [<img src="https://censorship.no/img/github-badge.png" alt="Get it on Github" height="80">](https://github.com/zbejas/portarius/releases) |
+
 ## Screenshots
 
 | Drawer | Home | Auth | Settings |
@@ -38,12 +44,6 @@
 | <img src="https://i.imgur.com/1cmRnmb.jpeg" width="200"> | <img src="https://i.imgur.com/yAKqI9S.jpeg" width="200"> | <img src="https://i.imgur.com/N6MqvTx.jpeg" width="200"> | <img src="https://i.imgur.com/IRjzCYd.jpeg" width="200"> |
 
 </details>
-
-## Install
-
-| Google Play | IzzyOnDroid | GitHub |
-| :--: | :--: | :--: |
-| [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=si.zbe.portarius) | [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="80">](https://apt.izzysoft.de/fdroid/index/apk/si.zbe.portarius) | [<img src="https://censorship.no/img/github-badge.png" alt="Get it on Github" height="80">](https://github.com/zbejas/portarius/releases) |
 
 ## Contribute
 
