@@ -134,12 +134,16 @@ class _PortariusDrawerState extends State<PortariusDrawer> {
                           future: RemoteService().getEndpoints(user),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-                              Endpoint? pickedEndpoint =
-                                  snapshot.data!.firstWhere(
-                                (endpoint) =>
-                                    endpoint.id == settings.selectedEndpointId,
-                              );
-
+                              Endpoint? pickedEndpoint;
+                              try {
+                                pickedEndpoint = snapshot.data!.firstWhere(
+                                  (endpoint) =>
+                                      endpoint.id ==
+                                      settings.selectedEndpointId,
+                                );
+                              } catch (e) {
+                                pickedEndpoint = snapshot.data!.first;
+                              }
                               if (snapshot.data!.isEmpty) {
                                 return const Text('No endpoints');
                               } else if (snapshot.data!.length == 1) {
