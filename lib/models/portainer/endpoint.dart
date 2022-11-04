@@ -462,8 +462,8 @@ class EndpointSnapshot {
 
   factory EndpointSnapshot.fromJson(Map<String, dynamic> json) =>
       EndpointSnapshot(
-        dockerSnapshotRaw:
-            DockerSnapshotRaw.fromJson(json["DockerSnapshotRaw"]),
+        /*dockerSnapshotRaw:
+            DockerSnapshotRaw.fromJson(json["DockerSnapshotRaw"]),*/
         dockerVersion: json["DockerVersion"],
         healthyContainerCount: json["HealthyContainerCount"],
         imageCount: json["ImageCount"],
