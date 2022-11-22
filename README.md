@@ -12,7 +12,11 @@
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/zbejas/portarius?color=yellow&include_prereleases&label=dev-release)
 
 ## Notes
-**I made Portarius for myself and maybe a few others as well. The feedback I got was overwhelmingly positive, so I am considering reworking Portarius from the ground up in the following months. I got some feature requests that would improve the overall functionality and UI, some for adding more networking options (like self-signed certificates). If I am honest, doing anything like that in this codebase is nearly impossible since this was my first time making and publishing an app by myself. I can, however, rebuild the app, using the new knowledge I got this past six months and adding the requested features. The update will take time, so there might be no updates in the next few months. Anyone is welcome to add feature requests since there will be a chance that the feature might appear in Portarius 2.0.**
+**I made Portarius for myself and maybe a few others as well. The feedback I got was overwhelmingly positive, so I am considering reworking Portarius from the ground up in the following months.**
+
+**I got some feature requests that would improve the overall functionality and UI, some for adding more networking options (like self-signed certificates). If I am honest, doing anything like that in this codebase is nearly impossible since this was my first time making and publishing an app by myself. I can, however, rebuild the app, using the new knowledge I got this past six months and adding the requested features**
+
+**The update will take time, so there might be no updates in the next few months. Anyone is welcome to add feature requests since there will be a chance that the feature might appear in Portarius 2.0.**
 
 **Do know that I am working on this, and the project is not abandoned.**
 
