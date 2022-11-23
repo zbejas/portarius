@@ -1,46 +1,42 @@
+import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_ios/local_auth_ios.dart';
 
-class LocalAuthManager {
-  static final LocalAuthentication _instance = LocalAuthentication();
+class LocalAuthController extends GetxService {
+  RxBool isAuthenticating = false.obs;
+  RxBool isAuthenticated = false.obs;
 
-  static Future<bool> hasBiometrics() {
-    return _instance.canCheckBiometrics;
+  final LocalAuthentication localAuth = LocalAuthentication();
+
+  Future<bool> hasBiometrics() async {
+    final bool hasBiometrics = await localAuth.canCheckBiometrics;
+    return hasBiometrics;
   }
 
-  static Future<bool> deviceSupported() async {
-    try {
-      return await _instance.isDeviceSupported();
-    } catch (e) {
-      return false;
-    }
-  }
-
-  static Future<bool> authenticate() async {
-    final isAvailable = await hasBiometrics();
+  Future<bool> authenticate() async {
+    final bool isAvailable = await hasBiometrics();
     if (!isAvailable) {
       return false;
     }
 
-    try {
-      return await _instance.authenticate(
-          localizedReason: 'Authenticate to access Portarius',
-          options: const AuthenticationOptions(
-            stickyAuth: true,
-            useErrorDialogs: true,
+    isAuthenticating.value = true;
+    final bool authenticated = await localAuth.authenticate(
+        localizedReason: 'Authenticate to access Portarius',
+        options: const AuthenticationOptions(
+          stickyAuth: true,
+        ),
+        authMessages: [
+          const AndroidAuthMessages(
+            signInTitle: 'Oops! Biometric authentication required!',
+            cancelButton: 'No thanks',
           ),
-          authMessages: [
-            const AndroidAuthMessages(
-              signInTitle: 'Oops! Biometric authentication required!',
-              cancelButton: 'No thanks',
-            ),
-            const IOSAuthMessages(
-              cancelButton: 'No thanks',
-            ),
-          ]);
-    } catch (e) {
-      return false;
-    }
+          const IOSAuthMessages(
+            cancelButton: 'No thanks',
+          ),
+        ]);
+    isAuthenticating.value = false;
+    isAuthenticated.value = authenticated;
+    return authenticated;
   }
 }
