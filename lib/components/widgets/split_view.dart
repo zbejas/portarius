@@ -33,7 +33,7 @@ class SplitView extends StatelessWidget {
 
     if (isBigScreen) {
       return Scaffold(
-        // Apply manuWidth marhin to the appbar and bottom navigation bar
+        // Apply manuWidth margin to the appbar and bottom navigation bar
         appBar: appBar != null
             ? PreferredSize(
                 preferredSize: appBar!.preferredSize,
@@ -41,9 +41,11 @@ class SplitView extends StatelessWidget {
                   children: [
                     Container(
                       width: menuWidth,
-                      // Replace the line bellow if not using GetX
-                      // color: Theme.of(context).cardColor,
-                      color: context.theme.cardColor,
+                      decoration: BoxDecoration(
+                        // Replace the line bellow if not using GetX
+                        // color: Theme.of(context).cardColor,
+                        color: context.theme.secondaryHeaderColor,
+                      ),
                     ),
                     Expanded(child: appBar!),
                   ],

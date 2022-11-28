@@ -28,10 +28,9 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     httpClient.timeout = const Duration(seconds: 15);
 
     final SettingsController settingsController = Get.find();
-    final bool verifySsl = settingsController.isSslVerificationEnabled.value;
 
     // Allow self-signed certificates
-    allowAutoSignedCert = !verifySsl;
+    allowAutoSignedCert = !settingsController.isSslVerificationEnabled.value;
   }
 
   // Update data for the API
@@ -75,16 +74,6 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     return response;
   }
 
-  void _showSnackBar(String message) {
-    Get.snackbar(
-      'Error',
-      message,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.red,
-      colorText: Colors.white,
-    );
-  }
-
   // Get container list
   Future<Response?> getContainers() async {
     final Response response = await get(
@@ -99,5 +88,15 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     }
 
     return response;
+  }
+
+  void _showSnackBar(String message) {
+    Get.snackbar(
+      'Error',
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
   }
 }

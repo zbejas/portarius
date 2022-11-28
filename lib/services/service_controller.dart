@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -59,7 +58,7 @@ class ServiceController {
     final String path =
         (await path_provider.getApplicationDocumentsDirectory()).path;
 
-    if (!kIsWeb) {
+    if (!GetPlatform.isWeb) {
       Hive.init(path);
     }
 
