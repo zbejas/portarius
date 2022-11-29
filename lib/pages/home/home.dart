@@ -1,5 +1,7 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:portarius/components/models/docker/simple_container.dart';
 import 'package:portarius/components/models/serverdata.dart';
 import 'package:portarius/components/models/view/container_list.dart';
 import 'package:portarius/components/widgets/drawer.dart';
@@ -13,15 +15,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserDataController userDataController = Get.find();
-
-    if (userDataController.currentServer == null) {
-      userDataController.setCurrentServer = ServerData(
-        baseUrl: 'http://192.168.0.29:9000',
-        endpoint: '1',
-        token: 'ptr_57P6Iv0Ca0cRhUkdVEw35lzdPQSfgTl/gn0LzESSEvE=',
-        name: 'test',
-      );
-    }
 
     final DockerController dockerController = Get.put(DockerController());
 
@@ -37,8 +30,68 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.dialog(
+            AlertDialog(
+              title: const Text(
+                'Search for a container',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              content: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 20.0,
+                  left: 10.0,
+                  right: 10.0,
+                ),
+                child: DropdownSearch<SimpleContainer>(
+                  items: dockerController.containers,
+                  itemAsString: (item) => item.name ?? item.image,
+                  popupProps: const PopupProps.menu(
+                    showSearchBox: true,
+                    constraints: BoxConstraints(
+                      maxHeight: 250,
+                    ),
+                    searchFieldProps: TextFieldProps(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.all(12),
+                        labelText: 'Search',
+                      ),
+                      autofocus: true,
+                      padding: EdgeInsets.all(12),
+                    ),
+                  ),
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.all(8),
+                      labelText: 'Search',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+        child: const Icon(Icons.search),
+      ),
       menuBuilder: (context) => const PortariusDrawer(),
-      contentBuilder: (context) => const ContainerList(),
+      contentBuilder: (context) => userDataController.serverList.isEmpty ||
+              userDataController.currentServer == null
+          ? Center(
+              child: Text(
+                'No servers added',
+                style: context.textTheme.headline5,
+              ),
+            )
+          : RefreshIndicator(
+              onRefresh: () => dockerController.updateContainers(),
+              child: const ContainerList(),
+            ),
     );
   }
 }

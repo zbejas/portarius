@@ -29,6 +29,7 @@ class DockerController extends GetxController {
 
     refreshInterval.value = settingsController.refreshInterval.value;
     isRefreshing.value = settingsController.autoRefresh.value;
+    sortOption.value = settingsController.sortOption.value;
 
     if (userDataController.currentServer != null) {
       _api.init(userDataController.currentServer!);
@@ -115,6 +116,25 @@ class DockerController extends GetxController {
     } else if (sortOption.value == SortOptions.created.toString()) {
       containers.sort((SimpleContainer a, SimpleContainer b) =>
           a.created!.compareTo(b.created!));
+    }
+  }
+
+  void setSortOption(SortOptions option) {
+    sortOption.value = option.toString();
+    sort();
+  }
+
+  SortOptions sortOptionFromString(String option) {
+    if (option == SortOptions.name.toString()) {
+      return SortOptions.name;
+    } else if (option == SortOptions.status.toString()) {
+      return SortOptions.status;
+    } else if (option == SortOptions.stack.toString()) {
+      return SortOptions.stack;
+    } else if (option == SortOptions.created.toString()) {
+      return SortOptions.created;
+    } else {
+      return SortOptions.stack;
     }
   }
 }

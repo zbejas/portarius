@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portarius/components/widgets/drawer.dart';
 import 'package:portarius/components/widgets/split_view.dart';
+import 'package:portarius/services/controllers/docker_controller.dart';
 import 'package:portarius/services/controllers/settings_controller.dart';
 import 'package:portarius/services/controllers/storage_controller.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -169,18 +170,34 @@ class SettingsPage extends GetView<SettingsController> {
                   ),
                 ),
               ),
-              // About
+              // Default sort order
               Card(
                 child: ListTile(
                   title: const Text(
-                    'About',
+                    'Default sort order',
                     style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
-                  subtitle: const Text('App info and legal jibberish'),
-                  trailing: const Icon(Icons.info),
-                  onTap: () => _showAbout(context),
+                  subtitle: const Text('Sets the default sort order.'),
+                  trailing: DropdownButton<SortOptions>(
+                    borderRadius: BorderRadius.circular(15),
+                    value: DockerController().sortOptionFromString(
+                      controller.sortOption.value,
+                    ),
+                    items: SortOptions.values
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(
+                              e.toString().split('.').last.capitalizeFirst!,
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) =>
+                        controller.setSortOption(value!.toString()),
+                  ),
                 ),
               ),
               // View logs
@@ -211,6 +228,20 @@ class SettingsPage extends GetView<SettingsController> {
                   subtitle: const Text('Support the development of portarius'),
                   trailing: const Icon(Icons.favorite),
                   onTap: () {},
+                ),
+              ),
+              // About
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'About',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: const Text('App info and legal jibberish'),
+                  trailing: const Icon(Icons.info),
+                  onTap: () => _showAbout(context),
                 ),
               ),
             ],

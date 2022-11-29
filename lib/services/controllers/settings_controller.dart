@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:portarius/services/api.dart';
+import 'package:portarius/services/controllers/docker_controller.dart';
 import 'package:portarius/services/controllers/logger_controller.dart';
 import 'package:portarius/services/controllers/storage_controller.dart';
 import 'package:portarius/services/controllers/userdata_controller.dart';
@@ -13,6 +14,7 @@ class SettingsController extends GetxController {
   RxBool allowAutoSignedCerts = false.obs;
   RxBool autoRefresh = true.obs;
   RxInt refreshInterval = 5.obs;
+  RxString sortOption = SortOptions.stack.toString().obs;
 
   final Logger _logger = Get.find<LoggerController>().logger;
 
@@ -30,6 +32,7 @@ class SettingsController extends GetxController {
       'allowAutoSignedCerts': allowAutoSignedCerts.value,
       'autoRefresh': autoRefresh.value,
       'refreshInterval': refreshInterval.value,
+      'sortOption': sortOption.value,
     };
   }
 
@@ -41,6 +44,8 @@ class SettingsController extends GetxController {
     allowAutoSignedCerts.value = (json['allowAutoSignedCerts'] ?? true) as bool;
     autoRefresh.value = (json['autoRefresh'] ?? true) as bool;
     refreshInterval.value = (json['refreshInterval'] ?? 5) as int;
+    sortOption.value =
+        (json['sortOption'] ?? SortOptions.stack.toString()) as String;
   }
 
   // ! Toggles and setters
@@ -142,6 +147,14 @@ class SettingsController extends GetxController {
   void setRefreshInterval(int value) {
     _logger.d('Setting refresh interval to: $value');
     refreshInterval.value = value;
+    save();
+  }
+
+  void setSortOption(String value) {
+    _logger.d('Setting sort option to: $value');
+    sortOption.value = value;
+    DockerController dockerController = Get.find();
+    dockerController.sortOption.value = value;
     save();
   }
 }

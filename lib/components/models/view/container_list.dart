@@ -27,7 +27,7 @@ class _ContainerListState extends State<ContainerList> {
       () => controller.containers.isEmpty
           ? const Center(
               child: Text(
-                'No containers found.\nMight also be loading...\nTry refreshing.',
+                'No containers found.\nMight also be loading...',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -35,7 +35,12 @@ class _ContainerListState extends State<ContainerList> {
               ),
             )
           : ListView.builder(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.only(
+                top: 15,
+                bottom: 50,
+                left: 15,
+                right: 15,
+              ),
               itemCount: controller.containers.length,
               itemBuilder: (context, index) => Card(
                 margin: const EdgeInsets.only(
@@ -138,12 +143,15 @@ class _ContainerListState extends State<ContainerList> {
                               width: 60,
                               height: 0,
                             ),
-                            Text(
-                              controller.containers[index].state ?? 'no state',
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
+                            if (controller.containers[index].composeStack !=
+                                null) ...[
+                              Text(
+                                controller.containers[index].composeStack ?? '',
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                            ],
                             Container(
                               width: 10,
                               height: 10,
