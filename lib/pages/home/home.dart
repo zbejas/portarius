@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:portarius/components/widgets/drawer.dart';
 import 'package:portarius/components/widgets/split_view.dart';
 import 'package:portarius/services/controllers/settings_controller.dart';
 
@@ -11,6 +12,7 @@ class HomePage extends StatelessWidget {
     final SettingsController settingsController = Get.find();
     return SplitView(
       appBar: AppBar(
+        backgroundColor: context.theme.canvasColor,
         title: const Text(
           'portarius',
           style: TextStyle(
@@ -18,11 +20,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      menuBuilder: (context) => Drawer(
-        child: ColoredBox(
-          color: context.theme.secondaryHeaderColor,
-        ),
-      ),
+      menuBuilder: (context) => const PortariusDrawer(),
       contentBuilder: (context) => Container(
         color: Get.theme.backgroundColor,
         child: Center(

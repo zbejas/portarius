@@ -12,6 +12,8 @@ import 'package:portarius/services/controllers/storage_controller.dart';
 import 'package:portarius/services/controllers/userdata_controller.dart';
 import 'package:portarius/services/local_auth.dart';
 
+import 'controllers/drawer_controller.dart';
+
 class ServiceController {
   Future<void> initServices() async {
     final Logger logger = Get.put(LoggerController()).logger;
@@ -47,6 +49,10 @@ class ServiceController {
 
     // Init user data controller
     final UserDataController userData = Get.put(UserDataController());
+
+    // Init DrawerController
+    final PortariusDrawerController drawerController =
+        Get.put(PortariusDrawerController());
 
     // 200ms delay to make sure the UI has time to update
     await Future.delayed(const Duration(milliseconds: 200));
