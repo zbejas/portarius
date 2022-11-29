@@ -44,7 +44,7 @@ class SplitView extends StatelessWidget {
                       decoration: BoxDecoration(
                         // Replace the line bellow if not using GetX
                         // color: Theme.of(context).cardColor,
-                        color: context.theme.secondaryHeaderColor,
+                        color: context.theme.canvasColor,
                       ),
                     ),
                     Expanded(child: appBar!),

@@ -11,14 +11,14 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
     final StorageController storage = Get.find();
 
     return Drawer(
-      backgroundColor: context.theme.secondaryHeaderColor,
+      backgroundColor: context.theme.canvasColor,
       child: Obx(
         () => ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: context.theme.secondaryHeaderColor,
+                color: context.theme.canvasColor,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -48,7 +48,12 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
               ),
             ),
             ListTile(
-              title: const Text('Home'),
+              title: const Text(
+                'Home',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
               subtitle: const Text('Home page'),
               trailing: const Icon(Icons.home),
               selected: controller.pickedPage.value == '/',
@@ -62,7 +67,12 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
               },
             ),
             ListTile(
-              title: const Text('User Data'),
+              title: const Text(
+                'User Data',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
               subtitle: const Text('Modify stored user data'),
               trailing: const Icon(Icons.person),
               enabled: false,
@@ -70,7 +80,12 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
               selected: controller.pickedPage.value == '/userdata',
             ),
             ListTile(
-              title: const Text('Settings'),
+              title: const Text(
+                'Settings',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
               subtitle: const Text('Modify app settings'),
               trailing: const Icon(Icons.settings),
               enabled: false,

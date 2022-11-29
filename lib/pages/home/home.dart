@@ -12,7 +12,8 @@ class HomePage extends StatelessWidget {
     final SettingsController settingsController = Get.find();
     return SplitView(
       appBar: AppBar(
-        backgroundColor: context.theme.canvasColor,
+        backgroundColor: context.theme.scaffoldBackgroundColor,
+        elevation: 0,
         title: const Text(
           'portarius',
           style: TextStyle(
@@ -22,7 +23,7 @@ class HomePage extends StatelessWidget {
       ),
       menuBuilder: (context) => const PortariusDrawer(),
       contentBuilder: (context) => Container(
-        color: Get.theme.backgroundColor,
+        color: context.theme.scaffoldBackgroundColor,
         child: Center(
           child: Obx(
             () => Switch(
