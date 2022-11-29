@@ -14,6 +14,7 @@ class SettingsPage extends GetView<SettingsController> {
   Widget build(BuildContext context) {
     return SplitView(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: context.theme.scaffoldBackgroundColor,
         elevation: 0,
         title: const Text(
@@ -24,183 +25,195 @@ class SettingsPage extends GetView<SettingsController> {
         ),
       ),
       menuBuilder: (context) => const PortariusDrawer(),
-      contentBuilder: (context) => Container(
-        color: context.theme.scaffoldBackgroundColor,
-        child: Center(
-          child: Obx(
-            () => Padding(
-              padding: const EdgeInsets.all(15),
-              child: ListView(
-                children: [
-                  Text(
-                    'Page refresh',
-                    style: context.textTheme.headline3,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  // Auto refresh toggle
-                  Card(
-                    child: ListTile(
-                      title: const Text(
-                        'Auto refresh',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      subtitle: const Text('Toggles the auto refresh.'),
-                      trailing: Switch(
-                        value: controller.autoRefresh.value,
-                        onChanged: (value) => controller.toggleAutoRefresh(),
-                      ),
-                    ),
-                  ),
-                  // Auto refresh interval
-                  Card(
-                    child: ListTile(
-                      title: const Text(
-                        'Auto refresh interval',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      subtitle: const Text('Sets the auto refresh interval.'),
-                      trailing: DropdownButton<int>(
-                        value: controller.refreshInterval.value,
-                        items: const [
-                          DropdownMenuItem(
-                            value: 1,
-                            child: Text('1 second'),
-                          ),
-                          DropdownMenuItem(
-                            value: 3,
-                            child: Text('3 seconds'),
-                          ),
-                          DropdownMenuItem(
-                            value: 5,
-                            child: Text('5 seconds'),
-                          ),
-                          DropdownMenuItem(
-                            value: 10,
-                            child: Text('10 seconds'),
-                          ),
-                          DropdownMenuItem(
-                            value: 15,
-                            child: Text('15 seconds'),
-                          ),
-                          DropdownMenuItem(
-                            value: 30,
-                            child: Text('30 seconds'),
-                          ),
-                        ],
-                        onChanged: (value) =>
-                            controller.setRefreshInterval(value!),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Security',
-                    style: context.textTheme.headline3,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  // Biometrics
-                  Card(
-                    child: ListTile(
-                      title: const Text(
-                        'Biometrics',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      subtitle: const Text('Toggle biometric authentication.'),
-                      trailing: Switch(
-                        value: controller.isAuthEnabled.value,
-                        onChanged: (value) async {
-                          await controller.toggleAuthEnabled();
-                        },
-                      ),
-                    ),
-                  ),
-                  // Ssl verification
-                  Card(
-                    child: ListTile(
-                      title: const Text(
-                        'SSL verification',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      subtitle: const Text('Toggle SSL verification'),
-                      trailing: Switch(
-                        value: controller.isSslVerificationEnabled.value,
-                        onChanged: (value) =>
-                            controller.toggleSslVerificationEnabled(),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Application',
-                    style: context.textTheme.headline3,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  // Dark mode
-                  Card(
-                    child: ListTile(
-                      title: const Text(
-                        'Dark mode',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      subtitle: const Text('Toggle dark mode'),
-                      trailing: Switch(
-                        value: controller.isDarkMode.value,
-                        onChanged: (value) => controller.toggleDarkMode(),
-                      ),
-                    ),
-                  ),
-                  // About
-                  Card(
-                    child: ListTile(
-                      title: const Text(
-                        'About',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      subtitle: const Text('About portarius'),
-                      trailing: const Icon(Icons.info),
-                      onTap: () => _showAbout(context),
-                    ),
-                  ),
-                  // View logs
-                  Card(
-                    child: ListTile(
-                      title: const Text(
-                        'View logs',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      enabled: false,
-                      subtitle: const Text('View portarius logs'),
-                      trailing: const Icon(Icons.list_alt),
-                      onTap: () => Get.toNamed('/settings/logs'),
-                    ),
-                  ),
-                ],
+      contentBuilder: (context) => Center(
+        child: Obx(
+          () => ListView(
+            padding: const EdgeInsets.all(15),
+            children: [
+              Text(
+                'Page refresh',
+                style: context.textTheme.headline3,
               ),
-            ),
+              const SizedBox(
+                height: 10,
+              ),
+              // Auto refresh toggle
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'Auto refresh',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: const Text('Toggles the auto refresh.'),
+                  trailing: Switch(
+                    value: controller.autoRefresh.value,
+                    onChanged: (value) => controller.toggleAutoRefresh(),
+                  ),
+                ),
+              ),
+              // Auto refresh interval
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'Auto refresh interval',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  enabled: controller.autoRefresh.value,
+                  subtitle: const Text('Sets the auto refresh interval.'),
+                  trailing: DropdownButton<int>(
+                    value: controller.refreshInterval.value,
+                    borderRadius: BorderRadius.circular(15),
+                    items: const [
+                      DropdownMenuItem(
+                        value: 1,
+                        child: Text('1 second'),
+                      ),
+                      DropdownMenuItem(
+                        value: 3,
+                        child: Text('3 seconds'),
+                      ),
+                      DropdownMenuItem(
+                        value: 5,
+                        child: Text('5 seconds'),
+                      ),
+                      DropdownMenuItem(
+                        value: 10,
+                        child: Text('10 seconds'),
+                      ),
+                      DropdownMenuItem(
+                        value: 15,
+                        child: Text('15 seconds'),
+                      ),
+                      DropdownMenuItem(
+                        value: 30,
+                        child: Text('30 seconds'),
+                      ),
+                    ],
+                    onChanged: controller.autoRefresh.value
+                        ? (value) => controller.setRefreshInterval(value!)
+                        : null,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Security',
+                style: context.textTheme.headline3,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              // Biometrics
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'Biometrics',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: const Text('Toggle biometric authentication.'),
+                  trailing: Switch(
+                    value: controller.isAuthEnabled.value,
+                    onChanged: (value) async {
+                      await controller.toggleAuthEnabled();
+                    },
+                  ),
+                ),
+              ),
+              // Ssl verification
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'SSL verification',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: const Text('Allow self-signed certificates.'),
+                  trailing: Switch(
+                    value: controller.allowAutoSignedCerts.value,
+                    onChanged: (value) => controller.toggleAutoCert(),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Application',
+                style: context.textTheme.headline3,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              // Dark mode
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'Dark mode',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: const Text('Toggle dark mode'),
+                  trailing: Switch(
+                    value: controller.isDarkMode.value,
+                    onChanged: (value) => controller.toggleDarkMode(),
+                  ),
+                ),
+              ),
+              // About
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'About',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: const Text('App info and legal jibberish'),
+                  trailing: const Icon(Icons.info),
+                  onTap: () => _showAbout(context),
+                ),
+              ),
+              // View logs
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'View logs',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  enabled: false,
+                  subtitle: const Text('View portarius logs'),
+                  trailing: const Icon(Icons.list_alt),
+                  onTap: () => Get.toNamed('/logs'),
+                ),
+              ),
+              // Donate
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'Donate',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  enabled: false,
+                  subtitle: const Text('Support the development of portarius'),
+                  trailing: const Icon(Icons.favorite),
+                  onTap: () {},
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -211,7 +224,7 @@ class SettingsPage extends GetView<SettingsController> {
     final StorageController storageController = Get.find();
     showAboutDialog(
       context: context,
-      applicationName: 'Portarius',
+      applicationName: 'portarius',
       applicationVersion: storageController.packageInfo.version,
       routeSettings: const RouteSettings(
         name: '/about',

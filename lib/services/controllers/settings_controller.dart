@@ -10,7 +10,7 @@ import 'package:portarius/services/local_auth.dart';
 class SettingsController extends GetxController {
   RxBool isDarkMode = false.obs;
   RxBool isAuthEnabled = false.obs;
-  RxBool isSslVerificationEnabled = true.obs;
+  RxBool allowAutoSignedCerts = false.obs;
   RxBool autoRefresh = true.obs;
   RxInt refreshInterval = 5.obs;
 
@@ -27,7 +27,7 @@ class SettingsController extends GetxController {
     return {
       'isDarkMode': isDarkMode.value,
       'isAuthEnabled': isAuthEnabled.value,
-      'isSslVerificationEnabled': isSslVerificationEnabled.value,
+      'allowAutoSignedCerts': allowAutoSignedCerts.value,
       'autoRefresh': autoRefresh.value,
       'refreshInterval': refreshInterval.value,
     };
@@ -38,8 +38,7 @@ class SettingsController extends GetxController {
   void fromJson(Map<dynamic, dynamic> json) {
     isDarkMode.value = (json['isDarkMode'] ?? Get.isPlatformDarkMode) as bool;
     isAuthEnabled.value = (json['isAuthEnabled'] ?? false) as bool;
-    isSslVerificationEnabled.value =
-        (json['isSslVerificationEnabled'] ?? true) as bool;
+    allowAutoSignedCerts.value = (json['allowAutoSignedCerts'] ?? true) as bool;
     autoRefresh.value = (json['autoRefresh'] ?? true) as bool;
     refreshInterval.value = (json['refreshInterval'] ?? 5) as int;
   }
@@ -93,14 +92,14 @@ class SettingsController extends GetxController {
     }
   }
 
-  Future<void> toggleSslVerificationEnabled() async {
-    if (isSslVerificationEnabled.value) {
+  Future<void> toggleAutoCert() async {
+    if (!allowAutoSignedCerts.value) {
       // A warning that biometrics will be disabled if
       // the user disables biometrics on their device
       Get.defaultDialog(
         title: 'Warning',
         middleText:
-            'Disabling SSL verification is not recommended. This may cause your data to be intercepted by a malicious third party.',
+            'Allowing self-signed certificates could make your connection insecure.',
         textConfirm: 'Continue',
         textCancel: 'Cancel',
         contentPadding: const EdgeInsets.all(16),
@@ -109,17 +108,17 @@ class SettingsController extends GetxController {
           Get.back();
 
           _logger.d(
-            'Toggling SSL verification enabled to: ${!isSslVerificationEnabled.value}',
+            'Auto certs set to: ${!allowAutoSignedCerts.value}',
           );
-          isSslVerificationEnabled.value = !isSslVerificationEnabled.value;
+          allowAutoSignedCerts.value = !allowAutoSignedCerts.value;
           save();
         },
       );
     } else {
       _logger.d(
-        'Toggling SSL verification enabled to: ${!isSslVerificationEnabled.value}',
+        'Auto certs set to : ${!allowAutoSignedCerts.value}',
       );
-      isSslVerificationEnabled.value = !isSslVerificationEnabled.value;
+      allowAutoSignedCerts.value = !allowAutoSignedCerts.value;
       save();
 
       // If SSL verification is disabled, we need to re-initialize the API
@@ -128,9 +127,7 @@ class SettingsController extends GetxController {
       final PortainerApiProvider api = Get.find();
       if (userDataController.currentServer != null) {
         api.init(
-          userDataController.currentServer!.token,
-          userDataController.currentServer!.baseUrl,
-          userDataController.currentServer!.endpoint,
+          userDataController.currentServer!,
         );
       }
     }

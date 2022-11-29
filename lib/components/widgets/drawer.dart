@@ -77,8 +77,14 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
               ),
               subtitle: const Text('Modify stored user data'),
               trailing: const Icon(Icons.person),
-              enabled: false,
-              onTap: () {},
+              onTap: () {
+                if (controller.pickedPage.value == '/userdata') {
+                  return;
+                }
+                Get.back();
+                controller.setPage('/userdata');
+                Get.offAllNamed('/userdata');
+              },
               selected: controller.pickedPage.value == '/userdata',
             ),
             ListTile(
