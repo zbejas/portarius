@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
@@ -7,13 +9,12 @@ import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:portarius/services/api.dart';
+import 'package:portarius/services/controllers/drawer_controller.dart';
 import 'package:portarius/services/controllers/logger_controller.dart';
 import 'package:portarius/services/controllers/settings_controller.dart';
 import 'package:portarius/services/controllers/storage_controller.dart';
 import 'package:portarius/services/controllers/userdata_controller.dart';
 import 'package:portarius/services/local_auth.dart';
-
-import 'controllers/drawer_controller.dart';
 
 class ServiceController {
   Future<void> initServices() async {
@@ -104,7 +105,9 @@ class ServiceController {
         await Hive.deleteBoxFromDisk('userData');
         await Hive.deleteBoxFromDisk('settings');
         await secureStorage.write(
-            key: 'encryptionKey', value: base64UrlEncode(newKey));
+          key: 'encryptionKey',
+          value: base64UrlEncode(newKey),
+        );
       }
     }
 

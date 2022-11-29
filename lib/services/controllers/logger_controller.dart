@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:portarius/services/controllers/settings_controller.dart';
 
 class LoggerController extends GetxController {
   final RxList<OutputEvent> _log = <OutputEvent>[].obs;

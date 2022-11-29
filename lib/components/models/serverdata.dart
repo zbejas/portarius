@@ -40,5 +40,6 @@ class ServerData {
 
   @override
   // TODO: implement hashCode
+  // ignore: unnecessary_overrides
   int get hashCode => super.hashCode;
 }

@@ -14,7 +14,7 @@ class SettingsController extends GetxController {
   RxBool autoRefresh = true.obs;
   RxInt refreshInterval = 5.obs;
 
-  Logger _logger = Get.find<LoggerController>().logger;
+  final Logger _logger = Get.find<LoggerController>().logger;
 
   Future<void> save() async {
     final StorageController storageController = Get.find();
@@ -109,14 +109,16 @@ class SettingsController extends GetxController {
           Get.back();
 
           _logger.d(
-              'Toggling SSL verification enabled to: ${!isSslVerificationEnabled.value}');
+            'Toggling SSL verification enabled to: ${!isSslVerificationEnabled.value}',
+          );
           isSslVerificationEnabled.value = !isSslVerificationEnabled.value;
           save();
         },
       );
     } else {
       _logger.d(
-          'Toggling SSL verification enabled to: ${!isSslVerificationEnabled.value}');
+        'Toggling SSL verification enabled to: ${!isSslVerificationEnabled.value}',
+      );
       isSslVerificationEnabled.value = !isSslVerificationEnabled.value;
       save();
 

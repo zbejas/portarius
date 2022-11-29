@@ -20,10 +20,14 @@ class StorageController extends GetxController {
       // Try getting encryped box collection
 
       // Open the boxes from the collection
-      userData = await Hive.openBox('userData',
-          encryptionCipher: HiveAesCipher(base64Decode(encryptionKey)));
-      settings = await Hive.openBox('settings',
-          encryptionCipher: HiveAesCipher(base64Decode(encryptionKey)));
+      userData = await Hive.openBox(
+        'userData',
+        encryptionCipher: HiveAesCipher(base64Decode(encryptionKey)),
+      );
+      settings = await Hive.openBox(
+        'settings',
+        encryptionCipher: HiveAesCipher(base64Decode(encryptionKey)),
+      );
 
       // Get package info
       packageInfo = await PackageInfo.fromPlatform();

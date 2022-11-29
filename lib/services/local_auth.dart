@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
@@ -28,19 +30,20 @@ class LocalAuthController extends GetxService {
 
     isAuthenticating.value = true;
     final bool authenticated = await localAuth.authenticate(
-        localizedReason: 'Authenticate to access Portarius',
-        options: const AuthenticationOptions(
-          stickyAuth: true,
+      localizedReason: 'Authenticate to access Portarius',
+      options: const AuthenticationOptions(
+        stickyAuth: true,
+      ),
+      authMessages: [
+        const AndroidAuthMessages(
+          signInTitle: 'Oops! Biometric authentication required!',
+          cancelButton: 'No thanks',
         ),
-        authMessages: [
-          const AndroidAuthMessages(
-            signInTitle: 'Oops! Biometric authentication required!',
-            cancelButton: 'No thanks',
-          ),
-          const IOSAuthMessages(
-            cancelButton: 'No thanks',
-          ),
-        ]);
+        const IOSAuthMessages(
+          cancelButton: 'No thanks',
+        ),
+      ],
+    );
     isAuthenticating.value = false;
     isAuthenticated.value = authenticated;
     return authenticated;
