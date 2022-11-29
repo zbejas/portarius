@@ -14,9 +14,15 @@ class LocalAuthController extends GetxService {
     return hasBiometrics;
   }
 
+  Future<bool> deviceSupported() async {
+    final bool isLockEnabled = await localAuth.isDeviceSupported();
+    return isLockEnabled;
+  }
+
   Future<bool> authenticate() async {
     final bool isAvailable = await hasBiometrics();
-    if (!isAvailable) {
+    final bool isSupported = await deviceSupported();
+    if (!isAvailable || !isSupported) {
       return false;
     }
 

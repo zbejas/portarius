@@ -1,7 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:portarius/services/api.dart';
 import 'package:portarius/services/controllers/logger_controller.dart';
 import 'package:portarius/services/controllers/storage_controller.dart';
+import 'package:portarius/services/controllers/userdata_controller.dart';
+import 'package:portarius/services/local_auth.dart';
 
 class SettingsController extends GetxController {
   RxBool isDarkMode = false.obs;
@@ -49,16 +53,85 @@ class SettingsController extends GetxController {
     save();
   }
 
-  void toggleAuthEnabled() {
-    _logger.d('Toggling auth enabled to: ${!isAuthEnabled.value}');
-    isAuthEnabled.value = !isAuthEnabled.value;
-    save();
+  Future<void> toggleAuthEnabled() async {
+    final LocalAuthController localAuth = Get.find();
+    if (!isAuthEnabled.value) {
+      // A warning that biometrics will be disabled if
+      // the user disables biometrics on their device
+      Get.defaultDialog(
+        title: 'Warning',
+        middleText:
+            'Biometrics will be disabled if you disable the screen lock on your device.',
+        textConfirm: 'Continue',
+        textCancel: 'Cancel',
+        contentPadding: const EdgeInsets.all(16),
+        titlePadding: const EdgeInsets.only(top: 20),
+        onConfirm: () async {
+          Get.back();
+          // check if device supports local auth
+          if (!(await localAuth.authenticate())) {
+            _logger.w('Device does not support local auth');
+            Get.snackbar(
+              'Error',
+              'Device does not support local auth',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+              margin: const EdgeInsets.all(10),
+            );
+            return;
+          }
+          _logger.d('Toggling auth enabled to: ${!isAuthEnabled.value}');
+          isAuthEnabled.value = !isAuthEnabled.value;
+          save();
+        },
+      );
+    } else {
+      _logger.d('Toggling auth enabled to: ${!isAuthEnabled.value}');
+      isAuthEnabled.value = !isAuthEnabled.value;
+      save();
+    }
   }
 
-  void toggleSslVerificationEnabled() {
-    _logger
-        .d('Toggling SSL verification to: ${!isSslVerificationEnabled.value}');
-    isSslVerificationEnabled.value = !isSslVerificationEnabled.value;
+  Future<void> toggleSslVerificationEnabled() async {
+    if (isSslVerificationEnabled.value) {
+      // A warning that biometrics will be disabled if
+      // the user disables biometrics on their device
+      Get.defaultDialog(
+        title: 'Warning',
+        middleText:
+            'Disabling SSL verification is not recommended. This may cause your data to be intercepted by a malicious third party.',
+        textConfirm: 'Continue',
+        textCancel: 'Cancel',
+        contentPadding: const EdgeInsets.all(16),
+        titlePadding: const EdgeInsets.only(top: 20),
+        onConfirm: () async {
+          Get.back();
+
+          _logger.d(
+              'Toggling SSL verification enabled to: ${!isSslVerificationEnabled.value}');
+          isSslVerificationEnabled.value = !isSslVerificationEnabled.value;
+          save();
+        },
+      );
+    } else {
+      _logger.d(
+          'Toggling SSL verification enabled to: ${!isSslVerificationEnabled.value}');
+      isSslVerificationEnabled.value = !isSslVerificationEnabled.value;
+      save();
+
+      // If SSL verification is disabled, we need to re-initialize the API
+      // but only if there is a server set
+      final UserDataController userDataController = Get.find();
+      final PortainerApiProvider api = Get.find();
+      if (userDataController.currentServer != null) {
+        api.init(
+          userDataController.currentServer!.token,
+          userDataController.currentServer!.baseUrl,
+          userDataController.currentServer!.endpoint,
+        );
+      }
+    }
   }
 
   void toggleAutoRefresh() {

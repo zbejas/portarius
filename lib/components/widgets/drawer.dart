@@ -9,11 +9,13 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
   @override
   Widget build(BuildContext context) {
     final StorageController storage = Get.find();
+    final ScrollController scrollController = ScrollController();
 
     return Drawer(
       backgroundColor: context.theme.canvasColor,
       child: Obx(
         () => ListView(
+          controller: scrollController,
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
@@ -61,7 +63,7 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                 if (controller.pickedPage.value == '/') {
                   return;
                 }
-
+                Get.back();
                 controller.setPage('/');
                 Get.offAllNamed('/');
               },
@@ -88,11 +90,28 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
               ),
               subtitle: const Text('Modify app settings'),
               trailing: const Icon(Icons.settings),
-              enabled: false,
-              onTap: () {},
+              onTap: () async {
+                if (controller.pickedPage.value == '/settings') {
+                  return;
+                }
+                Get.back();
+                controller.setPage('/settings');
+                Get.toNamed('/settings');
+              },
               selected: controller.pickedPage.value == '/settings',
             ),
             // todo: Dropdown for endpoint selection
+            const ListTile(
+              title: Text(
+                'Endpoint',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              subtitle: Text('Select your endpoint'),
+              trailing: Text('soon..'),
+              enabled: false,
+            ),
           ],
         ),
       ),

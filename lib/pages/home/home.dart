@@ -9,7 +9,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SettingsController settingsController = Get.find();
     return SplitView(
       appBar: AppBar(
         backgroundColor: context.theme.scaffoldBackgroundColor,
@@ -25,11 +24,9 @@ class HomePage extends StatelessWidget {
       contentBuilder: (context) => Container(
         color: context.theme.scaffoldBackgroundColor,
         child: Center(
-          child: Obx(
-            () => Switch(
-              value: settingsController.isDarkMode.value,
-              onChanged: (value) => settingsController.toggleDarkMode(),
-            ),
+          child: Text(
+            'Home',
+            style: context.textTheme.headline3,
           ),
         ),
       ),

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:portarius/services/api.dart';
 import 'package:portarius/services/controllers/logger_controller.dart';
 import 'package:portarius/services/controllers/settings_controller.dart';
 import 'package:portarius/services/controllers/storage_controller.dart';
@@ -34,8 +35,15 @@ class ServiceController {
     settings.fromJson(storage.settings.toMap());
 
     // Initialize local_auth
+    final LocalAuthController localAuth = Get.put(LocalAuthController());
     if (settings.isAuthEnabled.value) {
-      final LocalAuthController localAuth = Get.put(LocalAuthController());
+      if (!(await localAuth.deviceSupported())) {
+        logger.w('Device does not support local auth');
+        settings.isAuthEnabled.value = false;
+        await settings.save();
+        Get.forceAppUpdate();
+      }
+
       final bool result = await localAuth.authenticate();
       if (!result) {
         logger.e('Failed to authenticate');
@@ -54,6 +62,11 @@ class ServiceController {
     final PortariusDrawerController drawerController =
         Get.put(PortariusDrawerController());
 
+    // Init api provider
+    final PortainerApiProvider apiProvider = Get.put(PortainerApiProvider());
+    if (userData.serverList.isNotEmpty) {
+      // init api provider with selected server
+    }
     // 200ms delay to make sure the UI has time to update
     await Future.delayed(const Duration(milliseconds: 200));
 

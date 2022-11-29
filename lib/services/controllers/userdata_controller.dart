@@ -5,6 +5,7 @@ import 'package:portarius/services/controllers/storage_controller.dart';
 
 class UserDataController extends GetxController {
   RxList<ServerData> serverList = <ServerData>[].obs;
+  ServerData? currentServer;
 
   @override
   void onInit() {
@@ -58,5 +59,13 @@ class UserDataController extends GetxController {
       backgroundColor: Colors.red,
       colorText: Colors.white,
     );
+  }
+
+  set setCurrentServer(ServerData serverData) {
+    currentServer = serverData;
+  }
+
+  void clearCurrentServer() {
+    currentServer = null;
   }
 }
