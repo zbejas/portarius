@@ -111,6 +111,8 @@ class UserDataController extends GetxController {
   void clearCurrentServer() {
     currentServer = null;
     clearCurrentServerEndpoints();
+    PortainerApiProvider api = Get.find();
+    api.clearAll();
   }
 
   void setCurrentServerEndpoints(List<PortainerEndpoint> endpoints) {
@@ -125,6 +127,8 @@ class UserDataController extends GetxController {
 
   void setNewCurrentServerEndpoint(String endpointId) {
     currentServer = currentServer!.copyWith(endpoint: endpointId);
+    final PortainerApiProvider api = Get.find();
+    api.init(currentServer!);
     save();
   }
 

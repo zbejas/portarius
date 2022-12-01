@@ -68,7 +68,7 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                 }
                 Get.back();
                 controller.setPage('/');
-                Get.offAllNamed('/');
+                Get.offAndToNamed('/');
               },
             ),
             ListTile(
@@ -86,7 +86,7 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                 }
                 Get.back();
                 controller.setPage('/userdata');
-                Get.offAllNamed('/userdata');
+                Get.offAndToNamed('/userdata');
               },
               selected: controller.pickedPage.value == '/userdata',
             ),
@@ -105,7 +105,7 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                 }
                 Get.back();
                 controller.setPage('/settings');
-                Get.toNamed('/settings');
+                Get.offAndToNamed('/settings');
               },
               selected: controller.pickedPage.value == '/settings',
             ),

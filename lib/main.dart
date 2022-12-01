@@ -20,6 +20,23 @@ class MyApp extends StatelessWidget {
     final LoggerController loggerController = Get.find();
     final SettingsController settingsController = Get.find();
 
+    // Show a dialog that tells the user that this
+    // is a work in progress
+    Future.delayed(
+      const Duration(seconds: 5),
+      () {
+        Get.defaultDialog(
+          title: 'Work in progress',
+          middleText:
+              'This app is still a work in progress. The design is not final and the functionality is limited.',
+          textConfirm: 'OK',
+          onConfirm: () {
+            Get.back();
+          },
+        );
+      },
+    );
+
     return GetMaterialApp(
       title: 'Portarius',
       logWriterCallback: loggerController.logWriterCallback,

@@ -18,35 +18,53 @@ class HomePage extends StatelessWidget {
 
     final DockerController dockerController = Get.put(DockerController());
 
-    return SplitView(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: context.theme.scaffoldBackgroundColor,
-        elevation: 0,
-        title: const Text(
-          'portarius',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: () async {
+        return await Get.defaultDialog(
+          title: 'Exit Portarius?',
+          middleText: 'Are you sure you want to exit Portarius?',
+          textConfirm: 'Yes',
+          textCancel: 'No',
+          onConfirm: () => Get.back(result: true),
+          onCancel: () => Get.back(result: false),
+        ) as bool;
+      },
+      child: SplitView(
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: context.theme.scaffoldBackgroundColor,
+          elevation: 0,
+          title: const Text(
+            'portarius',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _showSearchDialog(dockerController),
+          child: const Icon(Icons.search),
+        ),
+        menuBuilder: (context) => const PortariusDrawer(),
+        contentBuilder: (context) => userDataController.serverList.isEmpty
+            ? Center(
+                child: Text(
+                  'No servers added',
+                  style: context.textTheme.headline5,
+                ),
+              )
+            : userDataController.currentServer == null
+                ? Center(
+                    child: Text(
+                      'No server selected.',
+                      style: context.textTheme.headline5,
+                    ),
+                  )
+                : RefreshIndicator(
+                    onRefresh: () => dockerController.updateContainers(),
+                    child: const ContainerList(),
+                  ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showSearchDialog(dockerController),
-        child: const Icon(Icons.search),
-      ),
-      menuBuilder: (context) => const PortariusDrawer(),
-      contentBuilder: (context) => userDataController.serverList.isEmpty ||
-              userDataController.currentServer == null
-          ? Center(
-              child: Text(
-                'No servers added',
-                style: context.textTheme.headline5,
-              ),
-            )
-          : RefreshIndicator(
-              onRefresh: () => dockerController.updateContainers(),
-              child: const ContainerList(),
-            ),
     );
   }
 
@@ -67,6 +85,7 @@ class HomePage extends StatelessWidget {
             right: 10.0,
           ),
           child: DropdownSearch<SimpleContainer>(
+            // set focus to the search field
             items: dockerController.containers,
             itemAsString: (item) => item.name ?? item.image,
             popupProps: const PopupProps.menu(
@@ -79,12 +98,14 @@ class HomePage extends StatelessWidget {
                   border: OutlineInputBorder(),
                   contentPadding: EdgeInsets.all(12),
                   labelText: 'Search',
+                  suffixIcon: Icon(Icons.search),
                 ),
                 autofocus: true,
                 padding: EdgeInsets.all(12),
               ),
             ),
             dropdownDecoratorProps: const DropDownDecoratorProps(
+              textAlign: TextAlign.center,
               dropdownSearchDecoration: InputDecoration(
                 border: OutlineInputBorder(),
                 contentPadding: EdgeInsets.all(8),

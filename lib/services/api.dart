@@ -52,6 +52,12 @@ class PortainerApiProvider extends GetConnect implements GetxService {
 
   set updateAutoSignedCert(bool value) => allowAutoSignedCert = value;
 
+  void clearAll() {
+    apiToken.value = '';
+    apiBaseUrl.value = '';
+    apiEndpoint.value = '';
+  }
+
   void updateAll(String token, String baseUrl, String endpoint) {
     apiToken.value = token;
 

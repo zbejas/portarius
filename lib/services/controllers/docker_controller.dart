@@ -21,6 +21,7 @@ class DockerController extends GetxController {
   final RxBool isRefreshing = false.obs;
   final RxInt refreshInterval = 5.obs;
   final RxString sortOption = SortOptions.stack.toString().obs;
+  final RxBool isLoaded = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -31,15 +32,19 @@ class DockerController extends GetxController {
     isRefreshing.value = settingsController.autoRefresh.value;
     sortOption.value = settingsController.sortOption.value;
 
+    isLoaded.value = false;
+
     if (userDataController.currentServer != null) {
       _api.init(userDataController.currentServer!);
-
       containers.addAll(await _api.getContainers());
+      refresh();
     } else {
       _logger.e('No server data found');
     }
 
     sort();
+
+    isLoaded.value = true;
 
     super.onInit();
   }

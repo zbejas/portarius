@@ -5,24 +5,30 @@ import 'package:portarius/components/models/portainer/endpoint.dart';
 import 'package:portarius/components/models/serverdata.dart';
 import 'package:portarius/services/api.dart';
 import 'package:portarius/services/controllers/userdata_controller.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class ServerAddPage extends GetView<UserDataController> {
+class ServerAddPage extends StatefulWidget {
   ServerAddPage({super.key});
+
+  @override
+  State<ServerAddPage> createState() => _ServerAddPageState();
+}
+
+class _ServerAddPageState extends State<ServerAddPage> {
   bool _hasConnectionBeenTested = false;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController urlController = TextEditingController();
+  final TextEditingController tokenController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final ScrollController scrollController = ScrollController();
+
+  final PortainerApiProvider apiProvider = PortainerApiProvider();
+  final UserDataController userDataController = Get.find();
+
+  final RxList<PortainerEndpoint> endpoints = <PortainerEndpoint>[].obs;
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController urlController = TextEditingController();
-    final TextEditingController tokenController = TextEditingController();
-    final PortainerApiProvider apiProvider = PortainerApiProvider();
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    final ScrollController scrollController = ScrollController();
-
-    RxList<PortainerEndpoint> endpoints = <PortainerEndpoint>[].obs;
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -108,7 +114,10 @@ class ServerAddPage extends GetView<UserDataController> {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         onEditingComplete: () {
                           // hide keyboard
-                          formKey.currentState!.validate();
+                          if (formKey.currentState!.validate()) {
+                            FocusScope.of(context).unfocus();
+                            _testConnection();
+                          }
                         },
                         decoration: const InputDecoration(
                           labelText: 'API token',
@@ -126,7 +135,7 @@ class ServerAddPage extends GetView<UserDataController> {
                         height: 40,
                       ),
                       Text(
-                        'If you are using HTTPS, make sure you have a valid certificate.',
+                        'If you are using a self-signed certificate, you may need to enable that in the settings.',
                         style: context.textTheme.caption,
                         textAlign: TextAlign.center,
                       ),
@@ -147,6 +156,7 @@ class ServerAddPage extends GetView<UserDataController> {
                                 ..onTap = () {
                                   launchUrlString(
                                     'https://docs.portainer.io/api/access',
+                                    mode: LaunchMode.externalApplication,
                                   );
                                 },
                             ),
@@ -160,67 +170,7 @@ class ServerAddPage extends GetView<UserDataController> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           ElevatedButton(
-                            onPressed: () async {
-                              if (!formKey.currentState!.validate()) {
-                                return;
-                              }
-
-                              _hasConnectionBeenTested = false;
-
-                              _showLoadingDialog();
-
-                              final String url = _fixUrl(urlController.text);
-
-                              final String? testResult =
-                                  await apiProvider.testConnection(
-                                url: url,
-                                token: tokenController.text,
-                              );
-
-                              if (Get.isSnackbarOpen) {
-                                await Get.closeCurrentSnackbar();
-                              }
-
-                              Get.back();
-
-                              if (testResult != null) {
-                                Get.snackbar(
-                                  'Connection failed',
-                                  testResult,
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.red,
-                                  colorText: Colors.white,
-                                  margin: const EdgeInsets.all(10),
-                                );
-                              } else {
-                                endpoints.value =
-                                    await apiProvider.checkEndpoints(
-                                          url: url,
-                                          token: tokenController.text,
-                                        ) ??
-                                        <PortainerEndpoint>[];
-
-                                if (endpoints.isEmpty) {
-                                  Get.snackbar(
-                                    'No endpoints found',
-                                    'Please create an endpoint in Portainer',
-                                    snackPosition: SnackPosition.BOTTOM,
-                                    backgroundColor: Colors.red,
-                                    colorText: Colors.white,
-                                    margin: const EdgeInsets.all(10),
-                                  );
-                                }
-
-                                _hasConnectionBeenTested = true;
-                                Get.defaultDialog(
-                                  title: 'Success',
-                                  content: const Text(
-                                    'Connection successful!\n',
-                                  ),
-                                  textCancel: 'OK',
-                                );
-                              }
-                            },
+                            onPressed: _testConnection,
                             child: const Text('Test connection'),
                           ),
                           ElevatedButton(
@@ -259,7 +209,7 @@ class ServerAddPage extends GetView<UserDataController> {
                                 );
                               }
                               Get.back();
-                              controller.addServer(serverData);
+                              userDataController.addServer(serverData);
                             },
                             child: const Text('Add'),
                           ),
@@ -298,5 +248,65 @@ class ServerAddPage extends GetView<UserDataController> {
         child: CircularProgressIndicator(),
       ),
     );
+  }
+
+  void _testConnection() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
+    _hasConnectionBeenTested = false;
+
+    _showLoadingDialog();
+
+    final String url = _fixUrl(urlController.text);
+
+    final String? testResult = await apiProvider.testConnection(
+      url: url,
+      token: tokenController.text,
+    );
+
+    if (Get.isSnackbarOpen) {
+      await Get.closeCurrentSnackbar();
+    }
+
+    Get.back();
+
+    if (testResult != null) {
+      Get.snackbar(
+        'Connection failed',
+        testResult,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(10),
+      );
+    } else {
+      endpoints.value = await apiProvider.checkEndpoints(
+            url: url,
+            token: tokenController.text,
+          ) ??
+          <PortainerEndpoint>[];
+
+      if (endpoints.isEmpty) {
+        Get.snackbar(
+          'No endpoints found',
+          'Please create an endpoint in Portainer',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          margin: const EdgeInsets.all(10),
+        );
+      }
+
+      _hasConnectionBeenTested = true;
+      Get.defaultDialog(
+        title: 'Success',
+        content: const Text(
+          'You may now add the server.',
+        ),
+        textCancel: 'OK',
+      );
+    }
   }
 }
