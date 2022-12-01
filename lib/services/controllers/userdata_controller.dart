@@ -1,23 +1,39 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:portarius/components/models/portainer/endpoint.dart';
 import 'package:portarius/components/models/serverdata.dart';
+import 'package:portarius/services/api.dart';
 import 'package:portarius/services/controllers/storage_controller.dart';
 
 class UserDataController extends GetxController {
   RxList<ServerData> serverList = <ServerData>[].obs;
   ServerData? currentServer;
+  List<PortainerEndpoint> currentServerEndpoints = <PortainerEndpoint>[];
 
   @override
   void onInit() {
     super.onInit();
     final StorageController storageController = Get.find();
 
-    final List<Map<String, dynamic>> serverListJson =
-        (storageController.userData.get('serverList') ??
-            <Map<String, dynamic>>[]) as List<Map<String, dynamic>>;
+    final Map<dynamic, dynamic> storedList = storageController.userData.toMap();
 
-    for (final Map<String, dynamic> server in serverListJson) {
-      serverList.add(ServerData.fromJson(server));
+    if (storedList.isNotEmpty) {
+      for (final Map<dynamic, dynamic> server in storedList['serverList']) {
+        serverList.add(ServerData.fromJson(server));
+      }
+    }
+
+    if (storedList['currentServer'] != null) {
+      currentServer = ServerData.fromJson(storedList['currentServer'] as Map);
+    }
+
+    if (storedList['currentServerEndpoints'] != null) {
+      for (final Map<dynamic, dynamic> endpoint
+          in storedList['currentServerEndpoints']) {
+        currentServerEndpoints.add(PortainerEndpoint.fromJson(endpoint));
+      }
     }
   }
 
@@ -30,6 +46,16 @@ class UserDataController extends GetxController {
     }
 
     await storageController.saveUserData('serverList', serverListJson);
+
+    if (currentServer != null) {
+      await storageController.saveUserData(
+          'currentServer', currentServer!.toJson());
+    }
+
+    if (currentServerEndpoints.isNotEmpty) {
+      await storageController.saveUserData('currentServerEndpoints',
+          currentServerEndpoints.map((e) => e.toJson()).toList());
+    }
   }
 
   void addServer(ServerData serverData) {
@@ -58,14 +84,61 @@ class UserDataController extends GetxController {
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.red,
       colorText: Colors.white,
+      margin: const EdgeInsets.all(10),
     );
   }
 
-  set setCurrentServer(ServerData serverData) {
+  Future<bool> setCurrentServer(ServerData serverData) async {
+    // get endpoints from server
+    final PortainerApiProvider api = Get.find();
+    List<PortainerEndpoint>? endpoints = await api.checkEndpoints(
+        url: serverData.baseUrl, token: serverData.token);
+
+    if (endpoints == null) {
+      _showSnackBar('Could not connect to server');
+      return false;
+    }
+
+    if (endpoints.isNotEmpty) {
+      currentServerEndpoints = endpoints;
+    }
+
     currentServer = serverData;
+    save();
+    return true;
   }
 
   void clearCurrentServer() {
     currentServer = null;
+    clearCurrentServerEndpoints();
+  }
+
+  void setCurrentServerEndpoints(List<PortainerEndpoint> endpoints) {
+    currentServerEndpoints = endpoints;
+    save();
+  }
+
+  void clearCurrentServerEndpoints() {
+    currentServerEndpoints = <PortainerEndpoint>[];
+    save();
+  }
+
+  void setNewCurrentServerEndpoint(String endpointId) {
+    currentServer = currentServer!.copyWith(endpoint: endpointId);
+    save();
+  }
+
+  Future<void> refreshEndpoints(ServerData serverData) async {
+    final PortainerApiProvider api = Get.find();
+    List<PortainerEndpoint>? endpoints = await api.checkEndpoints(
+        url: serverData.baseUrl, token: serverData.token);
+
+    if (endpoints == null) {
+      return;
+    }
+
+    if (endpoints.isNotEmpty) {
+      currentServerEndpoints = endpoints;
+    }
   }
 }

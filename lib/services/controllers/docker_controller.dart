@@ -8,9 +8,9 @@ import 'package:portarius/services/controllers/userdata_controller.dart';
 import 'logger_controller.dart';
 
 enum SortOptions {
+  stack,
   name,
   status,
-  stack,
   created,
 }
 

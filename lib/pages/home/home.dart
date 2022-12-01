@@ -31,52 +31,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.dialog(
-            AlertDialog(
-              title: const Text(
-                'Search for a container',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              content: Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 20.0,
-                  left: 10.0,
-                  right: 10.0,
-                ),
-                child: DropdownSearch<SimpleContainer>(
-                  items: dockerController.containers,
-                  itemAsString: (item) => item.name ?? item.image,
-                  popupProps: const PopupProps.menu(
-                    showSearchBox: true,
-                    constraints: BoxConstraints(
-                      maxHeight: 250,
-                    ),
-                    searchFieldProps: TextFieldProps(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.all(12),
-                        labelText: 'Search',
-                      ),
-                      autofocus: true,
-                      padding: EdgeInsets.all(12),
-                    ),
-                  ),
-                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.all(8),
-                      labelText: 'Search',
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
+        onPressed: () => _showSearchDialog(dockerController),
         child: const Icon(Icons.search),
       ),
       menuBuilder: (context) => const PortariusDrawer(),
@@ -92,6 +47,53 @@ class HomePage extends StatelessWidget {
               onRefresh: () => dockerController.updateContainers(),
               child: const ContainerList(),
             ),
+    );
+  }
+
+  void _showSearchDialog(DockerController dockerController) {
+    Get.dialog(
+      AlertDialog(
+        title: const Text(
+          'Search for a container',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+        content: Padding(
+          padding: const EdgeInsets.only(
+            bottom: 20.0,
+            left: 10.0,
+            right: 10.0,
+          ),
+          child: DropdownSearch<SimpleContainer>(
+            items: dockerController.containers,
+            itemAsString: (item) => item.name ?? item.image,
+            popupProps: const PopupProps.menu(
+              showSearchBox: true,
+              constraints: BoxConstraints(
+                maxHeight: 250,
+              ),
+              searchFieldProps: TextFieldProps(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.all(12),
+                  labelText: 'Search',
+                ),
+                autofocus: true,
+                padding: EdgeInsets.all(12),
+              ),
+            ),
+            dropdownDecoratorProps: const DropDownDecoratorProps(
+              dropdownSearchDecoration: InputDecoration(
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.all(8),
+                labelText: 'Search',
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

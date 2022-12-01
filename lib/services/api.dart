@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:portarius/components/models/docker/simple_container.dart';
+import 'package:portarius/components/models/portainer/endpoint.dart';
 import 'package:portarius/components/models/serverdata.dart';
 import 'package:portarius/services/controllers/logger_controller.dart';
 import 'package:portarius/services/controllers/settings_controller.dart';
@@ -21,7 +23,7 @@ class PortainerApiProvider extends GetConnect implements GetxService {
   void init(ServerData serverData) {
     apiToken.value = serverData.token;
     apiBaseUrl.value = serverData.baseUrl;
-    apiEndpoint.value = serverData.endpoint;
+    apiEndpoint.value = serverData.endpoint ?? '';
 
     _mainHeaders = {
       'Content-Type': 'application/json',
@@ -62,8 +64,58 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     apiEndpoint.value = endpoint;
   }
 
+  Future<String?> testConnection(
+      {required String url, required String token}) async {
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'X-API-Key': token,
+    };
+
+    final Response response = await get(
+      '$url/api/endpoints',
+      headers: headers,
+    );
+
+    if (response.hasError) {
+      return response.statusText;
+    } else {
+      return null;
+    }
+  }
+
+// Get api endpoints
+  Future<List<PortainerEndpoint>?> checkEndpoints(
+      {required String url, required String token}) async {
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'X-API-Key': token,
+    };
+
+    final Response response = await get(
+      '$url/api/endpoints',
+      headers: headers,
+    );
+
+    if (response.hasError) {
+      _showSnackBar('Error getting endpoints');
+      _logger.e(response.statusText);
+      return null;
+    }
+
+    // todo: this is a temporary measure
+    // Create list of endpoints with only the ids
+    final List<PortainerEndpoint> endpoints = <PortainerEndpoint>[];
+
+    for (final dynamic endpoint in response.body) {
+      endpoints
+          .add(PortainerEndpoint.fromJson(endpoint as Map<String, dynamic>));
+    }
+
+    return endpoints;
+  }
+
   // Get endpoints
-  Future<Response?> getEndpoints() async {
+  Future<List<PortainerEndpoint>?> getEndpoints() async {
     final Response response = await get(
       '$apiBaseUrl/api/endpoints',
       headers: _mainHeaders,
@@ -75,7 +127,16 @@ class PortainerApiProvider extends GetConnect implements GetxService {
       return null;
     }
 
-    return response;
+    // todo: this is a temporary measure
+    // Create list of endpoints with only the ids
+    final List<PortainerEndpoint> endpoints = <PortainerEndpoint>[];
+
+    for (final dynamic endpoint in response.body) {
+      endpoints
+          .add(PortainerEndpoint.fromJson(endpoint as Map<String, dynamic>));
+    }
+
+    return endpoints;
   }
 
   // Get container list

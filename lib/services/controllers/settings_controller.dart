@@ -41,7 +41,8 @@ class SettingsController extends GetxController {
   void fromJson(Map<dynamic, dynamic> json) {
     isDarkMode.value = (json['isDarkMode'] ?? Get.isPlatformDarkMode) as bool;
     isAuthEnabled.value = (json['isAuthEnabled'] ?? false) as bool;
-    allowAutoSignedCerts.value = (json['allowAutoSignedCerts'] ?? true) as bool;
+    allowAutoSignedCerts.value =
+        (json['allowAutoSignedCerts'] ?? false) as bool;
     autoRefresh.value = (json['autoRefresh'] ?? true) as bool;
     refreshInterval.value = (json['refreshInterval'] ?? 5) as int;
     sortOption.value =

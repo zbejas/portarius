@@ -1,22 +1,37 @@
 class ServerData {
   final String baseUrl;
-  final String endpoint;
+  final String? endpoint;
   final String token;
   final String name;
 
   ServerData({
     required this.baseUrl,
-    required this.endpoint,
+    this.endpoint,
     required this.token,
     required this.name,
   });
 
-  factory ServerData.fromJson(Map<String, dynamic> json) {
+  factory ServerData.fromJson(Map<dynamic, dynamic> json) {
     return ServerData(
       baseUrl: json['baseUrl'] as String,
       endpoint: json['endpoint'] as String,
       token: json['token'] as String,
       name: (json['name'] ?? '') as String,
+    );
+  }
+
+  // copy with
+  ServerData copyWith({
+    String? baseUrl,
+    String? endpoint,
+    String? token,
+    String? name,
+  }) {
+    return ServerData(
+      baseUrl: baseUrl ?? this.baseUrl,
+      endpoint: endpoint ?? this.endpoint,
+      token: token ?? this.token,
+      name: name ?? this.name,
     );
   }
 

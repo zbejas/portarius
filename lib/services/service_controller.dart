@@ -65,8 +65,8 @@ class ServiceController {
 
     // Init api provider
     final PortainerApiProvider apiProvider = Get.put(PortainerApiProvider());
-    if (userData.serverList.isNotEmpty) {
-      // init api provider with selected server
+    if (userData.currentServer != null) {
+      userData.refreshEndpoints(userData.currentServer!);
     }
     // 200ms delay to make sure the UI has time to update
     await Future.delayed(const Duration(milliseconds: 200));
@@ -96,11 +96,9 @@ class ServiceController {
       );
     } else {
       // check if key is valid
-      final String? key = await secureStorage.read(key: 'encryptionKey');
-
-      // if key is not valid, generate a new one and delete the old one
-      // and the hive storage
-      if (key == null || key.isEmpty) {
+      try {
+        final String? key = await secureStorage.read(key: 'encryptionKey');
+      } catch (e) {
         final List<int> newKey = Hive.generateSecureKey();
         await Hive.deleteBoxFromDisk('userData');
         await Hive.deleteBoxFromDisk('settings');
