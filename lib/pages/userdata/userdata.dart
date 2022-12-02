@@ -64,9 +64,10 @@ class _UserDataPageState extends State<UserDataPage> {
                             : 0,
                         child: InkWell(
                           onTap: () async {
-                            bool result =
-                                await userDataController.setCurrentServer(
-                                    userDataController.serverList[index]);
+                            final bool result =
+                                userDataController.setCurrentServer(
+                              userDataController.serverList[index],
+                            );
 
                             if (!result) {
                               return;
@@ -85,7 +86,8 @@ class _UserDataPageState extends State<UserDataPage> {
                             title:
                                 Text(userDataController.serverList[index].name),
                             subtitle: Text(
-                                userDataController.serverList[index].baseUrl),
+                              userDataController.serverList[index].baseUrl,
+                            ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [

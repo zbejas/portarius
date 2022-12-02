@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 class SimpleContainer {
   String id;
   String image;
@@ -49,7 +51,7 @@ class SimpleContainer {
   }
 
   @override
-  operator ==(Object other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is SimpleContainer && other.id == id;
@@ -57,5 +59,6 @@ class SimpleContainer {
 
   @override
   // TODO: implement hashCode
+  // ignore: unnecessary_overrides
   int get hashCode => super.hashCode;
 }

@@ -150,7 +150,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
                         },
                         decoration: const InputDecoration(
                           labelText: 'API token',
-                          hintText: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                          hintText: "See 'How to get an API token?' below.",
                           contentPadding: EdgeInsets.all(10),
                         ),
                         validator: (value) {
@@ -187,8 +187,8 @@ class _ServerAddPageState extends State<ServerAddPage> {
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () async {
-                                  PortariusDrawerController drawerController =
-                                      Get.find();
+                                  final PortariusDrawerController
+                                      drawerController = Get.find();
                                   // if any text controller has any value, alert the user that they will be lost
                                   if (nameController.text.isNotEmpty ||
                                       urlController.text.isNotEmpty ||
@@ -321,7 +321,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
     );
   }
 
-  void _testConnection() async {
+  Future<void> _testConnection() async {
     if (!formKey.currentState!.validate()) {
       return;
     }

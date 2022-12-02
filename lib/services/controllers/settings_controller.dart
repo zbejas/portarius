@@ -5,7 +5,6 @@ import 'package:portarius/services/api.dart';
 import 'package:portarius/services/controllers/docker_controller.dart';
 import 'package:portarius/services/controllers/logger_controller.dart';
 import 'package:portarius/services/controllers/storage_controller.dart';
-import 'package:portarius/services/controllers/userdata_controller.dart';
 import 'package:portarius/services/local_auth.dart';
 
 class SettingsController extends GetxController {
@@ -66,7 +65,7 @@ class SettingsController extends GetxController {
       Get.defaultDialog(
         title: 'Warning',
         middleText:
-            'Biometrics will be disabled if you disable the screen lock on your device.',
+            'Disabling biometrics on your device will disable biometrics in Portarius',
         textConfirm: 'Continue',
         textCancel: 'Cancel',
         contentPadding: const EdgeInsets.all(16),
@@ -147,7 +146,7 @@ class SettingsController extends GetxController {
   void setSortOption(String value) {
     _logger.d('Setting sort option to: $value');
     sortOption.value = value;
-    DockerController dockerController = Get.find();
+    final DockerController dockerController = Get.find();
     dockerController.sortOption.value = value;
     save();
   }

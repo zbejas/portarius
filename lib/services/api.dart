@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -63,8 +60,10 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     apiLocalUrl.value = '';
   }
 
-  Future<String?> testConnection(
-      {required String url, required String token}) async {
+  Future<String?> testConnection({
+    required String url,
+    required String token,
+  }) async {
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
       'X-API-Key': token,
@@ -83,8 +82,10 @@ class PortainerApiProvider extends GetConnect implements GetxService {
   }
 
 // Get api endpoints
-  Future<List<PortainerEndpoint>?> checkEndpoints(
-      {required String url, required String token}) async {
+  Future<List<PortainerEndpoint>?> checkEndpoints({
+    required String url,
+    required String token,
+  }) async {
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
       'X-API-Key': token,
@@ -133,7 +134,8 @@ class PortainerApiProvider extends GetConnect implements GetxService {
   // Get container list
   Future<List<SimpleContainer>> getContainers() async {
     final Response response = await _getResponse(
-        '/endpoints/$apiEndpoint/docker/containers/json?all=true');
+      '/endpoints/$apiEndpoint/docker/containers/json?all=true',
+    );
 
     if (response.hasError) {
       _showSnackBar(response.statusText ?? 'Error getting containers.');
@@ -268,5 +270,27 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     }
 
     return response;
+  }
+
+  // todo: figure out how to do this properly
+  // Stream a socket
+  // The url is the url without the base url withouth the /api prefix
+  // @param url The url to get
+  // ignore: unused_element
+  GetSocket? _getSocket(String url) {
+    GetSocket? stream;
+
+    // if local url is set, ping it
+    if (apiLocalUrl.isNotEmpty) {
+      try {
+        stream = socket('$apiLocalUrl/api$url');
+      } catch (e) {
+        stream = null;
+      }
+    } else {
+      stream = socket('$apiBaseUrl/api$url');
+    }
+
+    return stream;
   }
 }

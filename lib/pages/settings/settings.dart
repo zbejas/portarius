@@ -99,7 +99,7 @@ class SettingsPage extends GetView<SettingsController> {
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Toggles the auto refresh.'),
+                    subtitle: const Text('Auto refresh in the home page.'),
                     trailing: Switch(
                       value: controller.autoRefresh.value,
                       onChanged: (value) => controller.toggleAutoRefresh(),

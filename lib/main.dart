@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       title: 'Portarius',
       logWriterCallback: loggerController.logWriterCallback,
       getPages: appRoutes(),
-      initialRoute: '/',
+      initialRoute: '/home',
       themeMode: settingsController.isDarkMode.value
           ? ThemeMode.dark
           : ThemeMode.light,

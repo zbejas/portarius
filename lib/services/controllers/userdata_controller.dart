@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portarius/components/models/portainer/endpoint.dart';
@@ -49,12 +47,16 @@ class UserDataController extends GetxController {
 
     if (currentServer != null) {
       await storageController.saveUserData(
-          'currentServer', currentServer!.toJson());
+        'currentServer',
+        currentServer!.toJson(),
+      );
     }
 
     if (currentServerEndpoints.isNotEmpty) {
-      await storageController.saveUserData('currentServerEndpoints',
-          currentServerEndpoints.map((e) => e.toJson()).toList());
+      await storageController.saveUserData(
+        'currentServerEndpoints',
+        currentServerEndpoints.map((e) => e.toJson()).toList(),
+      );
     }
   }
 
@@ -116,7 +118,7 @@ class UserDataController extends GetxController {
   void clearCurrentServer() {
     currentServer = null;
     clearCurrentServerEndpoints();
-    PortainerApiProvider api = Get.find();
+    final PortainerApiProvider api = Get.find();
     api.clearAll();
   }
 
@@ -140,7 +142,9 @@ class UserDataController extends GetxController {
   Future<void> refreshEndpoints(ServerData serverData) async {
     final PortainerApiProvider api = Get.find();
     final List<PortainerEndpoint>? endpoints = await api.checkEndpoints(
-        url: serverData.baseUrl, token: serverData.token);
+      url: serverData.baseUrl,
+      token: serverData.token,
+    );
 
     if (endpoints == null) {
       return;

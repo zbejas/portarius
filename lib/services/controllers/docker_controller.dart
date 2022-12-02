@@ -2,10 +2,9 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:portarius/components/models/docker/simple_container.dart';
 import 'package:portarius/services/api.dart';
+import 'package:portarius/services/controllers/logger_controller.dart';
 import 'package:portarius/services/controllers/settings_controller.dart';
 import 'package:portarius/services/controllers/userdata_controller.dart';
-
-import 'logger_controller.dart';
 
 enum SortOptions {
   stack,
@@ -108,19 +107,25 @@ class DockerController extends GetxController {
 
   void sort() {
     if (sortOption.value == SortOptions.name.toString()) {
-      containers.sort((SimpleContainer a, SimpleContainer b) =>
-          a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
+      containers.sort(
+        (SimpleContainer a, SimpleContainer b) =>
+            a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
+      );
     } else if (sortOption.value == SortOptions.status.toString()) {
-      containers.sort((SimpleContainer a, SimpleContainer b) =>
-          a.state!.toLowerCase().compareTo(b.state!.toLowerCase()));
+      containers.sort(
+        (SimpleContainer a, SimpleContainer b) =>
+            a.state!.toLowerCase().compareTo(b.state!.toLowerCase()),
+      );
     } else if (sortOption.value == SortOptions.stack.toString()) {
       containers.sort(
         (SimpleContainer a, SimpleContainer b) =>
             a.composeStack!.compareTo(b.composeStack!),
       );
     } else if (sortOption.value == SortOptions.created.toString()) {
-      containers.sort((SimpleContainer a, SimpleContainer b) =>
-          a.created!.compareTo(b.created!));
+      containers.sort(
+        (SimpleContainer a, SimpleContainer b) =>
+            a.created!.compareTo(b.created!),
+      );
     }
   }
 

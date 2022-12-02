@@ -21,7 +21,10 @@ class HomePage extends StatelessWidget {
     final bool poppedFromServerAdd = (Get.arguments ?? false) as bool;
 
     // If there are no servers, show the server add dialog
-    if (userDataController.serverList.isEmpty && !poppedFromServerAdd) {
+    // todo: Get.isLogEnabled is a hack to prevent this from getting this every time the page is rebuilt, but it's not ideal
+    if (userDataController.serverList.isEmpty &&
+        !poppedFromServerAdd &&
+        !Get.isLogEnable) {
       Future.delayed(const Duration(milliseconds: 750), () {
         Get.defaultDialog(
           title: 'No servers found',
@@ -31,14 +34,18 @@ class HomePage extends StatelessWidget {
           confirmTextColor: Colors.white,
           onConfirm: () async {
             Get.back();
-            await Future.delayed(const Duration(
-              milliseconds: 250,
-            ));
+            await Future.delayed(
+              const Duration(
+                milliseconds: 250,
+              ),
+            );
             await Get.toNamed('/userdata/add_server');
             // 250ms delay to allow the server to be added
-            await Future.delayed(const Duration(
-              milliseconds: 250,
-            ));
+            await Future.delayed(
+              const Duration(
+                milliseconds: 250,
+              ),
+            );
 
             // Refresh the page
             Get.offAllNamed('/home', arguments: true);
@@ -99,9 +106,11 @@ class HomePage extends StatelessWidget {
                               ..onTap = () async {
                                 await Get.toNamed('/userdata/add_server');
                                 // 250ms delay to allow the server to be added
-                                await Future.delayed(const Duration(
-                                  milliseconds: 250,
-                                ));
+                                await Future.delayed(
+                                  const Duration(
+                                    milliseconds: 250,
+                                  ),
+                                );
 
                                 // Refresh the page
                                 Get.offAllNamed('/home', arguments: true);
