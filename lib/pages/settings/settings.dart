@@ -168,7 +168,7 @@ class SettingsPage extends GetView<SettingsController> {
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Toggle dark mode'),
+                    subtitle: const Text('Toggle dark mode.'),
                     trailing: Switch(
                       value: controller.isDarkMode.value,
                       onChanged: (value) => controller.toggleDarkMode(),
@@ -215,7 +215,7 @@ class SettingsPage extends GetView<SettingsController> {
                       ),
                     ),
                     enabled: false,
-                    subtitle: const Text('View portarius logs'),
+                    subtitle: const Text('View portarius logs.'),
                     trailing: const Icon(Icons.list_alt),
                     onTap: () => Get.toNamed('/logs'),
                   ),
@@ -245,7 +245,7 @@ class SettingsPage extends GetView<SettingsController> {
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('App info and legal jibberish'),
+                    subtitle: const Text('App info and legal jibberish.'),
                     trailing: const Icon(Icons.info),
                     onTap: () => _showAbout(context),
                   ),
@@ -263,7 +263,7 @@ class SettingsPage extends GetView<SettingsController> {
     showAboutDialog(
       context: context,
       applicationName: 'portarius',
-      applicationVersion: storageController.packageInfo.version,
+      applicationVersion: 'v${storageController.packageInfo.version}',
       routeSettings: const RouteSettings(
         name: '/about',
       ),

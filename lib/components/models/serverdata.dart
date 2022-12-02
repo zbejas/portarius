@@ -1,5 +1,6 @@
 class ServerData {
   final String baseUrl;
+  final String? localUrl;
   final String? endpoint;
   final String token;
   final String name;
@@ -7,6 +8,7 @@ class ServerData {
   ServerData({
     required this.baseUrl,
     this.endpoint,
+    this.localUrl,
     required this.token,
     required this.name,
   });
@@ -17,6 +19,7 @@ class ServerData {
       endpoint: json['endpoint'] as String,
       token: json['token'] as String,
       name: (json['name'] ?? '') as String,
+      localUrl: (json['localUrl'] ?? '') as String,
     );
   }
 
@@ -26,12 +29,14 @@ class ServerData {
     String? endpoint,
     String? token,
     String? name,
+    String? localUrl,
   }) {
     return ServerData(
       baseUrl: baseUrl ?? this.baseUrl,
       endpoint: endpoint ?? this.endpoint,
       token: token ?? this.token,
       name: name ?? this.name,
+      localUrl: localUrl ?? this.localUrl,
     );
   }
 
@@ -41,6 +46,7 @@ class ServerData {
       'endpoint': endpoint,
       'token': token,
       'name': name,
+      'localUrl': localUrl,
     };
   }
 

@@ -1,4 +1,5 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portarius/components/routing/routes.dart';
@@ -22,20 +23,22 @@ class MyApp extends StatelessWidget {
 
     // Show a dialog that tells the user that this
     // is a work in progress
-    Future.delayed(
-      const Duration(seconds: 5),
-      () {
-        Get.defaultDialog(
-          title: 'Work in progress',
-          middleText:
-              'This app is still a work in progress. The design is not final and the functionality is limited.',
-          textConfirm: 'OK',
-          onConfirm: () {
-            Get.back();
-          },
-        );
-      },
-    );
+    if (!kDebugMode) {
+      Future.delayed(
+        const Duration(seconds: 3),
+        () {
+          Get.defaultDialog(
+            title: 'Work in progress',
+            middleText:
+                'This app is still a work in progress. The design is not final and the functionality is limited.',
+            textConfirm: 'OK',
+            onConfirm: () {
+              Get.back();
+            },
+          );
+        },
+      );
+    }
 
     return GetMaterialApp(
       title: 'Portarius',

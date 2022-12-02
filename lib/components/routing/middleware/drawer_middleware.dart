@@ -14,8 +14,6 @@ class DrawerMiddleware extends GetMiddleware {
   RouteSettings? redirect(String? route) {
     PortariusDrawerController drawerController = Get.find();
 
-    print('DrawerMiddleware: redirect: route: $route');
-
     if (route != null) {
       drawerController.setPage(route);
     }

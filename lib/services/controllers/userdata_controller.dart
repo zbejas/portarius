@@ -65,6 +65,8 @@ class UserDataController extends GetxController {
     }
 
     serverList.add(serverData);
+    setCurrentServer(serverData);
+    refresh();
     save();
   }
 
@@ -88,20 +90,23 @@ class UserDataController extends GetxController {
     );
   }
 
-  Future<bool> setCurrentServer(ServerData serverData) async {
+  bool setCurrentServer(ServerData serverData) {
     // get endpoints from server
     final PortainerApiProvider api = Get.find();
-    List<PortainerEndpoint>? endpoints = await api.checkEndpoints(
-        url: serverData.baseUrl, token: serverData.token);
 
-    if (endpoints == null) {
-      _showSnackBar('Could not connect to server');
-      return false;
-    }
+    // changed to .then() so the user has instant feedback
+    api.checkEndpoints(url: serverData.baseUrl, token: serverData.token).then(
+      (endpoints) {
+        if (endpoints == null) {
+          _showSnackBar('Could not get server endpoints.');
+          return false;
+        }
 
-    if (endpoints.isNotEmpty) {
-      currentServerEndpoints = endpoints;
-    }
+        if (endpoints.isNotEmpty) {
+          currentServerEndpoints = endpoints;
+        }
+      },
+    );
 
     currentServer = serverData;
     save();
@@ -134,7 +139,7 @@ class UserDataController extends GetxController {
 
   Future<void> refreshEndpoints(ServerData serverData) async {
     final PortainerApiProvider api = Get.find();
-    List<PortainerEndpoint>? endpoints = await api.checkEndpoints(
+    final List<PortainerEndpoint>? endpoints = await api.checkEndpoints(
         url: serverData.baseUrl, token: serverData.token);
 
     if (endpoints == null) {

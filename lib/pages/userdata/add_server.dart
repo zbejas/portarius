@@ -8,7 +8,7 @@ import 'package:portarius/services/controllers/userdata_controller.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ServerAddPage extends StatefulWidget {
-  ServerAddPage({super.key});
+  const ServerAddPage({super.key});
 
   @override
   State<ServerAddPage> createState() => _ServerAddPageState();
@@ -18,6 +18,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
   bool _hasConnectionBeenTested = false;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController urlController = TextEditingController();
+  final TextEditingController localUrlController = TextEditingController();
   final TextEditingController tokenController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final ScrollController scrollController = ScrollController();
@@ -26,6 +27,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
   final UserDataController userDataController = Get.find();
 
   final RxList<PortainerEndpoint> endpoints = <PortainerEndpoint>[].obs;
+  final bool isLocalEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -90,16 +92,42 @@ class _ServerAddPageState extends State<ServerAddPage> {
                           FocusScope.of(context).nextFocus();
                         },
                         decoration: const InputDecoration(
-                          labelText: 'URL',
+                          labelText: 'Base URL',
                           hintText: 'https://example.com/portainer',
                           contentPadding: EdgeInsets.all(10),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Please enter a URL';
+                            return 'Please enter a base URL';
                           }
 
                           if (!Uri.tryParse(value)!.isAbsolute) {
+                            return 'Please enter a valid URL';
+                          }
+
+                          return null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        enabled: isLocalEnabled,
+                        controller: localUrlController,
+                        onEditingComplete: () {
+                          FocusScope.of(context).nextFocus();
+                        },
+                        decoration: const InputDecoration(
+                          labelText: 'Local URL',
+                          hintText: '(optional) http://192.168.x.x/portainer',
+                          contentPadding: EdgeInsets.all(10),
+                        ),
+                        validator: (value) {
+                          if (!isLocalEnabled || value!.isEmpty) {
+                            return null;
+                          }
+
+                          if (!Uri.tryParse(value!)!.isAbsolute) {
                             return 'Please enter a valid URL';
                           }
 
@@ -191,15 +219,12 @@ class _ServerAddPageState extends State<ServerAddPage> {
                                 await Get.closeCurrentSnackbar();
                               }
 
-                              // check if url ends with a slash
-                              // if it does, remove it
-                              final String url = _fixUrl(urlController.text);
-
                               final ServerData serverData = ServerData(
                                 name: nameController.text,
-                                baseUrl: url,
+                                baseUrl: _fixUrl(urlController.text),
                                 token: tokenController.text,
                                 endpoint: endpoints.first.id,
+                                localUrl: _fixUrl(localUrlController.text),
                               );
 
                               if (Get.isSnackbarOpen) {

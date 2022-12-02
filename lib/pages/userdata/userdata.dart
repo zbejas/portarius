@@ -67,7 +67,6 @@ class _UserDataPageState extends State<UserDataPage> {
                             bool result =
                                 await userDataController.setCurrentServer(
                                     userDataController.serverList[index]);
-                            userDataController.update();
 
                             if (!result) {
                               return;
@@ -99,9 +98,9 @@ class _UserDataPageState extends State<UserDataPage> {
                                   onPressed: () {
                                     // dialog confirming deletion
                                     Get.defaultDialog(
-                                      title: 'Delete server?',
+                                      title: 'Are you sure?',
                                       middleText:
-                                          'Are you sure you want to delete this server?',
+                                          'This action cannot be undone.',
                                       textConfirm: 'Delete',
                                       textCancel: 'Cancel',
                                       onConfirm: () {

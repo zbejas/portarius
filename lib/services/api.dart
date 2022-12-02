@@ -13,17 +13,20 @@ import 'package:portarius/services/controllers/settings_controller.dart';
 class PortainerApiProvider extends GetConnect implements GetxService {
   RxString apiToken = ''.obs;
   RxString apiBaseUrl = ''.obs;
+  RxString apiLocalUrl = ''.obs;
   RxString apiEndpoint = ''.obs;
 
   late Map<String, String> _mainHeaders;
 
-  final LoggerController _loggerController = Get.find();
-  late final Logger _logger = _loggerController.logger;
+  late final Logger _logger = Get.find<LoggerController>().logger;
+
+  final Duration _localTimeout = const Duration(milliseconds: 1500);
 
   void init(ServerData serverData) {
     apiToken.value = serverData.token;
     apiBaseUrl.value = serverData.baseUrl;
     apiEndpoint.value = serverData.endpoint ?? '';
+    apiLocalUrl.value = serverData.localUrl ?? '';
 
     _mainHeaders = {
       'Content-Type': 'application/json',
@@ -41,6 +44,7 @@ class PortainerApiProvider extends GetConnect implements GetxService {
 
   // Update data for the API
   set updateBaseUrl(String url) => apiBaseUrl.value = url;
+  set updateLocalUrl(String url) => apiLocalUrl.value = url;
   set updateEnpoint(String endpoint) => apiEndpoint.value = endpoint;
   set updateToken(String token) {
     apiToken.value = token;
@@ -56,18 +60,7 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     apiToken.value = '';
     apiBaseUrl.value = '';
     apiEndpoint.value = '';
-  }
-
-  void updateAll(String token, String baseUrl, String endpoint) {
-    apiToken.value = token;
-
-    _mainHeaders = {
-      'Content-Type': 'application/json',
-      'X-API-Key': apiToken.value,
-    };
-
-    apiBaseUrl.value = baseUrl;
-    apiEndpoint.value = endpoint;
+    apiLocalUrl.value = '';
   }
 
   Future<String?> testConnection(
@@ -122,10 +115,29 @@ class PortainerApiProvider extends GetConnect implements GetxService {
 
   // Get endpoints
   Future<List<PortainerEndpoint>?> getEndpoints() async {
-    final Response response = await get(
-      '$apiBaseUrl/api/endpoints',
-      headers: _mainHeaders,
-    );
+    // ping local url
+    Response response;
+
+    // if local url is set, ping it
+    if (apiLocalUrl.isNotEmpty) {
+      response = await get(
+        '$apiLocalUrl/api/endpoints',
+        headers: _mainHeaders,
+      );
+    } else {
+      response = await get(
+        '$apiBaseUrl/api/endpoints',
+        headers: _mainHeaders,
+      );
+    }
+
+    // if response is not ok, try the other url
+    if (response.hasError) {
+      response = await get(
+        '$apiBaseUrl/api/endpoints',
+        headers: _mainHeaders,
+      );
+    }
 
     if (response.hasError) {
       _showSnackBar('Error getting endpoints');
@@ -147,10 +159,32 @@ class PortainerApiProvider extends GetConnect implements GetxService {
 
   // Get container list
   Future<List<SimpleContainer>> getContainers() async {
-    final Response response = await get(
-      '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/json?all=1',
-      headers: _mainHeaders,
-    );
+    Response response;
+
+    // if local url is set, ping it
+    if (apiLocalUrl.isNotEmpty) {
+      try {
+        response = await get(
+          '$apiLocalUrl/api/endpoints/$apiEndpoint/docker/containers/json',
+          headers: _mainHeaders,
+        ).timeout(_localTimeout);
+      } catch (e) {
+        response = const Response(statusCode: 500);
+      }
+    } else {
+      response = await get(
+        '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/json',
+        headers: _mainHeaders,
+      );
+    }
+
+    // if response is not ok, try the other url
+    if (response.hasError) {
+      response = await get(
+        '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/json',
+        headers: _mainHeaders,
+      );
+    }
 
     if (response.hasError) {
       _showSnackBar(response.statusText ?? 'Error getting containers.');
@@ -170,11 +204,35 @@ class PortainerApiProvider extends GetConnect implements GetxService {
 
   // Start container
   Future<void> startContainer(String id) async {
-    final Response response = await post(
-      '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/$id/start',
-      {},
-      headers: _mainHeaders,
-    );
+    Response response;
+
+    // if local url is set, ping it
+    if (apiLocalUrl.isNotEmpty) {
+      try {
+        response = await post(
+          '$apiLocalUrl/api/endpoints/$apiEndpoint/docker/containers/$id/start',
+          {},
+          headers: _mainHeaders,
+        ).timeout(_localTimeout);
+      } catch (e) {
+        response = const Response(statusCode: 500);
+      }
+    } else {
+      response = await post(
+        '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/$id/start',
+        {},
+        headers: _mainHeaders,
+      );
+    }
+
+    // if response is not ok, try the other url
+    if (response.hasError) {
+      response = await post(
+        '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/$id/start',
+        {},
+        headers: _mainHeaders,
+      );
+    }
 
     if (response.hasError) {
       _showSnackBar(response.statusText ?? 'Error starting container.');
@@ -184,11 +242,35 @@ class PortainerApiProvider extends GetConnect implements GetxService {
 
   // Stop container
   Future<void> stopContainer(String id) async {
-    final Response response = await post(
-      '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/$id/stop',
-      {},
-      headers: _mainHeaders,
-    );
+    Response response;
+
+    // if local url is set, ping it
+    if (apiLocalUrl.isNotEmpty) {
+      try {
+        response = await post(
+          '$apiLocalUrl/api/endpoints/$apiEndpoint/docker/containers/$id/stop',
+          {},
+          headers: _mainHeaders,
+        ).timeout(_localTimeout);
+      } catch (e) {
+        response = const Response(statusCode: 500);
+      }
+    } else {
+      response = await post(
+        '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/$id/stop',
+        {},
+        headers: _mainHeaders,
+      );
+    }
+
+    // if response is not ok, try the other url
+    if (response.hasError) {
+      response = await post(
+        '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/$id/stop',
+        {},
+        headers: _mainHeaders,
+      );
+    }
 
     if (response.hasError) {
       _showSnackBar(response.statusText ?? 'Error stopping container.');
@@ -198,11 +280,35 @@ class PortainerApiProvider extends GetConnect implements GetxService {
 
   // Restart container
   Future<void> restartContainer(String id) async {
-    final Response response = await post(
-      '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/$id/restart',
-      {},
-      headers: _mainHeaders,
-    );
+    Response response;
+
+    // if local url is set, ping it
+    if (apiLocalUrl.isNotEmpty) {
+      try {
+        response = await post(
+          '$apiLocalUrl/api/endpoints/$apiEndpoint/docker/containers/$id/restart',
+          {},
+          headers: _mainHeaders,
+        ).timeout(_localTimeout);
+      } catch (e) {
+        response = const Response(statusCode: 500);
+      }
+    } else {
+      response = await post(
+        '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/$id/restart',
+        {},
+        headers: _mainHeaders,
+      );
+    }
+
+    // if response is not ok, try the other url
+    if (response.hasError) {
+      response = await post(
+        '$apiBaseUrl/api/endpoints/$apiEndpoint/docker/containers/$id/restart',
+        {},
+        headers: _mainHeaders,
+      );
+    }
 
     if (response.hasError) {
       _showSnackBar(response.statusText ?? 'Error restarting container.');

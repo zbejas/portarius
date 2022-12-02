@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portarius/components/models/docker/simple_container.dart';
@@ -25,14 +26,39 @@ class _ContainerListState extends State<ContainerList> {
 
     return Obx(
       () {
-        if (controller.containers.isEmpty && !controller.isLoaded.value) {
-          return const Center(
-            child: Text(
-              'No containers found.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-              ),
+        if (controller.containers.isEmpty && controller.isLoaded.value) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'No containers found.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                // clickable text to refresh
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Refresh',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            await controller.updateContainers();
+                          },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           );
         }

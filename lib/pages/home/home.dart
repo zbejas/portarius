@@ -1,4 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portarius/components/models/docker/simple_container.dart';
@@ -7,6 +8,7 @@ import 'package:portarius/components/models/view/container_list.dart';
 import 'package:portarius/components/widgets/drawer.dart';
 import 'package:portarius/components/widgets/split_view.dart';
 import 'package:portarius/services/controllers/docker_controller.dart';
+import 'package:portarius/services/controllers/drawer_controller.dart';
 import 'package:portarius/services/controllers/userdata_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -48,9 +50,40 @@ class HomePage extends StatelessWidget {
         menuBuilder: (context) => const PortariusDrawer(),
         contentBuilder: (context) => userDataController.serverList.isEmpty
             ? Center(
-                child: Text(
-                  'No servers added',
-                  style: context.textTheme.headline5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'No servers added',
+                      style: context.textTheme.headline5,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Add a server to get started.',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () async {
+                                await Get.toNamed('/userdata/add_server');
+                                // 250ms delay to allow the server to be added
+                                await Future.delayed(const Duration(
+                                  milliseconds: 250,
+                                ));
+
+                                // Refresh the page
+                                Get.offAllNamed('/home');
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               )
             : userDataController.currentServer == null

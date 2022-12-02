@@ -27,7 +27,7 @@ List<GetPage> appRoutes() => [
       ),
       GetPage(
         name: '/userdata/add_server',
-        page: () => ServerAddPage(),
+        page: () => const ServerAddPage(),
         transition: Transition.rightToLeft,
         transitionDuration: const Duration(milliseconds: 300),
       ),
