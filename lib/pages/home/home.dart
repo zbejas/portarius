@@ -3,12 +3,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portarius/components/models/docker/simple_container.dart';
-import 'package:portarius/components/models/serverdata.dart';
 import 'package:portarius/components/models/view/container_list.dart';
 import 'package:portarius/components/widgets/drawer.dart';
 import 'package:portarius/components/widgets/split_view.dart';
 import 'package:portarius/services/controllers/docker_controller.dart';
-import 'package:portarius/services/controllers/drawer_controller.dart';
 import 'package:portarius/services/controllers/userdata_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -19,6 +17,35 @@ class HomePage extends StatelessWidget {
     final UserDataController userDataController = Get.find();
 
     final DockerController dockerController = Get.put(DockerController());
+
+    final bool poppedFromServerAdd = (Get.arguments ?? false) as bool;
+
+    // If there are no servers, show the server add dialog
+    if (userDataController.serverList.isEmpty && !poppedFromServerAdd) {
+      Future.delayed(const Duration(milliseconds: 750), () {
+        Get.defaultDialog(
+          title: 'No servers found',
+          middleText: 'Would you like to add a server now?',
+          textConfirm: 'Yes',
+          textCancel: 'Not now',
+          confirmTextColor: Colors.white,
+          onConfirm: () async {
+            Get.back();
+            await Future.delayed(const Duration(
+              milliseconds: 250,
+            ));
+            await Get.toNamed('/userdata/add_server');
+            // 250ms delay to allow the server to be added
+            await Future.delayed(const Duration(
+              milliseconds: 250,
+            ));
+
+            // Refresh the page
+            Get.offAllNamed('/home', arguments: true);
+          },
+        );
+      });
+    }
 
     return WillPopScope(
       onWillPop: () async {
@@ -77,7 +104,7 @@ class HomePage extends StatelessWidget {
                                 ));
 
                                 // Refresh the page
-                                Get.offAllNamed('/home');
+                                Get.offAllNamed('/home', arguments: true);
                               },
                           ),
                         ],

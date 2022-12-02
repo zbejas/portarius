@@ -17,8 +17,6 @@ class StorageController extends GetxController {
 
   Future<void> init(String encryptionKey, String path) async {
     try {
-      // Try getting encryped box collection
-
       // Open the boxes from the collection
       userData = await Hive.openBox(
         'userData',

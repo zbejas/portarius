@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:portarius/components/models/portainer/endpoint.dart';
 import 'package:portarius/components/models/serverdata.dart';
 import 'package:portarius/services/api.dart';
+import 'package:portarius/services/controllers/drawer_controller.dart';
 import 'package:portarius/services/controllers/userdata_controller.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -27,7 +28,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
   final UserDataController userDataController = Get.find();
 
   final RxList<PortainerEndpoint> endpoints = <PortainerEndpoint>[].obs;
-  final bool isLocalEnabled = true;
+  final bool isLocalEnabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +128,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
                             return null;
                           }
 
-                          if (!Uri.tryParse(value!)!.isAbsolute) {
+                          if (!Uri.tryParse(value)!.isAbsolute) {
                             return 'Please enter a valid URL';
                           }
 
@@ -162,10 +163,56 @@ class _ServerAddPageState extends State<ServerAddPage> {
                       const SizedBox(
                         height: 40,
                       ),
-                      Text(
+                      /*Text(
                         'If you are using a self-signed certificate, you may need to enable that in the settings.',
                         style: context.textTheme.caption,
                         textAlign: TextAlign.center,
+                      ),*/
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text:
+                                  'If you are using a self-signed certificate, you may need to enable that in the ',
+                              style: TextStyle(
+                                color:
+                                    Theme.of(context).textTheme.caption!.color,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'settings.',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () async {
+                                  PortariusDrawerController drawerController =
+                                      Get.find();
+                                  // if any text controller has any value, alert the user that they will be lost
+                                  if (nameController.text.isNotEmpty ||
+                                      urlController.text.isNotEmpty ||
+                                      localUrlController.text.isNotEmpty ||
+                                      tokenController.text.isNotEmpty) {
+                                    Get.defaultDialog(
+                                      title: 'Are you sure?',
+                                      middleText:
+                                          'Any unsaved changes will be lost.',
+                                      textConfirm: 'Yes',
+                                      textCancel: 'No',
+                                      onConfirm: () {
+                                        drawerController.setPage('/settings');
+                                        Get.offAllNamed('/settings');
+                                      },
+                                    );
+                                  } else {
+                                    drawerController.setPage('/settings');
+                                    Get.offAllNamed('/settings');
+                                  }
+                                },
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 20,
@@ -173,13 +220,12 @@ class _ServerAddPageState extends State<ServerAddPage> {
                       // explain token with uri lanch to https://docs.portainer.io/api/access
                       RichText(
                         text: TextSpan(
-                          style: context.textTheme.caption,
+                          style: TextStyle(
+                            color: context.theme.primaryColor,
+                          ),
                           children: [
                             TextSpan(
                               text: 'How to get an API token? ',
-                              style: const TextStyle(
-                                color: Colors.blue,
-                              ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   launchUrlString(
@@ -295,9 +341,8 @@ class _ServerAddPageState extends State<ServerAddPage> {
       await Get.closeCurrentSnackbar();
     }
 
-    Get.back();
-
     if (testResult != null) {
+      Get.back();
       Get.snackbar(
         'Connection failed',
         testResult,
@@ -307,12 +352,27 @@ class _ServerAddPageState extends State<ServerAddPage> {
         margin: const EdgeInsets.all(10),
       );
     } else {
+      // Test local connection
+      final String localUrl = _fixUrl(localUrlController.text);
+      String? localTestResult;
+
+      if (localUrl.isNotEmpty) {
+        localTestResult = await apiProvider.testConnection(
+          url: localUrl,
+          token: tokenController.text,
+        );
+      }
+
       endpoints.value = await apiProvider.checkEndpoints(
             url: url,
             token: tokenController.text,
           ) ??
           <PortainerEndpoint>[];
+      if (Get.isSnackbarOpen) {
+        await Get.closeCurrentSnackbar();
+      }
 
+      Get.back();
       if (endpoints.isEmpty) {
         Get.snackbar(
           'No endpoints found',
@@ -325,13 +385,26 @@ class _ServerAddPageState extends State<ServerAddPage> {
       }
 
       _hasConnectionBeenTested = true;
-      Get.defaultDialog(
-        title: 'Success',
-        content: const Text(
-          'You may now add the server.',
-        ),
-        textCancel: 'OK',
-      );
+      if (localTestResult == null) {
+        Get.defaultDialog(
+          title: 'Success',
+          content: const Text(
+            'You may now add the server.',
+          ),
+          textCancel: 'OK',
+        );
+      } else {
+        Get.defaultDialog(
+          title: 'Warning',
+          content: const Text(
+            'The base URL is accessible, but the local URL is not. '
+            'This means that local the app may be able to switch to the local URL when available.'
+            '\n\nYou can still add the server, since the base URL is accessible.',
+            textAlign: TextAlign.center,
+          ),
+          textCancel: 'Continue',
+        );
+      }
     }
   }
 }

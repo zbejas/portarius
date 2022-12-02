@@ -13,6 +13,7 @@ class SettingsPage extends GetView<SettingsController> {
 
   @override
   Widget build(BuildContext context) {
+    final StorageController storageController = Get.find();
     return WillPopScope(
       onWillPop: () {
         Get.offAllNamed('/home');
@@ -37,11 +38,57 @@ class SettingsPage extends GetView<SettingsController> {
               padding: const EdgeInsets.all(15),
               children: [
                 Text(
-                  'Page refresh',
+                  'General',
                   style: context.textTheme.headline3,
                 ),
                 const SizedBox(
                   height: 10,
+                ),
+                // Dark mode
+                Card(
+                  child: ListTile(
+                    title: const Text(
+                      'Dark mode',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    subtitle: const Text('Toggle dark mode.'),
+                    trailing: Switch(
+                      value: controller.isDarkMode.value,
+                      onChanged: (value) => controller.toggleDarkMode(),
+                    ),
+                  ),
+                ),
+                // Default sort order
+                Card(
+                  child: ListTile(
+                    title: const Text(
+                      'Default sort order',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    subtitle: const Text('Sets the default sort order.'),
+                    trailing: DropdownButton<SortOptions>(
+                      borderRadius: BorderRadius.circular(15),
+                      value: DockerController().sortOptionFromString(
+                        controller.sortOption.value,
+                      ),
+                      items: SortOptions.values
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(
+                                e.toString().split('.').last.capitalizeFirst!,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) =>
+                          controller.setSortOption(value!.toString()),
+                    ),
+                  ),
                 ),
                 // Auto refresh toggle
                 Card(
@@ -153,57 +200,11 @@ class SettingsPage extends GetView<SettingsController> {
                   height: 10,
                 ),
                 Text(
-                  'Application',
+                  'Information',
                   style: context.textTheme.headline3,
                 ),
                 const SizedBox(
                   height: 10,
-                ),
-                // Dark mode
-                Card(
-                  child: ListTile(
-                    title: const Text(
-                      'Dark mode',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    subtitle: const Text('Toggle dark mode.'),
-                    trailing: Switch(
-                      value: controller.isDarkMode.value,
-                      onChanged: (value) => controller.toggleDarkMode(),
-                    ),
-                  ),
-                ),
-                // Default sort order
-                Card(
-                  child: ListTile(
-                    title: const Text(
-                      'Default sort order',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    subtitle: const Text('Sets the default sort order.'),
-                    trailing: DropdownButton<SortOptions>(
-                      borderRadius: BorderRadius.circular(15),
-                      value: DockerController().sortOptionFromString(
-                        controller.sortOption.value,
-                      ),
-                      items: SortOptions.values
-                          .map(
-                            (e) => DropdownMenuItem(
-                              value: e,
-                              child: Text(
-                                e.toString().split('.').last.capitalizeFirst!,
-                              ),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (value) =>
-                          controller.setSortOption(value!.toString()),
-                    ),
-                  ),
                 ),
                 // View logs
                 Card(
@@ -218,6 +219,29 @@ class SettingsPage extends GetView<SettingsController> {
                     subtitle: const Text('View portarius logs.'),
                     trailing: const Icon(Icons.list_alt),
                     onTap: () => Get.toNamed('/logs'),
+                  ),
+                ),
+                // FAQ
+                Card(
+                  child: ListTile(
+                    title: const Text(
+                      'FAQ',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    subtitle: const Text('Frequently asked questions.'),
+                    trailing: const Icon(Icons.question_answer),
+                    onTap: () async {
+                      const uri =
+                          'https://github.com/zbejas/portarius/wiki/FAQ';
+                      if (!await launchUrlString(
+                        uri,
+                        mode: LaunchMode.externalApplication,
+                      )) {
+                        throw 'Could not launch $uri';
+                      }
+                    },
                   ),
                 ),
                 // Donate
@@ -249,6 +273,16 @@ class SettingsPage extends GetView<SettingsController> {
                     trailing: const Icon(Icons.info),
                     onTap: () => _showAbout(context),
                   ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                // Version info
+                Text(
+                  '${storageController.packageInfo.appName} v'
+                  '${storageController.packageInfo.version}+${storageController.packageInfo.buildNumber}',
+                  style: context.textTheme.caption,
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -294,7 +328,7 @@ class SettingsPage extends GetView<SettingsController> {
               ),
               TextSpan(
                 text: ' is a free, open-source, '
-                    'cross-platform mobile '
+                    'cross-platform '
                     'application that allows you to '
                     'manage your Portainer sessions.',
                 style: context.textTheme.bodyText1,

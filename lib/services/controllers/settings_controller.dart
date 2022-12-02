@@ -100,8 +100,8 @@ class SettingsController extends GetxController {
 
   Future<void> toggleAutoCert() async {
     if (!allowAutoSignedCerts.value) {
-      // A warning that biometrics will be disabled if
-      // the user disables biometrics on their device
+      // A warning that self-signed certs will be enabled if
+      // the user enables auto signed certs
       Get.defaultDialog(
         title: 'Warning',
         middleText:
@@ -126,17 +126,10 @@ class SettingsController extends GetxController {
       );
       allowAutoSignedCerts.value = !allowAutoSignedCerts.value;
       save();
-
-      // If SSL verification is disabled, we need to re-initialize the API
-      // but only if there is a server set
-      final UserDataController userDataController = Get.find();
-      final PortainerApiProvider api = Get.find();
-      if (userDataController.currentServer != null) {
-        api.init(
-          userDataController.currentServer!,
-        );
-      }
     }
+
+    final PortainerApiProvider apiProvider = Get.find();
+    apiProvider.updateAutoSignedCert = !allowAutoSignedCerts.value;
   }
 
   void toggleAutoRefresh() {
