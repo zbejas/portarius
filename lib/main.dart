@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
     }
 
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Portarius',
       logWriterCallback: loggerController.logWriterCallback,
       getPages: appRoutes(),

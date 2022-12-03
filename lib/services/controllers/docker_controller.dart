@@ -81,10 +81,12 @@ class DockerController extends GetxController {
   }
 
   Future<void> updateContainers() async {
+    isRefreshing.value = true;
     final List<SimpleContainer> newContainers = await _api.getContainers();
     containers.clear();
     containers.addAll(newContainers);
     sort();
+    isRefreshing.value = false;
   }
 
   Future<void> startContainer(SimpleContainer container) async {

@@ -196,6 +196,22 @@ class SettingsPage extends GetView<SettingsController> {
                     ),
                   ),
                 ),
+                // Paranoid mode
+                Card(
+                  child: ListTile(
+                    title: const Text(
+                      'Paranoid mode',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    subtitle: const Text('Hide URLs in server list.'),
+                    trailing: Switch(
+                      value: controller.paranoidMode.value,
+                      onChanged: (value) => controller.toggleParanoidMode(),
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   height: 10,
                 ),

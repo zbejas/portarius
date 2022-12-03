@@ -16,10 +16,13 @@ class _ContainerListState extends State<ContainerList> {
 
   @override
   Widget build(BuildContext context) {
-    if (controller.isRefreshing.value && mounted) {
+    if (!controller.isRefreshing.value && mounted) {
       Future.delayed(Duration(seconds: controller.refreshInterval.value),
           () async {
         await controller.updateContainers();
+        if (mounted) {
+          setState(() {});
+        }
       });
     }
 
@@ -66,87 +69,109 @@ class _ContainerListState extends State<ContainerList> {
                   controller.containers[index].status ?? 'no status',
                 ),
                 dense: false,
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // start/stop icon button
-                    IconButton(
-                      icon: loading.containsKey(controller.containers[index]) &&
+                leading: PopupMenuButton(
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 'start/stop',
+                      child: Row(
+                        children: [
+                          if (loading
+                                  .containsKey(controller.containers[index]) &&
                               loading[controller.containers[index]] ==
-                                  'start/stop'
-                          ? const SizedBox(
+                                  'start/stop')
+                            const SizedBox(
                               height: 25,
                               width: 25,
                               child: CircularProgressIndicator(
                                 strokeWidth: 3,
                               ),
                             )
-                          : Icon(
+                          else
+                            Icon(
                               controller.containers[index].state == 'running'
                                   ? Icons.stop
                                   : Icons.play_arrow,
                             ),
-                      onPressed: () async {
-                        setState(() {
-                          loading.addAll({
-                            controller.containers[index]: 'start/stop',
-                          });
-                        });
-
-                        if (controller.containers[index].state == 'running') {
-                          await controller.stopContainer(
-                            controller.containers[index],
-                          );
-                        } else {
-                          await controller.startContainer(
-                            controller.containers[index],
-                          );
-                        }
-
-                        setState(() {
-                          loading.remove(controller.containers[index]);
-                        });
-                      },
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            controller.containers[index].state == 'running'
+                                ? 'Stop'
+                                : 'Start',
+                            style: context.textTheme.bodyText1,
+                          ),
+                        ],
+                      ),
                     ),
-                    // refresh icon button
-                    IconButton(
-                      icon: loading.containsKey(controller.containers[index]) &&
-                              loading[controller.containers[index]] == 'refresh'
-                          ? const SizedBox(
-                              height: 25,
-                              width: 25,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 3,
-                              ),
-                            )
-                          : const Icon(Icons.refresh),
-                      onPressed: () async {
-                        setState(() {
-                          loading.addAll({
-                            controller.containers[index]: 'refresh',
-                          });
+                    PopupMenuItem(
+                      value: 'restart',
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.delete,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Restart',
+                            style: context.textTheme.bodyText1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                  onSelected: (value) async {
+                    if (value == 'start/stop') {
+                      setState(() {
+                        loading.addAll({
+                          controller.containers[index]: 'start/stop',
                         });
+                      });
 
-                        await controller.restartContainer(
+                      if (controller.containers[index].state == 'running') {
+                        await controller.stopContainer(
                           controller.containers[index],
                         );
+                      } else {
+                        await controller.startContainer(
+                          controller.containers[index],
+                        );
+                      }
 
-                        setState(() {
-                          loading.remove(controller.containers[index]);
+                      setState(() {
+                        loading.remove(controller.containers[index]);
+                      });
+                    } else if (value == 'restart') {
+                      setState(() {
+                        loading.addAll({
+                          controller.containers[index]: 'refresh',
                         });
-                      },
-                    ),
+                      });
+
+                      await controller.restartContainer(
+                        controller.containers[index],
+                      );
+
+                      setState(() {
+                        loading.remove(controller.containers[index]);
+                      });
+                    }
+                  },
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // icon dropdown menu with start/stop/restart
                     const SizedBox(
                       width: 10,
                     ),
                     // status
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        const SizedBox(
-                          width: 60,
-                          height: 0,
-                        ),
                         if (controller.containers[index].composeStack !=
                             null) ...[
                           Text(

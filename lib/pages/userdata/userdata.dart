@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portarius/components/widgets/drawer.dart';
 import 'package:portarius/components/widgets/split_view.dart';
+import 'package:portarius/services/controllers/settings_controller.dart';
 import 'package:portarius/services/controllers/userdata_controller.dart';
 
 class UserDataPage extends StatefulWidget {
@@ -16,6 +19,7 @@ class _UserDataPageState extends State<UserDataPage> {
   @override
   Widget build(BuildContext context) {
     final UserDataController userDataController = Get.find();
+    final SettingsController settingsController = Get.find();
     return WillPopScope(
       onWillPop: () {
         Get.offAllNamed('/home');
@@ -83,10 +87,21 @@ class _UserDataPageState extends State<UserDataPage> {
                             );
                           },
                           child: ListTile(
-                            title:
-                                Text(userDataController.serverList[index].name),
+                            title: Text(
+                              userDataController.serverList[index].name,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             subtitle: Text(
-                              userDataController.serverList[index].baseUrl,
+                              settingsController.paranoidMode.value
+                                  ? _getObfuscated(
+                                      userDataController
+                                          .serverList[index].baseUrl,
+                                      userDataController
+                                          .serverList[index].token,
+                                    )
+                                  : userDataController
+                                      .serverList[index].baseUrl,
+                              overflow: TextOverflow.ellipsis,
                             ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -136,5 +151,21 @@ class _UserDataPageState extends State<UserDataPage> {
         ),
       ),
     );
+  }
+
+  String _getObfuscated(String text, String encodeKey) {
+    // return a random char from the list
+    final String charList = '/\\#\$%^&*+{}?';
+    // generate a value from the values of the chars in the string
+    final int endoceValue = encodeKey.codeUnits.reduce((a, b) => a + b);
+
+    // have randomness set by the day so that it's consistent
+    // but not the same every time
+    final Random random = Random(DateTime.now().day * endoceValue);
+
+    return text
+        .split('')
+        .map((e) => charList[random.nextInt(charList.length)])
+        .join();
   }
 }

@@ -14,6 +14,7 @@ class SettingsController extends GetxController {
   RxBool autoRefresh = true.obs;
   RxInt refreshInterval = 5.obs;
   RxString sortOption = SortOptions.stack.toString().obs;
+  RxBool paranoidMode = false.obs;
 
   final Logger _logger = Get.find<LoggerController>().logger;
 
@@ -32,6 +33,7 @@ class SettingsController extends GetxController {
       'autoRefresh': autoRefresh.value,
       'refreshInterval': refreshInterval.value,
       'sortOption': sortOption.value,
+      'paranoidMode': paranoidMode.value,
     };
   }
 
@@ -46,6 +48,7 @@ class SettingsController extends GetxController {
     refreshInterval.value = (json['refreshInterval'] ?? 5) as int;
     sortOption.value =
         (json['sortOption'] ?? SortOptions.stack.toString()) as String;
+    paranoidMode.value = (json['paranoidMode'] ?? false) as bool;
   }
 
   // ! Toggles and setters
@@ -148,6 +151,12 @@ class SettingsController extends GetxController {
     sortOption.value = value;
     final DockerController dockerController = Get.find();
     dockerController.sortOption.value = value;
+    save();
+  }
+
+  void toggleParanoidMode() {
+    _logger.d('Toggling paranoid mode to: ${!paranoidMode.value}');
+    paranoidMode.value = !paranoidMode.value;
     save();
   }
 }

@@ -41,12 +41,13 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                           ),
                         ),
                         // version
+                        // todo: link to edit server
                         Text(
                           userDataController.currentServer == null
                               ? 'v${storage.packageInfo.version}'
                               : userDataController.currentServer!.name,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 16,
                             color: context.theme.textTheme.headline1!.color,
                           ),
                         ),
@@ -67,11 +68,14 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                     subtitle: const Text('Home page'),
                     trailing: const Icon(Icons.home),
                     selected: controller.pickedPage.value == '/home',
-                    onTap: () {
+                    onTap: () async {
                       if (controller.pickedPage.value == '/home') {
                         return;
                       }
                       Get.back();
+
+                      await Future.delayed(const Duration(milliseconds: 250));
+
                       controller.setPage('/home');
                       Get.offAndToNamed('/home');
                     },
@@ -85,11 +89,14 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                     ),
                     subtitle: const Text('Modify stored user data'),
                     trailing: const Icon(Icons.person),
-                    onTap: () {
+                    onTap: () async {
                       if (controller.pickedPage.value == '/userdata') {
                         return;
                       }
                       Get.back();
+
+                      await Future.delayed(const Duration(milliseconds: 250));
+
                       controller.setPage('/userdata');
                       Get.offAndToNamed('/userdata');
                     },
@@ -109,6 +116,9 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                         return;
                       }
                       Get.back();
+
+                      await Future.delayed(const Duration(milliseconds: 250));
+
                       controller.setPage('/settings');
                       Get.offAndToNamed('/settings');
                     },
