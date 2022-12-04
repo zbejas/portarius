@@ -63,7 +63,6 @@ class SettingsPage extends GetView<SettingsController> {
                 // Language
                 Card(
                   child: ListTile(
-                    enabled: false,
                     title: Text(
                       'settings_language'.tr,
                       style: const TextStyle(
@@ -71,6 +70,20 @@ class SettingsPage extends GetView<SettingsController> {
                       ),
                     ),
                     subtitle: Text('settings_language_subtitle'.tr),
+                    trailing: DropdownButton<Locale>(
+                      value: Get.locale,
+                      items: const [
+                        DropdownMenuItem(
+                          value: Locale('en', 'US'),
+                          child: Text('English'),
+                        ),
+                        DropdownMenuItem(
+                          value: Locale('sl'),
+                          child: Text('Slovenian'),
+                        ),
+                      ],
+                      onChanged: (value) => Get.updateLocale(value!),
+                    ),
                   ),
                 ),
                 // Default sort order
@@ -102,6 +115,10 @@ class SettingsPage extends GetView<SettingsController> {
                           controller.setSortOption(value!.toString()),
                     ),
                   ),
+                ),
+                const Divider(
+                  endIndent: 20,
+                  indent: 20,
                 ),
                 // Auto refresh toggle
                 Card(

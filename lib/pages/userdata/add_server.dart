@@ -260,8 +260,8 @@ class _ServerAddPageState extends State<ServerAddPage> {
                                         snackPosition: SnackPosition.TOP,
                                         backgroundColor:
                                             context.theme.errorColor,
-                                        colorText:
-                                            Get.theme.scaffoldBackgroundColor,
+                                        colorText: Get.theme.snackBarTheme
+                                            .actionTextColor,
                                         margin: const EdgeInsets.all(10),
                                       );
                                       return;

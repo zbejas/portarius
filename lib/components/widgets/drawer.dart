@@ -133,24 +133,35 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                         ),
                       ),
                       subtitle: Text('drawer_endpoint_subtitle'.tr),
-                      trailing: DropdownButton<String>(
-                        value: userDataController.currentServer!.endpoint,
-                        items: userDataController.currentServerEndpoints
-                            .map(
-                              (e) => DropdownMenuItem<String>(
-                                value: e.id,
-                                child: Text(e.name),
-                              ),
+                      trailing: userDataController
+                              .currentServerEndpoints.isNotEmpty
+                          ? DropdownButton<String>(
+                              // ignore: iterable_contains_unrelated_type
+                              value: userDataController.currentServerEndpoints
+                                      .contains(
+                                userDataController.currentServer!.endpoint,
+                              )
+                                  ? userDataController.currentServer!.endpoint
+                                  : userDataController
+                                      .currentServerEndpoints.first.id,
+                              items: userDataController.currentServerEndpoints
+                                  .map(
+                                    (e) => DropdownMenuItem<String>(
+                                      value: e.id,
+                                      child: Text(e.name),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (String? value) async {
+                                if (value == null) {
+                                  return;
+                                }
+                                userDataController
+                                    .setNewCurrentServerEndpoint(value);
+                              },
+                              borderRadius: BorderRadius.circular(15),
                             )
-                            .toList(),
-                        onChanged: (String? value) async {
-                          if (value == null) {
-                            return;
-                          }
-                          userDataController.setNewCurrentServerEndpoint(value);
-                        },
-                        borderRadius: BorderRadius.circular(15),
-                      ),
+                          : null,
                     ),
                 ],
               ),

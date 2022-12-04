@@ -197,8 +197,9 @@ class PortainerApiProvider extends GetConnect implements GetxService {
       'snackbar_api_error_title'.tr,
       message,
       backgroundColor: Get.theme.errorColor,
-      colorText: Get.theme.scaffoldBackgroundColor,
+      colorText: Colors.white,
       margin: const EdgeInsets.all(10),
+      duration: const Duration(seconds: 2),
     );
   }
 

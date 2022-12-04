@@ -48,20 +48,23 @@ class StorageController extends GetxController {
   }
 
   Future<void> loadLanguages() async {
-    final Map<String, String> enUs = _convertToMap(
-      jsonDecode(
-        await rootBundle.loadString('assets/lang/en_US.json'),
-      ) as Map,
-    );
+    final Map<String, String> enUs =
+        await _convertToMap('assets/lang/en_US.json');
+    final Map<String, String> sl = await _convertToMap('assets/lang/sl.json');
 
     languages = {
       'en_US': enUs,
+      'sl': sl,
     };
   }
 
-  Map<String, String> _convertToMap(Map<dynamic, dynamic> map) {
+  Future<Map<String, String>> _convertToMap(String path) async {
     final Map<String, String> newMap = {};
-    map.forEach((key, value) {
+    final Map data = jsonDecode(
+      await rootBundle.loadString(path),
+    ) as Map;
+
+    data.forEach((key, value) {
       newMap[key.toString()] = value.toString();
     });
     return newMap;

@@ -82,7 +82,7 @@ class SettingsController extends GetxController {
               'snackbar_settings_no_auth_content'.tr,
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Get.theme.errorColor,
-              colorText: Get.theme.scaffoldBackgroundColor,
+              colorText: Colors.white,
               margin: const EdgeInsets.all(10),
             );
             return;
@@ -106,8 +106,8 @@ class SettingsController extends GetxController {
       Get.defaultDialog(
         title: 'dialog_settings_ssl_verification_title'.tr,
         middleText: 'dialog_settings_ssl_verification_content'.tr,
-        textConfirm: 'Continue',
-        textCancel: 'Cancel',
+        textConfirm: 'dialog_ok'.tr,
+        textCancel: 'dialog_cancel'.tr,
         contentPadding: const EdgeInsets.all(16),
         titlePadding: const EdgeInsets.only(top: 20),
         onConfirm: () async {
@@ -147,8 +147,6 @@ class SettingsController extends GetxController {
   void setSortOption(String value) {
     _logger.d('Setting sort option to: $value');
     sortOption.value = value;
-    final DockerController dockerController = Get.find();
-    dockerController.sortOption.value = value;
     save();
   }
 

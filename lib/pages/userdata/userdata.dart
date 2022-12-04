@@ -169,7 +169,7 @@ class _UserDataPageState extends State<UserDataPage> {
 
   String _getObfuscated(String text, String encodeKey) {
     // return a random char from the list
-    final String charList = '/\\#\$%^&*+{}?';
+    const String charList = '/\\#\$%^&*+{}?';
     // generate a value from the values of the chars in the string
     final int endoceValue = encodeKey.codeUnits.reduce((a, b) => a + b);
 
