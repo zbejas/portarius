@@ -66,9 +66,8 @@ class SettingsController extends GetxController {
       // A warning that biometrics will be disabled if
       // the user disables biometrics on their device
       Get.defaultDialog(
-        title: 'Warning',
-        middleText:
-            'Disabling biometrics on your device will disable biometrics in Portarius',
+        title: 'dialog_settings_security_biometrics_title'.tr,
+        middleText: 'dialog_settings_security_biometrics_content'.tr,
         textConfirm: 'Continue',
         textCancel: 'Cancel',
         contentPadding: const EdgeInsets.all(16),
@@ -79,11 +78,11 @@ class SettingsController extends GetxController {
           if (!(await localAuth.authenticate())) {
             _logger.w('Device does not support local auth');
             Get.snackbar(
-              'Error',
-              'Device does not support local auth',
+              'snackbar_settings_no_auth_title'.tr,
+              'snackbar_settings_no_auth_content'.tr,
               snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.red,
-              colorText: Colors.white,
+              backgroundColor: Get.theme.errorColor,
+              colorText: Get.theme.scaffoldBackgroundColor,
               margin: const EdgeInsets.all(10),
             );
             return;
@@ -105,9 +104,8 @@ class SettingsController extends GetxController {
       // A warning that self-signed certs will be enabled if
       // the user enables auto signed certs
       Get.defaultDialog(
-        title: 'Warning',
-        middleText:
-            'Allowing self-signed certificates could make your connection insecure.',
+        title: 'dialog_settings_ssl_verification_title'.tr,
+        middleText: 'dialog_settings_ssl_verification_content'.tr,
         textConfirm: 'Continue',
         textCancel: 'Cancel',
         contentPadding: const EdgeInsets.all(16),

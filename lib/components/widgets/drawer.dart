@@ -59,13 +59,13 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                     ),
                   ),
                   ListTile(
-                    title: const Text(
-                      'Home',
-                      style: TextStyle(
+                    title: Text(
+                      'drawer_home'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Home page'),
+                    subtitle: Text('drawer_home_subtitle'.tr),
                     trailing: const Icon(Icons.home),
                     selected: controller.pickedPage.value == '/home',
                     onTap: () async {
@@ -81,13 +81,13 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                     },
                   ),
                   ListTile(
-                    title: const Text(
-                      'User Data',
-                      style: TextStyle(
+                    title: Text(
+                      'drawer_userdata'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Modify stored user data'),
+                    subtitle: Text('drawer_userdata_subtitle'.tr),
                     trailing: const Icon(Icons.person),
                     onTap: () async {
                       if (controller.pickedPage.value == '/userdata') {
@@ -103,13 +103,13 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                     selected: controller.pickedPage.value == '/userdata',
                   ),
                   ListTile(
-                    title: const Text(
-                      'Settings',
-                      style: TextStyle(
+                    title: Text(
+                      'drawer_settings'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Modify app settings'),
+                    subtitle: Text('drawer_settings_subtitle'.tr),
                     trailing: const Icon(Icons.settings),
                     onTap: () async {
                       if (controller.pickedPage.value == '/settings') {
@@ -124,16 +124,15 @@ class PortariusDrawer extends GetView<PortariusDrawerController> {
                     },
                     selected: controller.pickedPage.value == '/settings',
                   ),
-                  // todo: Dropdown for endpoint selection
                   if (userDataController.currentServer != null)
                     ListTile(
-                      title: const Text(
-                        'Endpoint',
-                        style: TextStyle(
+                      title: Text(
+                        'drawer_endpoint'.tr,
+                        style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
-                      subtitle: const Text('Select your endpoint'),
+                      subtitle: Text('drawer_endpoint_subtitle'.tr),
                       trailing: DropdownButton<String>(
                         value: userDataController.currentServer!.endpoint,
                         items: userDataController.currentServerEndpoints

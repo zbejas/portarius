@@ -1,17 +1,18 @@
 // ignore_for_file: always_specify_types, avoid_dynamic_calls
 
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:portarius/services/controllers/logger_controller.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class StorageController extends GetxController {
   late Box<dynamic> userData;
   late Box<dynamic> settings;
   late PackageInfo packageInfo;
+  late Map<String, Map<String, String>> languages;
 
   final Logger _logger = LoggerController().logger;
 
@@ -44,5 +45,25 @@ class StorageController extends GetxController {
   Future<void> saveSettings(String key, dynamic value) async {
     await settings.put(key, value);
     update();
+  }
+
+  Future<void> loadLanguages() async {
+    final Map<String, String> enUs = _convertToMap(
+      jsonDecode(
+        await rootBundle.loadString('assets/lang/en_US.json'),
+      ) as Map,
+    );
+
+    languages = {
+      'en_US': enUs,
+    };
+  }
+
+  Map<String, String> _convertToMap(Map<dynamic, dynamic> map) {
+    final Map<String, String> newMap = {};
+    map.forEach((key, value) {
+      newMap[key.toString()] = value.toString();
+    });
+    return newMap;
   }
 }

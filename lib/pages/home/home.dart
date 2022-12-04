@@ -27,10 +27,10 @@ class HomePage extends StatelessWidget {
         !Get.isLogEnable) {
       Future.delayed(const Duration(milliseconds: 750), () {
         Get.defaultDialog(
-          title: 'No servers found',
-          middleText: 'Would you like to add a server now?',
-          textConfirm: 'Yes',
-          textCancel: 'Not now',
+          title: 'dialog_add_server_title'.tr,
+          middleText: 'dialog_add_server_content'.tr,
+          textConfirm: 'dialog_yes'.tr,
+          textCancel: 'dialog_cancel_not_now'.tr,
           confirmTextColor: Colors.white,
           onConfirm: () async {
             Get.back();
@@ -57,10 +57,10 @@ class HomePage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         return await Get.defaultDialog(
-          title: 'Exit Portarius?',
-          middleText: 'Are you sure you want to exit Portarius?',
-          textConfirm: 'Yes',
-          textCancel: 'No',
+          title: 'dialog_exit_title'.tr,
+          middleText: 'dialog_exit_content'.tr,
+          textConfirm: 'dialog_yes'.tr,
+          textCancel: 'dialog_cancel_not_now'.tr,
           onConfirm: () => Get.back(result: true),
           onCancel: () => Get.back(result: false),
         ) as bool;
@@ -88,7 +88,7 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'No servers added',
+                      'home_no_server'.tr,
                       style: context.textTheme.headline5,
                     ),
                     const SizedBox(
@@ -98,7 +98,7 @@ class HomePage extends StatelessWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Add a server to get started.',
+                            text: 'home_add_server'.tr,
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                             ),
@@ -125,7 +125,7 @@ class HomePage extends StatelessWidget {
             : userDataController.currentServer == null
                 ? Center(
                     child: Text(
-                      'No server selected.',
+                      'home_no_server_selected'.tr,
                       style: context.textTheme.headline5,
                     ),
                   )
@@ -137,6 +137,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  // this is a test, final search will not be a dialog
   void _showSearchDialog(DockerController dockerController) {
     Get.dialog(
       AlertDialog(

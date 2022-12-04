@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:portarius/components/routing/routes.dart';
 import 'package:portarius/services/controllers/logger_controller.dart';
 import 'package:portarius/services/controllers/settings_controller.dart';
+import 'package:portarius/services/messages.dart';
 import 'package:portarius/services/service_controller.dart';
 
 void main() async {
@@ -28,10 +29,9 @@ class MyApp extends StatelessWidget {
         const Duration(seconds: 3),
         () {
           Get.defaultDialog(
-            title: 'Work in progress',
-            middleText:
-                'This app is still a work in progress. The design is not final and the functionality is limited.',
-            textConfirm: 'OK',
+            title: 'dialog_main_work_in_progress'.tr,
+            middleText: 'dialog_main_work_in_progress_text'.tr,
+            textConfirm: 'dialog_ok'.tr,
             onConfirm: () {
               Get.back();
             },
@@ -41,6 +41,10 @@ class MyApp extends StatelessWidget {
     }
 
     return GetMaterialApp(
+      translations: Messages(),
+      // try checking the locale of the device with Get.deviceLocale
+      locale: Get.deviceLocale,
+      fallbackLocale: const Locale('en', 'US'),
       debugShowCheckedModeBanner: false,
       title: 'Portarius',
       logWriterCallback: loggerController.logWriterCallback,

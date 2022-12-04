@@ -57,7 +57,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
                   child: Column(
                     children: [
                       Text(
-                        'Input server details',
+                        'server_add_title'.tr,
                         style: context.textTheme.headline4,
                         textAlign: TextAlign.center,
                       ),
@@ -71,14 +71,14 @@ class _ServerAddPageState extends State<ServerAddPage> {
                         onEditingComplete: () {
                           FocusScope.of(context).nextFocus();
                         },
-                        decoration: const InputDecoration(
-                          labelText: 'Name',
-                          hintText: 'My server',
+                        decoration: InputDecoration(
+                          labelText: 'server_add_name_label'.tr,
+                          hintText: 'server_add_name_hint'.tr,
                           contentPadding: EdgeInsets.all(10),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Please enter a name';
+                            return 'server_add_name_empty'.tr;
                           }
                           return null;
                         },
@@ -92,18 +92,18 @@ class _ServerAddPageState extends State<ServerAddPage> {
                         onEditingComplete: () {
                           FocusScope.of(context).nextFocus();
                         },
-                        decoration: const InputDecoration(
-                          labelText: 'Base URL',
-                          hintText: 'https://example.com/portainer',
+                        decoration: InputDecoration(
+                          labelText: 'server_add_url_label'.tr,
+                          hintText: 'server_add_url_hint'.tr,
                           contentPadding: EdgeInsets.all(10),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Please enter a base URL';
+                            return 'server_add_url_empty'.tr;
                           }
 
                           if (!Uri.tryParse(value)!.isAbsolute) {
-                            return 'Please enter a valid URL';
+                            return 'server_add_url_invalid'.tr;
                           }
 
                           return null;
@@ -118,9 +118,9 @@ class _ServerAddPageState extends State<ServerAddPage> {
                         onEditingComplete: () {
                           FocusScope.of(context).nextFocus();
                         },
-                        decoration: const InputDecoration(
-                          labelText: 'Local URL',
-                          hintText: '(optional) http://192.168.x.x/portainer',
+                        decoration: InputDecoration(
+                          labelText: 'server_add_local_url_label'.tr,
+                          hintText: 'server_add_local_url_hint'.tr,
                           contentPadding: EdgeInsets.all(10),
                         ),
                         validator: (value) {
@@ -129,7 +129,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
                           }
 
                           if (!Uri.tryParse(value)!.isAbsolute) {
-                            return 'Please enter a valid URL';
+                            return 'server_add_local_url_invalid'.tr;
                           }
 
                           return null;
@@ -148,14 +148,14 @@ class _ServerAddPageState extends State<ServerAddPage> {
                             _testConnection();
                           }
                         },
-                        decoration: const InputDecoration(
-                          labelText: 'API token',
-                          hintText: "See 'How to get an API token?' below.",
+                        decoration: InputDecoration(
+                          labelText: 'server_add_token_label'.tr,
+                          hintText: 'server_add_token_hint'.tr,
                           contentPadding: EdgeInsets.all(10),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Please enter an API key';
+                            return 'server_add_token_empty'.tr;
                           }
                           return null;
                         },
@@ -163,25 +163,23 @@ class _ServerAddPageState extends State<ServerAddPage> {
                       const SizedBox(
                         height: 40,
                       ),
-                      /*Text(
-                        'If you are using a self-signed certificate, you may need to enable that in the settings.',
-                        style: context.textTheme.caption,
-                        textAlign: TextAlign.center,
-                      ),*/
                       RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text:
-                                  'If you are using a self-signed certificate, you may need to enable that in the ',
+                              text: 'server_add_info_self_signed'.trParams(
+                                {
+                                  'page': '',
+                                },
+                              ),
                               style: TextStyle(
                                 color:
                                     Theme.of(context).textTheme.caption!.color,
                               ),
                             ),
                             TextSpan(
-                              text: 'settings.',
+                              text: '${'settings'.tr}.',
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                               ),
@@ -195,11 +193,11 @@ class _ServerAddPageState extends State<ServerAddPage> {
                                       localUrlController.text.isNotEmpty ||
                                       tokenController.text.isNotEmpty) {
                                     Get.defaultDialog(
-                                      title: 'Are you sure?',
+                                      title: 'dialog_server_add_exit'.tr,
                                       middleText:
-                                          'Any unsaved changes will be lost.',
-                                      textConfirm: 'Yes',
-                                      textCancel: 'No',
+                                          'dialog_server_add_exit_text'.tr,
+                                      textConfirm: 'dialog_yes'.tr,
+                                      textCancel: 'dialog_cancel_not_now'.tr,
                                       onConfirm: () {
                                         drawerController.setPage('/settings');
                                         Get.offAllNamed('/settings');
@@ -225,7 +223,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
                           ),
                           children: [
                             TextSpan(
-                              text: 'How to get an API token? ',
+                              text: 'server_add_info_api_token'.tr,
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   launchUrlString(
@@ -245,7 +243,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
                         children: [
                           ElevatedButton(
                             onPressed: _testConnection,
-                            child: const Text('Test connection'),
+                            child: Text('server_add_button_test'.tr),
                           ),
                           ElevatedButton(
                             onPressed: () async {
@@ -254,9 +252,11 @@ class _ServerAddPageState extends State<ServerAddPage> {
                               }
                               if (!_hasConnectionBeenTested) {
                                 Get.snackbar(
-                                  'Connection not tested',
-                                  'Please test the connection before adding the server',
+                                  'snackbar_server_add_not_tested_title'.tr,
+                                  'snackbar_server_add_not_tested_text'.tr,
                                   snackPosition: SnackPosition.TOP,
+                                  backgroundColor: context.theme.errorColor,
+                                  colorText: Get.theme.scaffoldBackgroundColor,
                                   margin: const EdgeInsets.all(10),
                                 );
                                 return;
@@ -282,7 +282,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
                               Get.back();
                               userDataController.addServer(serverData);
                             },
-                            child: const Text('Add'),
+                            child: Text('server_add_button_save'.tr),
                           ),
                         ],
                       ),
@@ -344,11 +344,11 @@ class _ServerAddPageState extends State<ServerAddPage> {
     if (testResult != null) {
       Get.back();
       Get.snackbar(
-        'Connection failed',
-        testResult,
+        'snackbar_server_add_test_error_title'.tr,
+        'snackbar_server_add_test_error_content'.trParams(),
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
+        backgroundColor: context.theme.errorColor,
+        colorText: Get.theme.scaffoldBackgroundColor,
         margin: const EdgeInsets.all(10),
       );
     } else {
@@ -375,11 +375,11 @@ class _ServerAddPageState extends State<ServerAddPage> {
       Get.back();
       if (endpoints.isEmpty) {
         Get.snackbar(
-          'No endpoints found',
-          'Please create an endpoint in Portainer',
+          'snackbar_server_add_test_no_endoint_title'.tr,
+          'snackbar_server_add_test_no_endoint_content'.tr,
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
+          backgroundColor: context.theme.errorColor,
+          colorText: Get.theme.scaffoldBackgroundColor,
           margin: const EdgeInsets.all(10),
         );
       }
@@ -387,22 +387,25 @@ class _ServerAddPageState extends State<ServerAddPage> {
       _hasConnectionBeenTested = true;
       if (localTestResult == null) {
         Get.defaultDialog(
-          title: 'Success',
-          content: const Text(
-            'You may now add the server.',
+          title: 'dialog_server_add_test_success_title'.tr,
+          content: Text(
+            'dialog_server_add_test_success_content'.trParams(
+              {
+                'url': url,
+              },
+            ),
+            textAlign: TextAlign.center,
           ),
-          textCancel: 'OK',
+          textCancel: 'dialog_ok'.tr,
         );
       } else {
         Get.defaultDialog(
-          title: 'Warning',
-          content: const Text(
-            'The base URL is accessible, but the local URL is not. '
-            'This means that local the app may be able to switch to the local URL when available.'
-            '\n\nYou can still add the server, since the base URL is accessible.',
+          title: 'snackbar_server_add_test_local_warning_title'.tr,
+          content: Text(
+            'snackbar_server_add_test_local_warning_content'.tr,
             textAlign: TextAlign.center,
           ),
-          textCancel: 'Continue',
+          textCancel: 'dialog_ok'.tr,
         );
       }
     }

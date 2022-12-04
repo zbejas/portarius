@@ -62,7 +62,7 @@ class UserDataController extends GetxController {
 
   void addServer(ServerData serverData) {
     if (serverList.contains(serverData)) {
-      _showSnackBar('Server already exists');
+      _showSnackBar('userdata_server_exists'.tr);
       return;
     }
 
@@ -74,7 +74,7 @@ class UserDataController extends GetxController {
 
   void removeServer(ServerData serverData) {
     if (!serverList.contains(serverData)) {
-      _showSnackBar('Server not found');
+      _showSnackBar('snackbar_userdata_server_not_found'.tr);
       return;
     }
     serverList.remove(serverData);
@@ -83,7 +83,7 @@ class UserDataController extends GetxController {
 
   void _showSnackBar(String message) {
     Get.snackbar(
-      'Error',
+      'snackbar_userdata_title'.tr,
       message,
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.red,
@@ -100,7 +100,7 @@ class UserDataController extends GetxController {
     api.checkEndpoints(url: serverData.baseUrl, token: serverData.token).then(
       (endpoints) {
         if (endpoints == null) {
-          _showSnackBar('Could not get server endpoints.');
+          _showSnackBar('snackbar_server_add_test_no_endoint_title'.tr);
           return false;
         }
 

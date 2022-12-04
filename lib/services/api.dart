@@ -97,7 +97,7 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     );
 
     if (response.hasError) {
-      _showSnackBar('Error getting endpoints');
+      _showSnackBar('snackbar_api_error_endpoints'.tr);
       _logger.e(response.statusText);
       return null;
     }
@@ -138,7 +138,7 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     );
 
     if (response.hasError) {
-      _showSnackBar(response.statusText ?? 'Error getting containers.');
+      _showSnackBar(response.statusText ?? 'snackbar_api_error_containers'.tr);
       _logger.e(response.statusText);
 
       return <SimpleContainer>[];
@@ -161,7 +161,7 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     );
 
     if (response.hasError) {
-      _showSnackBar(response.statusText ?? 'Error starting container.');
+      _showSnackBar(response.statusText ?? 'snackbar_api_error_start'.tr);
       _logger.e(response.statusText);
     }
   }
@@ -174,7 +174,7 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     );
 
     if (response.hasError) {
-      _showSnackBar(response.statusText ?? 'Error stopping container.');
+      _showSnackBar(response.statusText ?? 'snackbar_api_error_stop'.tr);
       _logger.e(response.statusText);
     }
   }
@@ -187,14 +187,14 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     );
 
     if (response.hasError) {
-      _showSnackBar(response.statusText ?? 'Error restarting container.');
+      _showSnackBar(response.statusText ?? 'snackbar_api_error_restart'.tr);
       _logger.e(response.statusText);
     }
   }
 
   void _showSnackBar(String message) {
     Get.snackbar(
-      'Error',
+      'snackbar_api_error_title'.tr,
       message,
       backgroundColor: Get.theme.errorColor,
       colorText: Get.theme.scaffoldBackgroundColor,

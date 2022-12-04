@@ -33,6 +33,7 @@ class ServiceController {
 
     // Get settings from storage
     final StorageController storage = Get.find();
+    await storage.loadLanguages();
     settings.fromJson(storage.settings.toMap());
 
     // Initialize local_auth

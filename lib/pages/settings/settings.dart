@@ -38,7 +38,7 @@ class SettingsPage extends GetView<SettingsController> {
               padding: const EdgeInsets.all(15),
               children: [
                 Text(
-                  'General',
+                  'settings_title_general'.tr,
                   style: context.textTheme.headline3,
                 ),
                 const SizedBox(
@@ -47,29 +47,42 @@ class SettingsPage extends GetView<SettingsController> {
                 // Dark mode
                 Card(
                   child: ListTile(
-                    title: const Text(
-                      'Dark mode',
-                      style: TextStyle(
+                    title: Text(
+                      'settings_dark_mode'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Toggle dark mode.'),
+                    subtitle: Text('settings_dark_mode_subtitle'.tr),
                     trailing: Switch(
                       value: controller.isDarkMode.value,
                       onChanged: (value) => controller.toggleDarkMode(),
                     ),
                   ),
                 ),
-                // Default sort order
+                // Language
                 Card(
                   child: ListTile(
-                    title: const Text(
-                      'Default sort order',
-                      style: TextStyle(
+                    enabled: false,
+                    title: Text(
+                      'settings_language'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Sets the default sort order.'),
+                    subtitle: Text('settings_language_subtitle'.tr),
+                  ),
+                ),
+                // Default sort order
+                Card(
+                  child: ListTile(
+                    title: Text(
+                      'settings_sorting'.tr,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    subtitle: Text('settings_sorting_subtitle'.tr),
                     trailing: DropdownButton<SortOptions>(
                       borderRadius: BorderRadius.circular(15),
                       value: DockerController().sortOptionFromString(
@@ -93,13 +106,13 @@ class SettingsPage extends GetView<SettingsController> {
                 // Auto refresh toggle
                 Card(
                   child: ListTile(
-                    title: const Text(
-                      'Auto refresh',
-                      style: TextStyle(
+                    title: Text(
+                      'settings_auto_refresh'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Auto refresh in the home page.'),
+                    subtitle: Text('settings_auto_refresh_subtitle'.tr),
                     trailing: Switch(
                       value: controller.autoRefresh.value,
                       onChanged: (value) => controller.toggleAutoRefresh(),
@@ -109,41 +122,42 @@ class SettingsPage extends GetView<SettingsController> {
                 // Auto refresh interval
                 Card(
                   child: ListTile(
-                    title: const Text(
-                      'Auto refresh interval',
-                      style: TextStyle(
+                    title: Text(
+                      'settings_auto_refresh_interval'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
                     enabled: controller.autoRefresh.value,
-                    subtitle: const Text('Sets the auto refresh interval.'),
+                    subtitle:
+                        Text('settings_auto_refresh_interval_subtitle'.tr),
                     trailing: DropdownButton<int>(
                       value: controller.refreshInterval.value,
                       borderRadius: BorderRadius.circular(15),
-                      items: const [
+                      items: [
                         DropdownMenuItem(
                           value: 1,
-                          child: Text('1 second'),
+                          child: Text('1 ${'second'.tr}'),
                         ),
                         DropdownMenuItem(
                           value: 3,
-                          child: Text('3 seconds'),
+                          child: Text('3 ${'seconds'.tr}'),
                         ),
                         DropdownMenuItem(
                           value: 5,
-                          child: Text('5 seconds'),
+                          child: Text('5 ${'seconds'.tr}'),
                         ),
                         DropdownMenuItem(
                           value: 10,
-                          child: Text('10 seconds'),
+                          child: Text('10 ${'seconds'.tr}'),
                         ),
                         DropdownMenuItem(
                           value: 15,
-                          child: Text('15 seconds'),
+                          child: Text('15 ${'seconds'.tr}'),
                         ),
                         DropdownMenuItem(
                           value: 30,
-                          child: Text('30 seconds'),
+                          child: Text('30 ${'seconds'.tr}'),
                         ),
                       ],
                       onChanged: controller.autoRefresh.value
@@ -156,7 +170,7 @@ class SettingsPage extends GetView<SettingsController> {
                   height: 10,
                 ),
                 Text(
-                  'Security',
+                  'settings_title_security'.tr,
                   style: context.textTheme.headline3,
                 ),
                 const SizedBox(
@@ -165,13 +179,13 @@ class SettingsPage extends GetView<SettingsController> {
                 // Biometrics
                 Card(
                   child: ListTile(
-                    title: const Text(
-                      'Biometrics',
-                      style: TextStyle(
+                    title: Text(
+                      'settings_biometrics'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Toggle biometric authentication.'),
+                    subtitle: Text('settings_biometrics_subtitle'.tr),
                     trailing: Switch(
                       value: controller.isAuthEnabled.value,
                       onChanged: (value) async {
@@ -183,13 +197,13 @@ class SettingsPage extends GetView<SettingsController> {
                 // Ssl verification
                 Card(
                   child: ListTile(
-                    title: const Text(
-                      'SSL verification',
-                      style: TextStyle(
+                    title: Text(
+                      'settings_ssl_verification'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Allow self-signed certificates.'),
+                    subtitle: Text('settings_ssl_verification_subtitle'.tr),
                     trailing: Switch(
                       value: controller.allowAutoSignedCerts.value,
                       onChanged: (value) => controller.toggleAutoCert(),
@@ -199,13 +213,13 @@ class SettingsPage extends GetView<SettingsController> {
                 // Paranoid mode
                 Card(
                   child: ListTile(
-                    title: const Text(
-                      'Paranoid mode',
-                      style: TextStyle(
+                    title: Text(
+                      'settings_paranoid_mode'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Hide URLs in server list.'),
+                    subtitle: Text('settings_paranoid_mode_subtitle'.tr),
                     trailing: Switch(
                       value: controller.paranoidMode.value,
                       onChanged: (value) => controller.toggleParanoidMode(),
@@ -216,7 +230,7 @@ class SettingsPage extends GetView<SettingsController> {
                   height: 10,
                 ),
                 Text(
-                  'Information',
+                  'settings_title_information'.tr,
                   style: context.textTheme.headline3,
                 ),
                 const SizedBox(
@@ -225,14 +239,14 @@ class SettingsPage extends GetView<SettingsController> {
                 // View logs
                 Card(
                   child: ListTile(
-                    title: const Text(
-                      'View logs',
-                      style: TextStyle(
+                    title: Text(
+                      'settings_view_logs'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
                     enabled: false,
-                    subtitle: const Text('View portarius logs.'),
+                    subtitle: Text('settings_view_logs_subtitle'.tr),
                     trailing: const Icon(Icons.list_alt),
                     onTap: () => Get.toNamed('/logs'),
                   ),
@@ -240,13 +254,13 @@ class SettingsPage extends GetView<SettingsController> {
                 // FAQ
                 Card(
                   child: ListTile(
-                    title: const Text(
-                      'FAQ',
-                      style: TextStyle(
+                    title: Text(
+                      'settings_faq'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('Frequently asked questions.'),
+                    subtitle: Text('settings_faq_subtitle'.tr),
                     trailing: const Icon(Icons.question_answer),
                     onTap: () async {
                       const uri =
@@ -263,15 +277,14 @@ class SettingsPage extends GetView<SettingsController> {
                 // Donate
                 Card(
                   child: ListTile(
-                    title: const Text(
-                      'Donate',
-                      style: TextStyle(
+                    title: Text(
+                      'settings_donate'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
                     enabled: false,
-                    subtitle:
-                        const Text('Support the development of portarius'),
+                    subtitle: Text('settings_donate_subtitle'.tr),
                     trailing: const Icon(Icons.favorite),
                     onTap: () {},
                   ),
@@ -279,13 +292,13 @@ class SettingsPage extends GetView<SettingsController> {
                 // About
                 Card(
                   child: ListTile(
-                    title: const Text(
-                      'About',
-                      style: TextStyle(
+                    title: Text(
+                      'settings_about'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    subtitle: const Text('App info and legal jibberish.'),
+                    subtitle: Text('settings_about_subtitle'.tr),
                     trailing: const Icon(Icons.info),
                     onTap: () => _showAbout(context),
                   ),

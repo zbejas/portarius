@@ -48,7 +48,7 @@ class _UserDataPageState extends State<UserDataPage> {
           () => Center(
             child: userDataController.serverList.isEmpty
                 ? Text(
-                    'Add a server to get started.',
+                    'userdata_no_server'.tr,
                     style: context.textTheme.headline5,
                     textAlign: TextAlign.center,
                   )
@@ -80,8 +80,14 @@ class _UserDataPageState extends State<UserDataPage> {
                             setState(() {});
 
                             Get.snackbar(
-                              'Server changed',
-                              'Server changed to ${userDataController.currentServer!.name}',
+                              'snackbar_userdata_server_changed_title'.tr,
+                              'snackbar_userdata_server_changed_content'
+                                  .trParams(
+                                {
+                                  'name':
+                                      userDataController.currentServer!.name,
+                                },
+                              ),
                               snackPosition: SnackPosition.TOP,
                               duration: const Duration(seconds: 1),
                             );
@@ -115,11 +121,19 @@ class _UserDataPageState extends State<UserDataPage> {
                                   onPressed: () {
                                     // dialog confirming deletion
                                     Get.defaultDialog(
-                                      title: 'Are you sure?',
+                                      title:
+                                          'dialog_userdata_server_delete_title'
+                                              .tr,
                                       middleText:
-                                          'This action cannot be undone.',
-                                      textConfirm: 'Delete',
-                                      textCancel: 'Cancel',
+                                          'dialog_userdata_server_delete_content'
+                                              .trParams(
+                                        {
+                                          'name': userDataController
+                                              .serverList[index].name,
+                                        },
+                                      ),
+                                      textConfirm: 'dialog_confirm_delete'.tr,
+                                      textCancel: 'dialog_cancel'.tr,
                                       onConfirm: () {
                                         // if server was current server, set current server to null
                                         if (userDataController.currentServer !=
