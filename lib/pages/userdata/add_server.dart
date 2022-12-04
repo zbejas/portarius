@@ -246,42 +246,49 @@ class _ServerAddPageState extends State<ServerAddPage> {
                             child: Text('server_add_button_test'.tr),
                           ),
                           ElevatedButton(
-                            onPressed: () async {
-                              if (!formKey.currentState!.validate()) {
-                                return;
-                              }
-                              if (!_hasConnectionBeenTested) {
-                                Get.snackbar(
-                                  'snackbar_server_add_not_tested_title'.tr,
-                                  'snackbar_server_add_not_tested_text'.tr,
-                                  snackPosition: SnackPosition.TOP,
-                                  backgroundColor: context.theme.errorColor,
-                                  colorText: Get.theme.scaffoldBackgroundColor,
-                                  margin: const EdgeInsets.all(10),
-                                );
-                                return;
-                              }
-                              if (Get.isSnackbarOpen) {
-                                await Get.closeCurrentSnackbar();
-                              }
+                            onPressed: _hasConnectionBeenTested
+                                ? () async {
+                                    if (!formKey.currentState!.validate()) {
+                                      return;
+                                    }
+                                    if (!_hasConnectionBeenTested) {
+                                      Get.snackbar(
+                                        'snackbar_server_add_not_tested_title'
+                                            .tr,
+                                        'snackbar_server_add_not_tested_text'
+                                            .tr,
+                                        snackPosition: SnackPosition.TOP,
+                                        backgroundColor:
+                                            context.theme.errorColor,
+                                        colorText:
+                                            Get.theme.scaffoldBackgroundColor,
+                                        margin: const EdgeInsets.all(10),
+                                      );
+                                      return;
+                                    }
+                                    if (Get.isSnackbarOpen) {
+                                      await Get.closeCurrentSnackbar();
+                                    }
 
-                              final ServerData serverData = ServerData(
-                                name: nameController.text,
-                                baseUrl: _fixUrl(urlController.text),
-                                token: tokenController.text,
-                                endpoint: endpoints.first.id,
-                                localUrl: _fixUrl(localUrlController.text),
-                              );
+                                    final ServerData serverData = ServerData(
+                                      name: nameController.text,
+                                      baseUrl: _fixUrl(urlController.text),
+                                      token: tokenController.text,
+                                      endpoint: endpoints.first.id,
+                                      localUrl:
+                                          _fixUrl(localUrlController.text),
+                                    );
 
-                              if (Get.isSnackbarOpen) {
-                                await Get.closeCurrentSnackbar();
-                                await Future<void>.delayed(
-                                  const Duration(milliseconds: 100),
-                                );
-                              }
-                              Get.back();
-                              userDataController.addServer(serverData);
-                            },
+                                    if (Get.isSnackbarOpen) {
+                                      await Get.closeCurrentSnackbar();
+                                      await Future<void>.delayed(
+                                        const Duration(milliseconds: 100),
+                                      );
+                                    }
+                                    Get.back();
+                                    userDataController.addServer(serverData);
+                                  }
+                                : null,
                             child: Text('server_add_button_save'.tr),
                           ),
                         ],
@@ -385,6 +392,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
       }
 
       _hasConnectionBeenTested = true;
+      setState(() {});
       if (localTestResult == null) {
         Get.defaultDialog(
           title: 'dialog_server_add_test_success_title'.tr,

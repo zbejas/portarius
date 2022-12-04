@@ -13,7 +13,7 @@
     "dialog_server_add_exit_content": "Any unsaved changes will be lost.",
     "dialog_server_add_test_success_content": "Connection to\n@url\nwas successful.\n\nYou can now save the server.",
     "dialog_server_add_test_success_title": "Connection successful",
-    "dialog_settings_security_biometrics_content": "Disabling biometrics on your device will disable biometrics in Portarius.",
+    "dialog_settings_security_biometrics_content": "Disabling biometrics on your device will disable biometrics in portarius.",
     "dialog_settings_security_biometrics_title": "Warning",
     "dialog_settings_ssl_verification_content": "Allowing self-signed certificates could make your connection insecure.\nAlso please make sure that you have added the certificate to your device.",
     "dialog_settings_ssl_verification_title": "Warning",
