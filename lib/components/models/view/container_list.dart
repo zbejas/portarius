@@ -29,9 +29,9 @@ class _ContainerListState extends State<ContainerList> {
     return Obx(
       () {
         if (controller.containers.isEmpty && controller.isLoaded.value) {
-          return const Center(
+          return Center(
             child: Text(
-              'No containers found.',
+              'home_no_containers_found'.tr,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -62,11 +62,11 @@ class _ContainerListState extends State<ContainerList> {
               padding: const EdgeInsets.all(5.0),
               child: ListTile(
                 title: Text(
-                  controller.containers[index].name ?? 'no name',
+                  controller.containers[index].name ?? '',
                   style: context.textTheme.titleMedium,
                 ),
                 subtitle: Text(
-                  controller.containers[index].status ?? 'no status',
+                  controller.containers[index].status ?? '',
                 ),
                 dense: false,
                 leading: PopupMenuButton(
@@ -97,8 +97,8 @@ class _ContainerListState extends State<ContainerList> {
                           ),
                           Text(
                             controller.containers[index].state == 'running'
-                                ? 'Stop'
-                                : 'Start',
+                                ? 'stop'.tr
+                                : 'start'.tr,
                             style: context.textTheme.bodyText1,
                           ),
                         ],
@@ -115,7 +115,7 @@ class _ContainerListState extends State<ContainerList> {
                             width: 10,
                           ),
                           Text(
-                            'Restart',
+                            'restart'.tr,
                             style: context.textTheme.bodyText1,
                           ),
                         ],

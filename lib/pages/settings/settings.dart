@@ -291,6 +291,10 @@ class SettingsPage extends GetView<SettingsController> {
                     },
                   ),
                 ),
+                const Divider(
+                  endIndent: 20,
+                  indent: 20,
+                ),
                 // Donate
                 Card(
                   child: ListTile(
