@@ -12,7 +12,7 @@
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/zbejas/portarius?color=yellow&include_prereleases&label=dev-release)
 
 ## Notes
-**I am working on portarius 2.0.0. If you want to try it out, help out, or check how the progress is, you can join our [Discord server](https://discord.gg/CVYEkSwVWE).**
+*I am working on portarius 2.0.0. If you want to try it out, help out or check the progress, for more information you can join our [Discord server](https://discord.gg/CVYEkSwVWE).*
 
 ## Features
 
@@ -54,7 +54,16 @@
 - [Request](https://github.com/zbejas/portarius/issues/new?assignees=&labels=&template=feature_request.md&title=) a feature
 - [Help](https://github.com/zbejas/portarius/issues) with the issues
 - [Send](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) a pull request
+- [Chat](https://discord.gg/CVYEkSwVWE) on Discord server
+- [Translate](https://hosted.weblate.org/projects/portarius/) on Weblate
 
+<details>
+  <summary>Translation progress</summary>
+  
+  [![Stanje prevoda](https://hosted.weblate.org/widgets/portarius/-/multi-auto.svg)](https://hosted.weblate.org/engage/portarius/)
+  
+</details>
+  
 ## Donations
 
 | Paypal | LiberaPay | Buy Me a Coffee |
