@@ -33,7 +33,7 @@ class _ContainerListState extends State<ContainerList> {
             child: Text(
               'home_no_containers_found'.tr,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
               ),
             ),
@@ -69,97 +69,92 @@ class _ContainerListState extends State<ContainerList> {
                   controller.containers[index].status ?? '',
                 ),
                 dense: false,
-                leading: PopupMenuButton(
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      value: 'start/stop',
-                      child: Row(
-                        children: [
-                          if (loading
-                                  .containsKey(controller.containers[index]) &&
-                              loading[controller.containers[index]] ==
-                                  'start/stop')
-                            const SizedBox(
-                              height: 25,
-                              width: 25,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 3,
-                              ),
-                            )
-                          else
-                            Icon(
-                              controller.containers[index].state == 'running'
-                                  ? Icons.stop
-                                  : Icons.play_arrow,
+                leading: loading.containsKey(controller.containers[index])
+                    ? const CircularProgressIndicator(
+                        strokeWidth: 3,
+                      )
+                    : PopupMenuButton(
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            value: 'start/stop',
+                            child: Row(
+                              children: [
+                                Icon(
+                                  controller.containers[index].state ==
+                                          'running'
+                                      ? Icons.stop
+                                      : Icons.play_arrow,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  controller.containers[index].state ==
+                                          'running'
+                                      ? 'stop'.tr
+                                      : 'start'.tr,
+                                  style: context.textTheme.bodyText1,
+                                ),
+                              ],
                             ),
-                          const SizedBox(
-                            width: 10,
                           ),
-                          Text(
-                            controller.containers[index].state == 'running'
-                                ? 'stop'.tr
-                                : 'start'.tr,
-                            style: context.textTheme.bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'restart',
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.delete,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'restart'.tr,
-                            style: context.textTheme.bodyText1,
+                          PopupMenuItem(
+                            value: 'restart',
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.delete,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'restart'.tr,
+                                  style: context.textTheme.bodyText1,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
+                        onSelected: (value) async {
+                          if (value == 'start/stop') {
+                            setState(() {
+                              loading.addAll({
+                                controller.containers[index]: 'start/stop',
+                              });
+                            });
+
+                            if (controller.containers[index].state ==
+                                'running') {
+                              await controller.stopContainer(
+                                controller.containers[index],
+                              );
+                            } else {
+                              await controller.startContainer(
+                                controller.containers[index],
+                              );
+                            }
+
+                            setState(() {
+                              loading.remove(controller.containers[index]);
+                            });
+                          } else if (value == 'restart') {
+                            setState(() {
+                              loading.addAll({
+                                controller.containers[index]: 'refresh',
+                              });
+                            });
+
+                            await controller.restartContainer(
+                              controller.containers[index],
+                            );
+
+                            setState(() {
+                              loading.remove(controller.containers[index]);
+                            });
+                          }
+                        },
                       ),
-                    ),
-                  ],
-                  onSelected: (value) async {
-                    if (value == 'start/stop') {
-                      setState(() {
-                        loading.addAll({
-                          controller.containers[index]: 'start/stop',
-                        });
-                      });
-
-                      if (controller.containers[index].state == 'running') {
-                        await controller.stopContainer(
-                          controller.containers[index],
-                        );
-                      } else {
-                        await controller.startContainer(
-                          controller.containers[index],
-                        );
-                      }
-
-                      setState(() {
-                        loading.remove(controller.containers[index]);
-                      });
-                    } else if (value == 'restart') {
-                      setState(() {
-                        loading.addAll({
-                          controller.containers[index]: 'refresh',
-                        });
-                      });
-
-                      await controller.restartContainer(
-                        controller.containers[index],
-                      );
-
-                      setState(() {
-                        loading.remove(controller.containers[index]);
-                      });
-                    }
-                  },
-                ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

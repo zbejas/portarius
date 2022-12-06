@@ -77,10 +77,10 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
+        /*floatingActionButton: FloatingActionButton(
           onPressed: () => _showSearchDialog(dockerController),
           child: const Icon(Icons.search),
-        ),
+        ),?*/
         menuBuilder: (context) => const PortariusDrawer(),
         contentBuilder: (context) => userDataController.serverList.isEmpty
             ? Center(
@@ -138,6 +138,7 @@ class HomePage extends StatelessWidget {
   }
 
   // this is a test, final search will not be a dialog
+  // ignore: unused_element
   void _showSearchDialog(DockerController dockerController) {
     Get.dialog(
       AlertDialog(

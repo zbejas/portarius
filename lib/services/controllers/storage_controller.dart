@@ -1,12 +1,13 @@
 // ignore_for_file: always_specify_types, avoid_dynamic_calls
 
 import 'dart:convert';
+
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:portarius/services/controllers/logger_controller.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 class StorageController extends GetxController {
   late Box<dynamic> userData;

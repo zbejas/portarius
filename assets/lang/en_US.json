@@ -17,6 +17,8 @@
     "dialog_settings_security_biometrics_title": "Warning",
     "dialog_settings_ssl_verification_content": "Allowing self-signed certificates could make your connection insecure.\nAlso please make sure that you have added the certificate to your device.",
     "dialog_settings_ssl_verification_title": "Warning",
+    "dialog_settings_language_title": "Are you sure?",
+    "dialog_settings_language_content": "Are you sure you want to change the language to '@language'?",
     "dialog_userdata_server_delete_content": "You are about to delete @name.\nThis action cannot be undone.",
     "dialog_userdata_server_delete_title": "Are you sure?",
     "dialog_yes": "Yes",

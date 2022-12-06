@@ -71,20 +71,49 @@ class SettingsPage extends GetView<SettingsController> {
                     ),
                     subtitle: Text('settings_language_subtitle'.tr),
                     trailing: DropdownButton<Locale>(
+                      borderRadius: BorderRadius.circular(15),
                       value: Get.locale,
                       items: const [
                         DropdownMenuItem(
                           value: Locale('en', 'US'),
-                          child: Text('English'),
+                          child: Text('English US'),
                         ),
                         DropdownMenuItem(
                           value: Locale('sl'),
                           child: Text('Slovenian'),
                         ),
                       ],
-                      onChanged: (value) => Get.updateLocale(value!),
+                      onChanged: (value) => Get.defaultDialog(
+                        title: 'dialog_settings_language_title'.tr,
+                        content: Text(
+                          'dialog_settings_language_content'.trParams(
+                            {
+                              'language':
+                                  '${value!.languageCode}${value.countryCode != null ? '_${value.countryCode}' : ''}',
+                            },
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Get.back(),
+                            child: Text('dialog_cancel'.tr),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Get.updateLocale(value!);
+                              Get.back();
+                            },
+                            child: Text('dialog_ok'.tr),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
+                ),
+                const Divider(
+                  endIndent: 20,
+                  indent: 20,
                 ),
                 // Default sort order
                 Card(
@@ -115,10 +144,6 @@ class SettingsPage extends GetView<SettingsController> {
                           controller.setSortOption(value!.toString()),
                     ),
                   ),
-                ),
-                const Divider(
-                  endIndent: 20,
-                  indent: 20,
                 ),
                 // Auto refresh toggle
                 Card(

@@ -352,7 +352,12 @@ class _ServerAddPageState extends State<ServerAddPage> {
       Get.back();
       Get.snackbar(
         'snackbar_server_add_test_error_title'.tr,
-        'snackbar_server_add_test_error_content'.trParams(),
+        'snackbar_server_add_test_error_content'.trParams(
+          {
+            'error': testResult,
+            'name': nameController.text,
+          },
+        ),
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: context.theme.errorColor,
         colorText: Get.theme.scaffoldBackgroundColor,

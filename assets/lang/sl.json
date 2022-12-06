@@ -10,6 +10,8 @@
     "dialog_settings_security_biometrics_content": "Če onemogočite biometrijo v vaši napravi, se biometrija izključi tudi v Portariusu.",
     "dialog_settings_security_biometrics_title": "Opozorilo",
     "dialog_settings_ssl_verification_title": "Opozorilo",
+    "dialog_settings_language_title": "Ste prepričani?",
+    "dialog_settings_language_content": "Ali ste prepričani da želite jezik nastavit na '@language'?",
     "drawer_home": "Domov",
     "home_add_server": "Za začetek, dodajte strežnik.",
     "drawer_settings_subtitle": "Spremenite nastavitve aplikacije.",
@@ -102,5 +104,9 @@
     "settings_view_logs_subtitle": "Ogled dnevnika Portariusa.",
     "snackbar_server_add_test_local_warning_title": "Opozorilo",
     "dialog_main_work_in_progress": "V razvoju",
-    "dialog_yes": "Da"
+    "dialog_yes": "Da",
+    "restart": "Ponovno zaženi",
+    "start": "Zaženi",
+    "stop": "Ustavi",
+    "home_no_containers_found": "Kontejnerji niso bili najdeni."
 }
