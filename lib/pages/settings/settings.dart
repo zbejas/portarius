@@ -72,7 +72,7 @@ class SettingsPage extends GetView<SettingsController> {
                     subtitle: Text('settings_language_subtitle'.tr),
                     trailing: DropdownButton<Locale>(
                       borderRadius: BorderRadius.circular(15),
-                      value: Get.locale,
+                      value: controller.locale.value,
                       items: const [
                         DropdownMenuItem(
                           value: Locale('en', 'US'),
@@ -101,7 +101,7 @@ class SettingsPage extends GetView<SettingsController> {
                           ),
                           TextButton(
                             onPressed: () {
-                              Get.updateLocale(value!);
+                              controller.setLocale(value);
                               Get.back();
                             },
                             child: Text('dialog_ok'.tr),
@@ -266,6 +266,20 @@ class SettingsPage extends GetView<SettingsController> {
                       value: controller.paranoidMode.value,
                       onChanged: (value) => controller.toggleParanoidMode(),
                     ),
+                  ),
+                ),
+                // Backup
+                Card(
+                  child: ListTile(
+                    title: Text(
+                      'settings_backup_restore'.tr,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    subtitle: Text('settings_backup_restore_subtitle'.tr),
+                    trailing: const Icon(Icons.settings_backup_restore),
+                    onTap: () => Get.toNamed('/settings/backup_restore'),
                   ),
                 ),
                 const SizedBox(
