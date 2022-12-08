@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final LoggerController loggerController = Get.find();
     final SettingsController settingsController = Get.find();
-    final StorageController storageController = Get.find();
 
     // Show a dialog that tells the user that this
     // is a work in progress
@@ -50,7 +49,7 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en', 'US'),
       debugShowCheckedModeBanner: false,
       title: 'Portarius',
-      logWriterCallback: loggerController.logWriterCallback,
+      logWriterCallback: kDebugMode ? loggerController.logWriterCallback : null,
       getPages: appRoutes(),
       initialRoute: '/home',
       themeMode: settingsController.isDarkMode.value

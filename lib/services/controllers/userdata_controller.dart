@@ -12,6 +12,11 @@ class UserDataController extends GetxController {
 
   @override
   void onInit() {
+    // Reset the current data
+    serverList.clear();
+    currentServer = null;
+    currentServerEndpoints.clear();
+
     super.onInit();
     final StorageController storageController = Get.find();
 
@@ -154,5 +159,9 @@ class UserDataController extends GetxController {
     if (endpoints.isNotEmpty) {
       currentServerEndpoints = endpoints;
     }
+  }
+
+  void reInit() {
+    onInit();
   }
 }

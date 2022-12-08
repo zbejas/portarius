@@ -13,8 +13,6 @@
 	"dialog_server_add_exit_content": "Any unsaved changes will be lost.",
 	"dialog_server_add_test_success_content": "Connection to\n@url\nwas successful.\n\nYou can now save the server.",
 	"dialog_server_add_test_success_title": "Connection successful",
-	"dialog_settings_backup_restore_restart_content": "Portarius needs to be restarted for the changes to take effect.",
-	"dialog_settings_backup_restore_restart_title": "Restart required",
 	"dialog_settings_language_content": "Are you sure you want to change the language to '@language'?",
 	"dialog_settings_language_title": "Are you sure?",
 	"dialog_settings_security_biometrics_content": "Disabling biometrics on your device will disable biometrics in Portarius.",
@@ -116,6 +114,8 @@
 	"snackbar_userdata_server_exists": "Server already exists",
 	"snackbar_userdata_server_not_found": "Server not found",
 	"snackbar_userdata_title": "Error",
+    "snackbar_success_title": "Success",
+    "snackbar_success_content": "Action completed successfully.",
 	"start": "Start",
 	"stop": "Stop",
 	"userdata_no_server": "Add a server to get started."

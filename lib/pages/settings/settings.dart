@@ -301,10 +301,9 @@ class SettingsPage extends GetView<SettingsController> {
                         fontSize: 16,
                       ),
                     ),
-                    enabled: false,
                     subtitle: Text('settings_view_logs_subtitle'.tr),
                     trailing: const Icon(Icons.list_alt),
-                    onTap: () => Get.toNamed('/logs'),
+                    onTap: () => Get.toNamed('/settings/logs'),
                   ),
                 ),
                 // FAQ

@@ -6,11 +6,13 @@ class LoggerController extends GetxController {
   final RxList<OutputEvent> _log = <OutputEvent>[].obs;
 
   final Logger logger = Logger(
+    filter: ProductionFilter(),
     output: ConsoleOutput(),
     printer: PrettyPrinter(
       printTime: true,
+      noBoxingByDefault: true,
+      lineLength: 100,
     ),
-    level: Level.debug,
   );
 
   void addLog(OutputEvent log) {

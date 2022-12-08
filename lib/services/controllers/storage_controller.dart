@@ -4,13 +4,17 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show SystemNavigator, rootBundle;
+import 'package:flutter/services.dart'
+    show SystemChannels, SystemNavigator, rootBundle;
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
+import 'package:portarius/main.dart';
 import 'package:portarius/services/controllers/logger_controller.dart';
+import 'package:portarius/services/controllers/settings_controller.dart';
+import 'package:portarius/services/controllers/userdata_controller.dart';
 import 'package:share_plus/share_plus.dart';
 
 class StorageController extends GetxController {
@@ -93,7 +97,7 @@ class StorageController extends GetxController {
     await jsonFile.writeAsBytes(jsonString.codeUnits);
 
     final XFile file = XFile(jsonFile.path);
-    ShareResult result = await Share.shareXFiles(
+    final ShareResult result = await Share.shareXFiles(
       [file],
     );
 
@@ -106,10 +110,10 @@ class StorageController extends GetxController {
   }
 
   Future<void> importData() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    final FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      File file = File(result.files.single.path!);
+      final File file = File(result.files.single.path!);
       final Map<String, dynamic> data = jsonDecode(
         await file.readAsString(),
       ) as Map<String, dynamic>;
@@ -135,17 +139,23 @@ class StorageController extends GetxController {
       await userData.putAll(data['userData'] as Map);
       await settings.putAll(data['settings'] as Map);
 
-      // Show dialog to restart the app
-      Get.defaultDialog(
-        title: 'dialog_settings_backup_restore_restart_title'.tr,
-        middleText: 'dialog_settings_backup_restore_restart_content'.tr,
-        textConfirm: 'dialog_ok'.tr,
-        textCancel: 'dialog_cancel_not_now'.tr,
-        // exit the app
-        onConfirm: () => SystemNavigator.pop(),
+      final UserDataController userDataController = Get.find();
+      userDataController.onInit();
+
+      final SettingsController settingsController = Get.find();
+      settingsController.fromJson(settings.toMap());
+
+      Get.snackbar(
+        'snackbar_success_title'.tr,
+        'snackbar_success_content'.tr,
+        snackPosition: SnackPosition.TOP,
+        margin: const EdgeInsets.all(10),
       );
+
+      // Restart the app
+      Get.forceAppUpdate();
     } else {
-      _logger.e('No file selected');
+      _logger.e('Error importing data: No file selected');
     }
   }
 
