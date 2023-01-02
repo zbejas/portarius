@@ -79,6 +79,7 @@ class SplitView extends StatelessWidget {
         floatingActionButton: floatingActionButton,
         floatingActionButtonLocation: floatingActionButtonLocation,
         drawer: menuBuilder(context),
+        drawerEdgeDragWidth: context.width,
         body: contentBuilder(context),
       );
     }

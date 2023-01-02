@@ -10,7 +10,10 @@ class LoggerController extends GetxController {
     output: ConsoleOutput(),
     printer: PrettyPrinter(
       printTime: true,
-      noBoxingByDefault: true,
+      // for release this should be false
+      // for debugging this should be true
+      // ignore: avoid_redundant_argument_values
+      noBoxingByDefault: !kDebugMode,
       lineLength: 100,
     ),
   );

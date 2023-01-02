@@ -8,8 +8,6 @@ import 'package:portarius/services/controllers/settings_controller.dart';
 import 'package:portarius/services/messages.dart';
 import 'package:portarius/services/service_controller.dart';
 
-import 'services/controllers/storage_controller.dart';
-
 void main() async {
   await ServiceController().initServices();
   runApp(const MyApp());

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:portarius/components/routing/middleware/drawer_middleware.dart';
+import 'package:portarius/pages/details/details.dart';
 
 import 'package:portarius/pages/home/home.dart';
 import 'package:portarius/pages/settings/pages/backup_restore.dart';
@@ -16,6 +17,12 @@ List<GetPage> appRoutes() => [
         middlewares: [DrawerMiddleware()],
         transition: Transition.noTransition,
         transitionDuration: const Duration(milliseconds: 150),
+      ),
+      GetPage(
+        name: '/home/details',
+        page: () => const ContainerDetailsPage(),
+        transition: Transition.downToUp,
+        transitionDuration: const Duration(milliseconds: 300),
       ),
       GetPage(
         name: '/settings',

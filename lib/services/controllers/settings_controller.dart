@@ -16,6 +16,7 @@ class SettingsController extends GetxController {
   RxString sortOption = SortOptions.stack.toString().obs;
   RxBool paranoidMode = false.obs;
   Rx<Locale?> locale = const Locale('en', 'US').obs;
+  RxBool listView = true.obs;
 
   final Logger _logger = Get.find<LoggerController>().logger;
 
@@ -36,6 +37,7 @@ class SettingsController extends GetxController {
       'sortOption': sortOption.value,
       'paranoidMode': paranoidMode.value,
       'locale': locale.value.toString(),
+      'listView': listView.value,
     };
   }
 
@@ -51,6 +53,7 @@ class SettingsController extends GetxController {
     sortOption.value =
         (json['sortOption'] ?? SortOptions.stack.toString()) as String;
     paranoidMode.value = (json['paranoidMode'] ?? false) as bool;
+    listView.value = (json['listView'] ?? false) as bool;
 
     // Set locale if it exists
     if (json['locale'] != null) {
@@ -65,6 +68,11 @@ class SettingsController extends GetxController {
   }
 
   // ! Toggles and setters
+
+  void toggleListView() {
+    listView.value = !listView.value;
+    save();
+  }
 
   void toggleDarkMode() {
     _logger.d('Toggling dark mode to: ${!isDarkMode.value}');

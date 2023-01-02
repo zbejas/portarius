@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:portarius/components/models/docker/detailed_container.dart';
 import 'package:portarius/components/models/docker/simple_container.dart';
 import 'package:portarius/services/api.dart';
 import 'package:portarius/services/controllers/logger_controller.dart';
@@ -48,6 +49,54 @@ class DockerController extends GetxController {
     super.onInit();
   }
 
+  Future<void> updateContainers() async {
+    isRefreshing.value = true;
+    final List<SimpleContainer> newContainers = await _api.getContainers();
+    containers.clear();
+    containers.addAll(newContainers);
+    sort();
+    isRefreshing.value = false;
+  }
+
+  Future<void> startContainer(SimpleContainer container) async {
+    update();
+    await _api.startContainer(container.id);
+    await updateContainers();
+  }
+
+  Future<void> stopContainer(SimpleContainer container) async {
+    update();
+    await _api.stopContainer(container.id);
+    await updateContainers();
+  }
+
+  Future<void> restartContainer(SimpleContainer container) async {
+    update();
+    await _api.restartContainer(container.id);
+    await updateContainers();
+  }
+
+  Future<DetailedContainer?> getContainerDetails(
+    SimpleContainer container,
+  ) async {
+    update();
+    return _api.inspectContainer(container.id);
+  }
+
+  Future<void> refreshDetails(SimpleContainer container) async {
+    final DetailedContainer? details = await getContainerDetails(container);
+    if (details != null) {
+      // add details to container and update the list
+      container.details = details;
+
+      // update the list
+      containers[containers.indexOf(container)] = container;
+      update();
+    }
+  }
+
+  // ! Sorting options
+
   List<SimpleContainer> get runningContainers => containers
       .where((SimpleContainer container) => container.state == 'running')
       .toList();
@@ -78,33 +127,6 @@ class DockerController extends GetxController {
       }
     }
     return sorted;
-  }
-
-  Future<void> updateContainers() async {
-    isRefreshing.value = true;
-    final List<SimpleContainer> newContainers = await _api.getContainers();
-    containers.clear();
-    containers.addAll(newContainers);
-    sort();
-    isRefreshing.value = false;
-  }
-
-  Future<void> startContainer(SimpleContainer container) async {
-    update();
-    await _api.startContainer(container.id);
-    await updateContainers();
-  }
-
-  Future<void> stopContainer(SimpleContainer container) async {
-    update();
-    await _api.stopContainer(container.id);
-    await updateContainers();
-  }
-
-  Future<void> restartContainer(SimpleContainer container) async {
-    update();
-    await _api.restartContainer(container.id);
-    await updateContainers();
   }
 
   void sort() {

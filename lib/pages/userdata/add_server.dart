@@ -195,7 +195,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
                                     Get.defaultDialog(
                                       title: 'dialog_server_add_exit'.tr,
                                       middleText:
-                                          'dialog_server_add_exit_text'.tr,
+                                          'dialog_server_add_exit_content'.tr,
                                       textConfirm: 'dialog_yes'.tr,
                                       textCancel: 'dialog_cancel_not_now'.tr,
                                       onConfirm: () {

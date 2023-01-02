@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_dynamic_calls
 
+import 'package:portarius/components/models/docker/detailed_container.dart';
+
 class SimpleContainer {
   String id;
   String image;
@@ -10,11 +12,7 @@ class SimpleContainer {
   String? name;
   String? state;
   String? composeStack;
-  // todo: add more fields
-  //List<Map<String, dynamic>>? ports;
-  //List<String> networks;
-  //List<String> volumes;
-  //List<String> labels;
+  DetailedContainer? details;
 
   SimpleContainer({
     required this.id,
@@ -26,6 +24,7 @@ class SimpleContainer {
     required this.name,
     required this.state,
     required this.composeStack,
+    this.details,
   });
 
   // from json

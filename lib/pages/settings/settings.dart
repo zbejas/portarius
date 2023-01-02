@@ -115,6 +115,22 @@ class SettingsPage extends GetView<SettingsController> {
                   endIndent: 20,
                   indent: 20,
                 ),
+                // Default view
+                Card(
+                  child: ListTile(
+                    title: Text(
+                      'settings_view'.tr,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    subtitle: Text('settings_view_subtitle'.tr),
+                    trailing: Switch(
+                      value: controller.listView.value,
+                      onChanged: (value) => controller.toggleListView(),
+                    ),
+                  ),
+                ),
                 // Default sort order
                 Card(
                   child: ListTile(
@@ -391,7 +407,7 @@ class SettingsPage extends GetView<SettingsController> {
       ),
       applicationIcon: Image.asset(
         'assets/icons/icon.png',
-        width: 100,
+        width: 65,
       ),
       applicationLegalese: '© ${DateTime.now().year} Zbejas',
       children: [

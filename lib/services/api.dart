@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:portarius/components/models/docker/detailed_container.dart';
 import 'package:portarius/components/models/docker/simple_container.dart';
 import 'package:portarius/components/models/portainer/endpoint.dart';
 import 'package:portarius/components/models/serverdata.dart';
@@ -201,6 +202,21 @@ class PortainerApiProvider extends GetConnect implements GetxService {
       margin: const EdgeInsets.all(10),
       duration: const Duration(seconds: 2),
     );
+  }
+
+  // Inspect container
+  Future<DetailedContainer?> inspectContainer(String id) async {
+    final Response response = await _getResponse(
+      '/endpoints/$apiEndpoint/docker/containers/$id/json',
+    );
+
+    if (response.hasError) {
+      _showSnackBar(response.statusText ?? 'snackbar_api_error_inspect'.tr);
+      _logger.e(response.statusText);
+      return null;
+    }
+
+    return DetailedContainer.fromJson(response.body as Map<String, dynamic>);
   }
 
   // Get a response using a GET request

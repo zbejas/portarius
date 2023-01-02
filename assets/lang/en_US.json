@@ -1,4 +1,7 @@
 {
+	"details_mounts": "Mounts",
+	"details_networks": "Networks",
+	"details_ports": "Ports",
 	"dialog_add_server_content": "Would you like to add a server now?",
 	"dialog_add_server_title": "No server found.",
 	"dialog_cancel": "Cancel",
@@ -87,6 +90,8 @@
 	"settings_title_general": "General",
 	"settings_title_information": "Information",
 	"settings_title_security": "Security",
+	"settings_view": "List view",
+	"settings_view_subtitle": "Sets Home to list view.",
 	"settings_view_logs": "View logs",
 	"settings_view_logs_subtitle": "View Portarius logs.",
 	"snackbar_api_error_container_restart": "Failed to restart container.",

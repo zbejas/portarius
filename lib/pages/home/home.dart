@@ -3,10 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portarius/components/models/docker/simple_container.dart';
+import 'package:portarius/components/models/view/container_grid.dart';
 import 'package:portarius/components/models/view/container_list.dart';
 import 'package:portarius/components/widgets/drawer.dart';
 import 'package:portarius/components/widgets/split_view.dart';
 import 'package:portarius/services/controllers/docker_controller.dart';
+import 'package:portarius/services/controllers/settings_controller.dart';
 import 'package:portarius/services/controllers/userdata_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,8 +19,10 @@ class HomePage extends StatelessWidget {
     final UserDataController userDataController = Get.find();
 
     final DockerController dockerController = Get.put(DockerController());
+    final SettingsController settingsController = Get.find();
 
-    final bool poppedFromServerAdd = (Get.arguments ?? false) as bool;
+    final bool poppedFromServerAdd =
+        (Get.arguments is bool ? Get.arguments : false) as bool;
 
     // If there are no servers, show the server add dialog
     // todo: Get.isLogEnabled is a hack to prevent this from getting this every time the page is rebuilt, but it's not ideal
@@ -131,7 +135,9 @@ class HomePage extends StatelessWidget {
                   )
                 : RefreshIndicator(
                     onRefresh: () => dockerController.updateContainers(),
-                    child: const ContainerList(),
+                    child: settingsController.listView.value
+                        ? const ContainerList()
+                        : const ContainerGrid(),
                   ),
       ),
     );
