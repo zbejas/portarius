@@ -48,8 +48,9 @@ class ContainerConfig {
       tty: data['Tty'] as bool,
       user: data['User'] as String,
       workingDir: data['WorkingDir'] as String,
-      volumes:
-          Map<String, dynamic>.from(data['Volumes'] as Map<String, dynamic>),
+      volumes: data['Volumes'] == null
+          ? {}
+          : Map<String, dynamic>.from(data['Volumes'] as Map<String, dynamic>),
       domain: data['Domainname'] as String,
     );
   }

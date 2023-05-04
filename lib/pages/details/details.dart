@@ -18,7 +18,7 @@ class _ContainerDetailsPageState extends State<ContainerDetailsPage> {
     final ScrollController scrollController = ScrollController();
 
     final DockerController dockerController = Get.find();
-    final String containerId = Get.arguments as String;
+    final String containerId = Get.parameters['id']!;
 
     SimpleContainer container = dockerController.containers.firstWhere(
       (SimpleContainer container) => container.id == containerId,
@@ -34,7 +34,7 @@ class _ContainerDetailsPageState extends State<ContainerDetailsPage> {
       });
     }
 
-    if (!dockerController.isRefreshing.value && mounted) {
+    /*if (!dockerController.isRefreshing.value && mounted) {
       Future.delayed(Duration(seconds: dockerController.refreshInterval.value),
           () async {
         await dockerController.refreshDetails(container);
@@ -42,7 +42,7 @@ class _ContainerDetailsPageState extends State<ContainerDetailsPage> {
           setState(() {});
         }
       });
-    }
+    }*/
 
     return Scaffold(
       body: Obx(
@@ -66,6 +66,17 @@ class _ContainerDetailsPageState extends State<ContainerDetailsPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  actions: [
+                    // Logs button
+                    IconButton(
+                      icon: const Icon(Icons.list),
+                      onPressed: () {
+                        Get.toNamed(
+                          '/home/details/${container.id}/logs',
+                        );
+                      },
+                    ),
+                  ],
                 ),
                 if (loading) ...[
                   const SliverToBoxAdapter(
@@ -80,7 +91,7 @@ class _ContainerDetailsPageState extends State<ContainerDetailsPage> {
                   ),
                 ] else ...[
                   // Mount points
-                  if (container.details!.mounts.isNotEmpty)
+                  if (container.details?.mounts.isNotEmpty ?? false)
                     SliverToBoxAdapter(
                       child: Card(
                         child: Padding(
@@ -128,7 +139,7 @@ class _ContainerDetailsPageState extends State<ContainerDetailsPage> {
                           ),
                         ),
                       ),
-                    ),
+                    )
                 ],
               ],
             ),

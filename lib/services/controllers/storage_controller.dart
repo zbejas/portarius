@@ -127,7 +127,7 @@ class StorageController extends GetxController {
               'error': 'Invalid data.',
             },
           ),
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.bottom,
           backgroundColor: Get.theme.errorColor,
           colorText: Colors.white,
           margin: const EdgeInsets.all(10),
@@ -148,7 +148,7 @@ class StorageController extends GetxController {
       Get.snackbar(
         'snackbar_success_title'.tr,
         'snackbar_success_content'.tr,
-        snackPosition: SnackPosition.TOP,
+        snackPosition: SnackPosition.top,
         margin: const EdgeInsets.all(10),
       );
 

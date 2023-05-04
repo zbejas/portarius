@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -54,9 +55,14 @@ class SettingsPage extends GetView<SettingsController> {
                       ),
                     ),
                     subtitle: Text('settings_dark_mode_subtitle'.tr),
-                    trailing: Switch(
-                      value: controller.isDarkMode.value,
-                      onChanged: (value) => controller.toggleDarkMode(),
+                    trailing: Transform.scale(
+                      scale: 0.8,
+                      child: CupertinoSwitch(
+                        value: controller.isDarkMode.value,
+                        onChanged: (value) => controller.toggleDarkMode(),
+                        activeColor: context.theme.primaryColor,
+                        trackColor: context.theme.colorScheme.primaryContainer,
+                      ),
                     ),
                   ),
                 ),
@@ -125,9 +131,14 @@ class SettingsPage extends GetView<SettingsController> {
                       ),
                     ),
                     subtitle: Text('settings_view_subtitle'.tr),
-                    trailing: Switch(
-                      value: controller.listView.value,
-                      onChanged: (value) => controller.toggleListView(),
+                    trailing: Transform.scale(
+                      scale: 0.8,
+                      child: CupertinoSwitch(
+                        value: controller.listView.value,
+                        onChanged: (value) => controller.toggleListView(),
+                        activeColor: context.theme.primaryColor,
+                        trackColor: context.theme.colorScheme.primaryContainer,
+                      ),
                     ),
                   ),
                 ),
@@ -171,9 +182,14 @@ class SettingsPage extends GetView<SettingsController> {
                       ),
                     ),
                     subtitle: Text('settings_auto_refresh_subtitle'.tr),
-                    trailing: Switch(
-                      value: controller.autoRefresh.value,
-                      onChanged: (value) => controller.toggleAutoRefresh(),
+                    trailing: Transform.scale(
+                      scale: 0.8,
+                      child: CupertinoSwitch(
+                        value: controller.autoRefresh.value,
+                        onChanged: (value) => controller.toggleAutoRefresh(),
+                        activeColor: context.theme.primaryColor,
+                        trackColor: context.theme.colorScheme.primaryContainer,
+                      ),
                     ),
                   ),
                 ),
@@ -244,11 +260,16 @@ class SettingsPage extends GetView<SettingsController> {
                       ),
                     ),
                     subtitle: Text('settings_biometrics_subtitle'.tr),
-                    trailing: Switch(
-                      value: controller.isAuthEnabled.value,
-                      onChanged: (value) async {
-                        await controller.toggleAuthEnabled();
-                      },
+                    trailing: Transform.scale(
+                      scale: 0.8,
+                      child: CupertinoSwitch(
+                        value: controller.isAuthEnabled.value,
+                        onChanged: (value) async {
+                          await controller.toggleAuthEnabled();
+                        },
+                        activeColor: context.theme.primaryColor,
+                        trackColor: context.theme.colorScheme.primaryContainer,
+                      ),
                     ),
                   ),
                 ),
@@ -262,9 +283,14 @@ class SettingsPage extends GetView<SettingsController> {
                       ),
                     ),
                     subtitle: Text('settings_ssl_verification_subtitle'.tr),
-                    trailing: Switch(
-                      value: controller.allowAutoSignedCerts.value,
-                      onChanged: (value) => controller.toggleAutoCert(),
+                    trailing: Transform.scale(
+                      scale: 0.8,
+                      child: CupertinoSwitch(
+                        value: controller.allowAutoSignedCerts.value,
+                        onChanged: (value) => controller.toggleAutoCert(),
+                        activeColor: context.theme.primaryColor,
+                        trackColor: context.theme.colorScheme.primaryContainer,
+                      ),
                     ),
                   ),
                 ),
@@ -278,9 +304,14 @@ class SettingsPage extends GetView<SettingsController> {
                       ),
                     ),
                     subtitle: Text('settings_paranoid_mode_subtitle'.tr),
-                    trailing: Switch(
-                      value: controller.paranoidMode.value,
-                      onChanged: (value) => controller.toggleParanoidMode(),
+                    trailing: Transform.scale(
+                      scale: 0.8,
+                      child: CupertinoSwitch(
+                        value: controller.paranoidMode.value,
+                        onChanged: (value) => controller.toggleParanoidMode(),
+                        activeColor: context.theme.primaryColor,
+                        trackColor: context.theme.colorScheme.primaryContainer,
+                      ),
                     ),
                   ),
                 ),

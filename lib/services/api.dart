@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -14,6 +16,13 @@ class PortainerApiProvider extends GetConnect implements GetxService {
   RxString apiLocalUrl = ''.obs;
   RxString apiEndpoint = ''.obs;
 
+  final SettingsController settingsController = Get.find();
+
+  @override
+  bool get allowAutoSignedCert {
+    return settingsController.allowAutoSignedCerts.value;
+  }
+
   late Map<String, String> _mainHeaders;
 
   late final Logger _logger = Get.find<LoggerController>().logger;
@@ -29,15 +38,13 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     _mainHeaders = {
       'Content-Type': 'application/json',
       'X-API-Key': apiToken.value,
+      'charset': 'utf-8',
     };
 
     // Set global timeout
     httpClient.timeout = const Duration(seconds: 15);
-
-    final SettingsController settingsController = Get.find();
-
-    // Allow self-signed certificates
-    allowAutoSignedCert = settingsController.allowAutoSignedCerts.value;
+    httpClient.errorSafety = true;
+    httpClient.defaultContentType = 'application/json';
   }
 
   // Update data for the API
@@ -49,10 +56,9 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     _mainHeaders = {
       'Content-Type': 'application/json',
       'X-API-Key': apiToken.value,
+      'charset': 'utf-8',
     };
   }
-
-  set updateAutoSignedCert(bool value) => allowAutoSignedCert = value;
 
   void clearAll() {
     apiToken.value = '';
@@ -219,10 +225,54 @@ class PortainerApiProvider extends GetConnect implements GetxService {
     return DetailedContainer.fromJson(response.body as Map<String, dynamic>);
   }
 
+  // View container logs
+  Future<List<String>?> getContainerLogs(String id) async {
+    final Response response = await _getResponse(
+      '/endpoints/$apiEndpoint/docker/containers/$id/logs?stdout=true&stderr=true&tail=50',
+    );
+
+    if (response.hasError) {
+      _showSnackBar(response.statusText ?? 'snackbar_api_error_logs'.tr);
+      _logger.e(response.statusText);
+
+      return null;
+    } else {
+      // log everything
+      _logger.i(response.body);
+      _logger.i(response.headers);
+      _logger.i(response.statusCode);
+    }
+
+    if (response.body == null) {
+      return null;
+    }
+
+    // Split logs into list
+    final List<String> logList = (response.body as String).split('\n');
+    for (int i = 0; i < logList.length; i++) {
+      // remove the weird character
+      logList[i] = logList[i].replaceAll(RegExp(r'[^\x20-\x7E\n\r]'), '');
+
+      // remove color codes
+      logList[i] = logList[i].replaceAll(RegExp(r'\x1B\[[0-9;]*[mK]'), '');
+
+      if (logList[i].isEmpty || i == 0) {
+        continue;
+      }
+      logList[i] = logList[i].substring(1);
+      logList[i] = logList[i].trim();
+    }
+
+    return logList;
+  }
+
   // Get a response using a GET request
   // The url is the url without the base url withouth the /api prefix
   // @param url The url to get
-  Future<Response> _getResponse(String url) async {
+  Future<Response> _getResponse(
+    String url, {
+    Function(dynamic)? decoder,
+  }) async {
     Response response;
 
     if (apiLocalUrl.isNotEmpty) {
@@ -230,6 +280,7 @@ class PortainerApiProvider extends GetConnect implements GetxService {
         response = await get(
           '$apiLocalUrl/api$url',
           headers: _mainHeaders,
+          decoder: decoder,
         ).timeout(_localTimeout);
       } catch (e) {
         response = const Response(statusCode: 500);
@@ -238,14 +289,16 @@ class PortainerApiProvider extends GetConnect implements GetxService {
       response = await get(
         '$apiBaseUrl/api$url',
         headers: _mainHeaders,
+        decoder: decoder,
       );
     }
 
     // if response is not ok, try the other url
-    if (response.hasError) {
+    if (response.hasError && apiLocalUrl.isNotEmpty) {
       response = await get(
         '$apiBaseUrl/api$url',
         headers: _mainHeaders,
+        decoder: decoder,
       );
     }
 

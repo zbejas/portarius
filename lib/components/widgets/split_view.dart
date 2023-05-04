@@ -39,14 +39,6 @@ class SplitView extends StatelessWidget {
                 preferredSize: appBar!.preferredSize,
                 child: Row(
                   children: [
-                    Container(
-                      width: menuWidth,
-                      decoration: BoxDecoration(
-                        // Replace the line bellow if not using GetX
-                        // color: Theme.of(context).cardColor,
-                        color: context.theme.canvasColor,
-                      ),
-                    ),
                     Expanded(child: appBar!),
                   ],
                 ),

@@ -88,7 +88,7 @@ class _UserDataPageState extends State<UserDataPage> {
                                       userDataController.currentServer!.name,
                                 },
                               ),
-                              snackPosition: SnackPosition.TOP,
+                              snackPosition: SnackPosition.top,
                               duration: const Duration(seconds: 1),
                             );
                           },

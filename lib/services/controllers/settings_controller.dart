@@ -101,7 +101,7 @@ class SettingsController extends GetxController {
             Get.snackbar(
               'snackbar_settings_no_auth_title'.tr,
               'snackbar_settings_no_auth_content'.tr,
-              snackPosition: SnackPosition.BOTTOM,
+              snackPosition: SnackPosition.bottom,
               backgroundColor: Get.theme.errorColor,
               colorText: Colors.white,
               margin: const EdgeInsets.all(10),
@@ -132,13 +132,13 @@ class SettingsController extends GetxController {
         contentPadding: const EdgeInsets.all(16),
         titlePadding: const EdgeInsets.only(top: 20),
         onConfirm: () async {
-          Get.back();
-
           _logger.d(
             'Auto certs set to: ${!allowAutoSignedCerts.value}',
           );
           allowAutoSignedCerts.value = !allowAutoSignedCerts.value;
+
           save();
+          Get.back();
         },
       );
     } else {
@@ -148,9 +148,6 @@ class SettingsController extends GetxController {
       allowAutoSignedCerts.value = !allowAutoSignedCerts.value;
       save();
     }
-
-    final PortainerApiProvider apiProvider = Get.find();
-    apiProvider.updateAutoSignedCert = !allowAutoSignedCerts.value;
   }
 
   void toggleAutoRefresh() {

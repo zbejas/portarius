@@ -11,20 +11,22 @@ class ContainerList extends StatefulWidget {
 }
 
 class _ContainerListState extends State<ContainerList> {
-  Map<SimpleContainer, String> loading = {};
+  Map<String, String> loading = {};
   final DockerController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    if (!controller.isRefreshing.value && mounted) {
+    if (!controller.isRefreshing.value && mounted && loading.isEmpty) {
       Future.delayed(Duration(seconds: controller.refreshInterval.value),
           () async {
-        await controller.updateContainers();
         if (mounted) {
+          await controller.updateContainers();
           setState(() {});
         }
       });
     }
+
+    print(loading);
 
     return Obx(
       () {
@@ -61,8 +63,7 @@ class _ContainerListState extends State<ContainerList> {
             child: InkWell(
               onTap: () {
                 Get.toNamed(
-                  '/home/details',
-                  arguments: controller.containers[index].id,
+                  '/home/details/${controller.containers[index].id}',
                 );
               },
               child: Padding(
@@ -127,7 +128,7 @@ class _ContainerListState extends State<ContainerList> {
                             if (value == 'start/stop') {
                               setState(() {
                                 loading.addAll({
-                                  controller.containers[index]: 'start/stop',
+                                  controller.containers[index].id: 'start/stop',
                                 });
                               });
 
@@ -142,13 +143,12 @@ class _ContainerListState extends State<ContainerList> {
                                 );
                               }
 
-                              setState(() {
-                                loading.remove(controller.containers[index]);
-                              });
+                              loading.remove(controller.containers[index].id);
+                              setState(() {});
                             } else if (value == 'restart') {
                               setState(() {
                                 loading.addAll({
-                                  controller.containers[index]: 'refresh',
+                                  controller.containers[index].id: 'restart',
                                 });
                               });
 
@@ -156,9 +156,8 @@ class _ContainerListState extends State<ContainerList> {
                                 controller.containers[index],
                               );
 
-                              setState(() {
-                                loading.remove(controller.containers[index]);
-                              });
+                              loading.remove(controller.containers[index].id);
+                              setState(() {});
                             }
                           },
                         ),

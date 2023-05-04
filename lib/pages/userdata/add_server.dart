@@ -257,7 +257,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
                                             .tr,
                                         'snackbar_server_add_not_tested_text'
                                             .tr,
-                                        snackPosition: SnackPosition.TOP,
+                                        snackPosition: SnackPosition.top,
                                         backgroundColor:
                                             context.theme.errorColor,
                                         colorText: Get.theme.snackBarTheme
@@ -358,7 +358,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
             'name': nameController.text,
           },
         ),
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.bottom,
         backgroundColor: context.theme.errorColor,
         colorText: Get.theme.scaffoldBackgroundColor,
         margin: const EdgeInsets.all(10),
@@ -389,7 +389,7 @@ class _ServerAddPageState extends State<ServerAddPage> {
         Get.snackbar(
           'snackbar_server_add_test_no_endoint_title'.tr,
           'snackbar_server_add_test_no_endoint_content'.tr,
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.bottom,
           backgroundColor: context.theme.errorColor,
           colorText: Get.theme.scaffoldBackgroundColor,
           margin: const EdgeInsets.all(10),

@@ -19,6 +19,7 @@ class DockerController extends GetxController {
   final List<SimpleContainer> containers = <SimpleContainer>[].obs;
   final PortainerApiProvider _api = Get.find();
   final RxBool isRefreshing = false.obs;
+  final RxBool autoRefresh = false.obs;
   final RxInt refreshInterval = 5.obs;
   final RxString sortOption = SortOptions.stack.toString().obs;
   final RxBool isLoaded = false.obs;
@@ -29,7 +30,7 @@ class DockerController extends GetxController {
     final SettingsController settingsController = Get.find();
 
     refreshInterval.value = settingsController.refreshInterval.value;
-    isRefreshing.value = settingsController.autoRefresh.value;
+    autoRefresh.value = settingsController.autoRefresh.value;
     sortOption.value = settingsController.sortOption.value;
 
     isLoaded.value = false;
@@ -52,6 +53,19 @@ class DockerController extends GetxController {
   Future<void> updateContainers() async {
     isRefreshing.value = true;
     final List<SimpleContainer> newContainers = await _api.getContainers();
+
+    final List<SimpleContainer> oldList = containers;
+    final List<SimpleContainer> newList = newContainers;
+
+    // copy details from old list to new list
+    for (final SimpleContainer oldContainer in oldList) {
+      for (final SimpleContainer newContainer in newList) {
+        if (oldContainer.id == newContainer.id) {
+          newContainer.details = oldContainer.details;
+        }
+      }
+    }
+
     containers.clear();
     containers.addAll(newContainers);
     sort();
@@ -95,6 +109,15 @@ class DockerController extends GetxController {
     }
   }
 
+  Future<List<String>?> getContainerLogs(SimpleContainer container) async {
+    isRefreshing.value = true;
+    update();
+    final List<String>? logs = await _api.getContainerLogs(container.id);
+    isRefreshing.value = true;
+    update();
+    return logs;
+  }
+
   // ! Sorting options
 
   List<SimpleContainer> get runningContainers => containers
@@ -133,7 +156,9 @@ class DockerController extends GetxController {
     if (sortOption.value == SortOptions.name.toString()) {
       containers.sort(
         (SimpleContainer a, SimpleContainer b) =>
-            a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
+            a.name != null && b.name != null
+                ? a.name!.toLowerCase().compareTo(b.name!.toLowerCase())
+                : 0,
       );
     } else if (sortOption.value == SortOptions.status.toString()) {
       containers.sort(
@@ -143,7 +168,11 @@ class DockerController extends GetxController {
     } else if (sortOption.value == SortOptions.stack.toString()) {
       containers.sort(
         (SimpleContainer a, SimpleContainer b) =>
-            a.composeStack!.compareTo(b.composeStack!),
+            a.composeStack != null && b.composeStack != null
+                ? a.composeStack!.toLowerCase().compareTo(
+                      b.composeStack!.toLowerCase(),
+                    )
+                : 0,
       );
     } else if (sortOption.value == SortOptions.created.toString()) {
       containers.sort(

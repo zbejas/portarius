@@ -90,7 +90,7 @@ class UserDataController extends GetxController {
     Get.snackbar(
       'snackbar_userdata_title'.tr,
       message,
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.bottom,
       backgroundColor: Get.theme.errorColor,
       colorText: Colors.white,
       margin: const EdgeInsets.all(10),
@@ -106,7 +106,6 @@ class UserDataController extends GetxController {
     api.checkEndpoints(url: serverData.baseUrl, token: serverData.token).then(
       (endpoints) {
         if (endpoints == null) {
-          _showSnackBar('snackbar_api_error_endpoints'.tr);
           return false;
         }
 

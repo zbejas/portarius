@@ -23,7 +23,7 @@ class SimpleContainer {
     required this.created,
     required this.name,
     required this.state,
-    required this.composeStack,
+    this.composeStack,
     this.details,
   });
 
